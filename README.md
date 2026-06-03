@@ -28,28 +28,35 @@
 
 ## 🚀 如何使用
 
-### 1. 克隆仓库
+### 方式一：npx skills（推荐，适配所有 AI 工具）
 
 ```bash
-git clone https://github.com/wu529778790/shenzjd-skills.git
+# 安装全部 skills
+npx skills add wu529778790/shenzjd-skills -y
+
+# 只安装指定 skill
+npx skills add wu529778790/shenzjd-skills -s github-profile-beautifier -y
+
+# 指定 AI 工具
+npx skills add wu529778790/shenzjd-skills -y -a claude-code
+npx skills add wu529778790/shenzjd-skills -y -a cursor
 ```
 
-### 2. 根据你的 AI 工具配置
+支持的 AI 工具：Claude Code、Cursor、Copilot、Windsurf、Gemini CLI、Cline、Aider 等 67+ 种。
+
+### 方式二：手动安装
 
 **Claude Code：**
 ```bash
-cp -r github-profile-beautifier ~/.claude/skills/
-# 重启 Claude Code 后生效
+git clone https://github.com/wu529778790/shenzjd-skills.git
+cp -r shenzjd-skills/github-profile-beautifier ~/.claude/skills/
 ```
 
-**Cursor：**
-将 `github-profile-beautifier/SKILL.md` 的内容复制到 `.cursorrules` 或 `.cursor/rules/` 中。
+**Cursor：** 将 SKILL.md 内容复制到 `.cursorrules` 或 `.cursor/rules/`。
 
-**GitHub Copilot：**
-将 `github-profile-beautifier/SKILL.md` 的内容复制到 `.github/copilot-instructions.md`。
+**GitHub Copilot：** 将 SKILL.md 内容复制到 `.github/copilot-instructions.md`。
 
-**其他工具：**
-每个 Skill 的 `SKILL.md` 是一份完整的指令文档，包含执行流程、参数说明和边界情况处理。将其内容粘贴到你所用工具的 system prompt 或规则文件中即可。
+**其他工具：** `SKILL.md` 是通用指令文档，粘贴到你所用工具的 system prompt 或规则文件即可。
 
 ---
 

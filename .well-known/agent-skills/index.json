@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "github-profile-beautifier",
+      "type": "skill-md",
+      "description": "Use when user wants to create or improve their GitHub profile README, generate a new profile page, or beautify their existing GitHub homepage with stats, projects, and tech stack badges",
+      "url": "./github-profile-beautifier/SKILL.md",
+      "digest": "sha256:6f7dd1fd6d6038a3d8bd3cd3c6befaafd87ac9dbecb0ff83b9d21f16074877a4"
+    }
+  ]
+}
