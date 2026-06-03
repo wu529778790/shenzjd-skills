@@ -2,25 +2,25 @@
   "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
   "skills": [
     {
-      "name": "release-notes-generator",
-      "type": "skill-md",
-      "description": "Use when creating git tags, releases, or version bumps, or when user wants to generate changelogs and release notes from git history",
-      "url": "./release-notes-generator/SKILL.md",
-      "digest": "sha256:49d34b31344dda2714906498faebbe048366e163e2f57996bddefef82bc21794"
-    },
-    {
       "name": "docker-build-deploy",
       "type": "skill-md",
-      "description": "Use when creating GitHub Actions workflows that build Docker images, push to GHCR, and deploy to a server via SSH",
+      "description": "Use when user wants to containerize a project, set up Docker CI/CD with GitHub Actions, push images to a container registry, or deploy containers to a remote server",
       "url": "./docker-build-deploy/SKILL.md",
-      "digest": "sha256:e96d55f220b7d77b06311f97727be38098e0337c08586d29a5be4f96f77a27d2"
+      "digest": "sha256:551e42e621c1fb7546f076fbef690623da8cf4f7cc38d6895cb1c5740916535c"
     },
     {
       "name": "github-profile-beautifier",
       "type": "skill-md",
       "description": "Use when user wants to create or improve their GitHub profile README, generate a new profile page, or beautify their existing GitHub homepage with stats, projects, and tech stack badges",
       "url": "./github-profile-beautifier/SKILL.md",
-      "digest": "sha256:6f7dd1fd6d6038a3d8bd3cd3c6befaafd87ac9dbecb0ff83b9d21f16074877a4"
+      "digest": "sha256:e15d9491844c813c7d10a917711850305a4e2ad36a72778575e825a7ec600c2b"
+    },
+    {
+      "name": "release-notes-generator",
+      "type": "skill-md",
+      "description": "Use when creating git tags, releases, or version bumps, or when user wants to generate changelogs and release notes from git history",
+      "url": "./release-notes-generator/SKILL.md",
+      "digest": "sha256:911f73e5f55b08a3bdad79ef4e700e63878318ffbce67d703be536a9ce8bf746"
     }
   ]
 }
