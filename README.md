@@ -2,8 +2,6 @@
 
 > 9 个生产级 AI 编程技能模块，一行命令安装，覆盖 DevOps 全链路。
 
-[![GitHub stars](https://img.shields.io/github/stars/wu529778790/shenzjd-skills?style=social)](https://github.com/wu529778790/shenzjd-skills/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/wu529778790/shenzjd-skills?style=social)](https://github.com/wu529778790/shenzjd-skills/network/members)
 [![skills.sh](https://img.shields.io/badge/skills.sh-find%20me-blue)](https://skills.sh/wu529778790/shenzjd-skills)
 
 ## ⚡ 一键安装
