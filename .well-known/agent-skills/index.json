@@ -55,7 +55,7 @@
       "type": "skill-md",
       "description": "Use when user wants to create or improve their GitHub profile README, generate a new profile page, beautify their existing GitHub homepage, or add stats cards, project showcase, and tech stack badges",
       "url": "./github-profile-beautifier/SKILL.md",
-      "digest": "sha256:c0613962b803fe7d96644b3d2f1a0b65c97a714ef7e87da4930658a0e7a9b613"
+      "digest": "sha256:160078bb3e30db0cc535fd90c107484ad23e1d02d49cb59dd23cb8365a16e81f"
     },
     {
       "name": "dependency-audit",
