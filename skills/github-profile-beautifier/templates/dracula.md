@@ -84,9 +84,18 @@
 
 <div align="center">
 
-[![Website](https://img.shields.io/badge/Website-个人网站-bd93f9?style=for-the-badge&logo=googlechrome&logoColor=white)]({{website}})
-[![Blog](https://img.shields.io/badge/Blog-技术博客-50fa7b?style=for-the-badge&logo=blogger&logoColor=white)]({{blog}})
+{{#if website}}
+[![Website](https://img.shields.io/badge/Website-{{website_name|default:"个人网站"}}-bd93f9?style=for-the-badge&logo=googlechrome&logoColor=white)]({{website}})
+{{/if}}
+{{#if blog}}
+[![Blog](https://img.shields.io/badge/Blog-{{blog_name|default:"技术博客"}}-50fa7b?style=for-the-badge&logo=blogger&logoColor=white)]({{blog}})
+{{/if}}
+{{#if email}}
 [![Email](https://img.shields.io/badge/Email-发送邮件-ff79c6?style=for-the-badge&logo=gmail&logoColor=white)](mailto:{{email}})
+{{/if}}
+{{#if linkedin}}
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-{{linkedin}}-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]({{linkedin_url}})
+{{/if}}
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/{{username}})
 
 </div>

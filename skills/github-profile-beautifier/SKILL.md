@@ -32,38 +32,49 @@ digraph flow {
 }
 ```
 
+### Step 0: 解析参数
+
+从用户输入中提取参数：
+
+```
+/github-profile-beautifier [username] [--sort stars|smart|updated] [--theme radical|tokyonight|dracula|minimalist|professional]
+```
+
+- `username`：GitHub 用户名（位置参数，可选）
+- `--sort`：排序方式（默认 `smart`）
+- `--theme`：主题风格（默认 `radical`）
+
+如果用户未提供 username，交互式询问。如果未提供 `--sort` 和 `--theme`，交互式让用户选择。
+
 ### Step 1: 获取用户信息
 
 使用 `gh` 命令获取用户基本信息和仓库列表：
 
 ```bash
-# 获取用户信息
-gh api user --jq '.login,.name,.bio'
-
-# 获取仓库列表
-gh repo list $USERNAME --limit 50 --json name,description,primaryLanguage,url,updatedAt,stargazerCount
-```
-
-**关键点：**
-- 使用 `gh` 命令，不依赖外部 API
-- 限制 50 个仓库，避免信息过载
-- 获取关键字段：name, description, language, stars, update time
-
-**错误处理：**
-```bash
-# 检查用户是否存在
-if ! gh api users/$USERNAME > /dev/null 2>&1; then
-  echo "错误：用户 $USERNAME 不存在"
-  exit 1
-fi
-
 # 检查 gh CLI 是否安装
 if ! command -v gh &> /dev/null; then
   echo "错误：请先安装 gh CLI"
   echo "安装命令：brew install gh"
   exit 1
 fi
+
+# 检查用户是否存在
+if ! gh api users/$USERNAME > /dev/null 2>&1; then
+  echo "错误：用户 $USERNAME 不存在"
+  exit 1
+fi
+
+# 获取用户信息
+gh api users/$USERNAME --jq '.login,.name,.bio'
+
+# 获取仓库列表
+gh repo list $USERNAME --limit 50 --json name,description,primaryLanguage,url,updatedAt,stargazerCount,isFork
 ```
+
+**关键点：**
+- 使用 `gh api users/$USERNAME`（不是 `gh api user`），确保获取指定用户的信息
+- `gh repo list` 添加 `isFork` 字段，用于后续筛选 fork 仓库
+- 限制 50 个仓库，避免信息过载
 
 ### Step 2: 分析仓库
 
@@ -180,7 +191,58 @@ const themeConfig = themes[selectedTheme];
 - 如果用户无 README → 使用 radical 主题（默认）
 - 如果仓库有 AI 相关项目 → 突出展示 AI Agent 部分
 
-### Step 4: 生成 README
+### Step 4: 准备模板数据
+
+根据所选模板准备不同的数据结构。所有模板共享以下基础变量：
+
+| 变量 | 说明 | 来源 |
+|------|------|------|
+| `username` | GitHub 用户名 | `gh api` |
+| `name` | 用户显示名 | `gh api`（为空则用 username） |
+| `bio` | 个人简介 | `gh api`（为空则用默认文案） |
+| `typing_lines` | 打字动画文本 | 从 bio 或项目名生成，用 `;` 分隔多行 |
+| `website` | 个人网站 URL | 用户提供或从 GitHub profile 获取 |
+| `website_name` | 网站显示名 | 用户提供（默认"个人网站"） |
+| `blog` | 博客 URL | 用户提供 |
+| `blog_name` | 博客显示名 | 用户提供（默认"技术博客"） |
+| `email` | 邮箱 | 用户提供 |
+| `linkedin` | LinkedIn 显示名 | 用户提供 |
+| `linkedin_url` | LinkedIn 个人页 URL | 用户提供 |
+
+**项目表格变量（所有模板）：**
+
+| 变量 | 说明 |
+|------|------|
+| `projects` | 项目数组，每项包含 `name`, `description`, `url` |
+| `stars` | 项目 star 数（仅 radical/tokyonight/dracula 使用） |
+| `tech` | 技术栈标签（仅 professional 使用） |
+
+**技术栈变量（按模板区分）：**
+
+| 模板 | 变量 | 说明 |
+|------|------|------|
+| radical / tokyonight / dracula / minimalist | `languages` | 语言数组：`{name, color, logo}` |
+| | `tools` | 工具数组：`{name, color, logo}` |
+| professional | `frontend` | 前端技术数组：`{name, color, logo}` |
+| | `backend` | 后端技术数组：`{name, color, logo}` |
+| | `tools` | 工具数组：`{name, color, logo}` |
+
+**Professional 模板的前端/后端分类逻辑：**
+
+```typescript
+const frontendTechs = ['JavaScript', 'TypeScript', 'Vue', 'React', 'HTML', 'CSS', 'Svelte'];
+const backendTechs = ['Python', 'Go', 'Java', 'Rust', 'PHP', 'Ruby', 'C#', 'Node.js'];
+
+const frontend = languages.filter(l => frontendTechs.includes(l.name));
+const backend = languages.filter(l => backendTechs.includes(l.name));
+const tools = languages.filter(l => !frontendTechs.includes(l.name) && !backendTechs.includes(l.name));
+```
+
+**语言/工具颜色配置从 `themes.json` 的 `languages` 和 `tools` 字段获取。**
+
+**Snake 贡献图注意事项：** radical / tokyonight / dracula 模板包含蛇形贡献图（snake animation），该功能依赖用户仓库中已配置 [github-snake](https://github.com/platane/snk) GitHub Actions 工作流。如果用户未配置，该图片会显示 404。在生成 README 后应提示用户：如需蛇形贡献图，需先 fork [platane/snk](https://github.com/platane/snk) 并配置 GitHub Actions。
+
+### Step 5: 生成 README
 
 使用模板生成完整的 README.md：
 
@@ -286,74 +348,50 @@ const themeConfig = themes[selectedTheme];
 ### 完整执行流程
 
 ```
-1. 检查 gh CLI 是否安装
-   - 未安装 → 提示用户安装
-   - 已安装 → 继续
+0. 解析参数
+   - 提取 username、--sort、--theme
+   - 缺少参数时交互式询问
 
-2. 获取用户信息
-   gh api user --jq '.login,.name,.bio'
-   gh repo list $USERNAME --limit 50 --json name,description,primaryLanguage,url,updatedAt,stargazerCount
+1. 获取用户信息
+   - 检查 gh CLI 是否安装（未安装 → 提示安装）
+   - 验证用户是否存在（gh api users/$USERNAME）
+   - 获取用户信息：gh api users/$USERNAME --jq '.login,.name,.bio'
+   - 获取仓库列表：gh repo list $USERNAME --limit 50 --json ...
 
-3. 交互式选择（如果未指定参数）
-   - 询问排序方式：stars / smart / updated
-   - 询问主题风格：radical / tokyonight / dracula / minimalist / professional
-
-4. 分析仓库
-   - 根据排序方式筛选项目
+2. 分析仓库
+   - 筛选非 fork 仓库
+   - 根据排序方式筛选 Top 5 项目
    - 统计语言分布
-   - 识别主要项目
 
-5. 智能推荐
-   - 推荐 Top 5 项目（根据排序方式）
+3. 智能推荐
    - 应用选择的主题
-   - 推荐技术栈徽章
+   - 从 themes.json 获取语言/工具颜色配置
+   - 准备模板所需的数据结构
 
-6. 生成 README
-   - 使用对应主题模板
-   - 填充用户数据
-   - 输出完整 README.md
+4. 准备模板数据
+   - 基础变量：username, name, bio, typing_lines, 联系方式
+   - 项目列表：projects (name, description, url, stars, tech)
+   - 技术栈：languages/tools 或 frontend/backend/tools（取决于模板）
 
-7. 输出结果
+5. 生成 README
+   - 读取对应主题的模板文件
+   - 用 {{#if}} 处理可选字段（website, blog, email, linkedin）
+   - 填充所有变量，输出完整 README.md
+
+6. 输出结果
    - 显示在终端
    - 可选：保存到文件
 ```
 
 ### 模板配置
 
-**主题配置文件 (themes.json)**
-```json
-{
-  "radical": {
-    "name": "Radical",
-    "colors": ["#fe428e", "#f8d847", "#a9fef7"],
-    "stats_theme": "radical"
-  },
-  "tokyonight": {
-    "name": "Tokyo Night",
-    "colors": ["#7aa2f7", "#bb9af7", "#9ece6a"],
-    "stats_theme": "tokyonight"
-  },
-  "dracula": {
-    "name": "Dracula",
-    "colors": ["#ff79c6", "#bd93f9", "#50fa7b"],
-    "stats_theme": "dracula"
-  }
-}
-```
+**主题配置文件 (themes.json)** 包含三个部分：
 
-**技术栈徽章映射**
-```json
-{
-  "JavaScript": "javascript",
-  "TypeScript": "typescript",
-  "Vue": "vuedotjs",
-  "React": "react",
-  "Node.js": "nodedotjs",
-  "Python": "python",
-  "Go": "go",
-  "Docker": "docker"
-}
-```
+- `themes`：主题定义（颜色、模板文件、badge 样式、打字动画颜色等）
+- `languages`：语言徽章配置（颜色、logo、logo 颜色）
+- `tools`：工具徽章配置（颜色、logo）
+
+语言和工具的 `color` 字段不含 `#` 前缀（shields.io 两种格式都支持）。
 
 ## Common Mistakes
 
@@ -435,8 +473,8 @@ fi
 ### 5. 网络问题
 ```bash
 # 检查网络连接
-if ! gh api user > /dev/null 2>&1; then
-  echo "错误：无法连接到 GitHub"
+if ! gh api users/$USERNAME > /dev/null 2>&1; then
+  echo "错误：无法连接到 GitHub 或用户不存在"
   echo "请检查网络连接"
   exit 1
 fi

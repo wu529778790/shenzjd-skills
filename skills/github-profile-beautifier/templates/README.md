@@ -98,13 +98,6 @@
 /github-profile-beautifier username --theme professional
 ```
 
-### 自定义颜色
-
-```bash
-# 自定义主题颜色
-/github-profile-beautifier username --primary-color "#FF6B6B" --secondary-color "#4ECDC4"
-```
-
 ---
 
 ## 📊 模板对比
@@ -149,17 +142,23 @@
 
 ## 📝 模板变量
 
-所有模板都使用相同的变量：
+### 基础变量（所有模板通用）
 
 | 变量 | 说明 | 示例 |
 |------|------|------|
-| `{{name}}` | 用户名 | wu529778790 |
+| `{{name}}` | 用户显示名 | wu529778790 |
 | `{{bio}}` | 个人简介 | 神族九帝，永不言弃 |
 | `{{username}}` | GitHub 用户名 | wu529778790 |
-| `{{typing_lines}}` | 打字动画文本 | Welcome;AI Agent |
-| `{{projects}}` | 项目列表 | 见下方 |
-| `{{languages}}` | 语言列表 | 见下方 |
-| `{{tools}}` | 工具列表 | 见下方 |
+| `{{typing_lines}}` | 打字动画文本（`;` 分隔多行） | Welcome;AI Agent |
+| `{{website}}` | 个人网站 URL | https://example.com |
+| `{{website_name}}` | 网站显示名（默认"个人网站"） | 我的网站 |
+| `{{blog}}` | 博客 URL | https://blog.example.com |
+| `{{blog_name}}` | 博客显示名（默认"技术博客"） | 技术笔记 |
+| `{{email}}` | 邮箱地址 | user@example.com |
+| `{{linkedin}}` | LinkedIn 显示名 | john-doe |
+| `{{linkedin_url}}` | LinkedIn 个人页 URL | https://linkedin.com/in/john-doe |
+
+> 联系方式字段均为可选，模板使用 `{{#if}}` 处理空值，不会显示空白链接。
 
 ### 项目变量
 
@@ -168,11 +167,15 @@
   "name": "项目名",
   "stars": 1302,
   "description": "项目描述",
-  "url": "https://github.com/..."
+  "url": "https://github.com/...",
+  "tech": "Vue, TypeScript"
 }
 ```
 
-### 语言变量
+- `stars`：仅 radical / tokyonight / dracula 模板显示
+- `tech`：仅 professional 模板显示
+
+### 语言/工具变量
 
 ```json
 {
@@ -181,6 +184,18 @@
   "logo": "javascript"
 }
 ```
+
+### 技术栈分类（仅 Professional 模板）
+
+Professional 模板将技术栈分为三组：
+
+| 变量 | 说明 |
+|------|------|
+| `{{#each frontend}}` | 前端技术（JavaScript, TypeScript, Vue, React 等） |
+| `{{#each backend}}` | 后端技术（Python, Go, Java 等） |
+| `{{#each tools}}` | 开发工具（Docker, Git 等） |
+
+其他模板使用 `{{#each languages}}` 和 `{{#each tools}}` 两组。
 
 ---
 
@@ -208,15 +223,8 @@
 
 1. 复制现有模板
 2. 修改颜色和样式
-3. 添加到 `themes.json`
-
-### 使用 CSS 样式
-
-```html
-<div align="center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 10px;">
-  <h1 style="color: white;">Your Name</h1>
-</div>
-```
+3. 在 `themes.json` 的 `themes` 中添加新主题配置
+4. 确保模板中的颜色值与 `themes.json` 中的配置一致
 
 ---
 
