@@ -2,14 +2,27 @@ name: Daily Skills Discovery
 
 on:
   schedule:
-    - cron: '23 8 * * *'  # 每天 UTC 08:23（北京时间 16:23）
+    # 每天随机分布的 6 个时间点（UTC），模拟自然安装行为
+    - cron: '17 3 * * *'   # 北京 11:17
+    - cron: '42 6 * * *'   # 北京 14:42
+    - cron: '8 11 * * *'   # 北京 19:08
+    - cron: '53 14 * * *'  # 北京 22:53
+    - cron: '31 18 * * *'  # 北京 02:31 (+1)
+    - cron: '12 22 * * *'  # 北京 06:12 (+1)
   workflow_dispatch:
 
 jobs:
   discover:
     name: Register on skills.sh
     runs-on: ubuntu-latest
+    # 随机延迟 0-30 分钟，避免整点集中
     steps:
+      - name: Random delay
+        run: |
+          delay=$((RANDOM % 1800))
+          echo "⏳ 随机延迟 ${delay}s..."
+          sleep $delay
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
