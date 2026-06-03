@@ -6,6 +6,7 @@ on:
     paths:
       - '**/SKILL.md'
       - '*/templates/**'
+      - '.github/workflows/skills-publish.yml'
   workflow_dispatch:
 
 jobs:
