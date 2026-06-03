@@ -1,6 +1,6 @@
 # 🛠️ AI Coding Skills
 
-> 8 个生产级 AI 编程技能模块，一行命令安装，覆盖 DevOps 全链路。
+> 9 个生产级 AI 编程技能模块，一行命令安装，覆盖 DevOps 全链路。
 
 [![GitHub stars](https://img.shields.io/github/stars/wu529778790/shenzjd-skills?style=social)](https://github.com/wu529778790/shenzjd-skills/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/wu529778790/shenzjd-skills?style=social)](https://github.com/wu529778790/shenzjd-skills/network/members)
@@ -26,6 +26,7 @@ npx skills add wu529778790/shenzjd-skills -y
 | 🗄️ **db-migration-helper** | Model 变更 → 安全迁移 SQL | `/db-migration-helper` |
 | 🪝 **git-hooks-setup** | 一键配置 husky/lefthook + commitlint | `/git-hooks-setup` |
 | 🔒 **dependency-audit** | CVE 漏洞 + 过时依赖 + License 合规 | `/dependency-audit` |
+| 📊 **diagram-generator** | 架构图/流程图/时序图自动生成 | `/diagram-generator` |
 
 ## 🎯 覆盖场景
 
@@ -49,6 +50,7 @@ npx skills add wu529778790/shenzjd-skills -s api-doc-generator -y
 npx skills add wu529778790/shenzjd-skills -s db-migration-helper -y
 npx skills add wu529778790/shenzjd-skills -s git-hooks-setup -y
 npx skills add wu529778790/shenzjd-skills -s dependency-audit -y
+npx skills add wu529778790/shenzjd-skills -s diagram-generator -y
 npx skills add wu529778790/shenzjd-skills -s docker-build-deploy -y
 npx skills add wu529778790/shenzjd-skills -s release-notes-generator -y
 npx skills add wu529778790/shenzjd-skills -s github-profile-beautifier -y
