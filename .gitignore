@@ -33,6 +33,7 @@ Thumbs.db
 
 # Skills install artifacts
 .agents/
+skills-lock.json
 
 # Temporary files
 tmp/
