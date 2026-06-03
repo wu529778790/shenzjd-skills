@@ -2,8 +2,8 @@
 
 > 我的 Claude Code skills 集合，用于提升开发效率
 
-[![GitHub stars](https://img.shields.io/github/stars/wu529778790-skills?style=social)](https://github.com/wu529778790-skills/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/wu529778790-skills?style=social)](https://github.com/wu529778790-skills/network/members)
+[![GitHub stars](https://img.shields.io/github/stars/wu529778790/shenzjd-skills?style=social)](https://github.com/wu529778790/shenzjd-skills/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/wu529778790/shenzjd-skills?style=social)](https://github.com/wu529778790/shenzjd-skills/network/members)
 
 ## 📋 Skills 列表
 
@@ -48,7 +48,7 @@
 
 1. 克隆这个仓库
 ```bash
-git clone https://github.com/wu529778790-skills.git
+git clone https://github.com/wu529778790/shenzjd-skills.git
 ```
 
 2. 复制 skills 到你的 Claude Code 目录
@@ -70,7 +70,7 @@ cp -r skills/* ~/.claude/skills/
 ## 📁 目录结构
 
 ```
-wu529778790-skills/
+shenzjd-skills/
 ├── README.md                          # 项目说明
 ├── skills/
 │   └── github-profile-beautifier/     # GitHub Profile 生成器
