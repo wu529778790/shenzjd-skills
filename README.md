@@ -11,6 +11,7 @@
 |-------|------|------|
 | 🎨 [github-profile-beautifier](./github-profile-beautifier/) | 一键生成 GitHub 个人主页 README，5 种主题 + 3 种排序 | `/github-profile-beautifier username` |
 | 🐳 [docker-build-deploy](./docker-build-deploy/) | 一键生成 Docker 构建 + 推送 + 部署的 GitHub Actions 工作流 | `/docker-build-deploy` |
+| 📋 [release-notes-generator](./release-notes-generator/) | 打 tag 时自动对比变更，生成标准化 Release Notes | `/release-notes v1.1.0` |
 
 ## 🚀 安装
 
