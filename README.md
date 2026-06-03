@@ -9,37 +9,23 @@
 
 | Skill | 说明 | 用法 |
 |-------|------|------|
-| 🎨 [github-profile-beautifier](./github-profile-beautifier/) | 一键生成 GitHub 个人主页 README，5 种主题 + 3 种排序 | `/github-profile-beautifier username` |
-| 🐳 [docker-build-deploy](./docker-build-deploy/) | 一键生成 Docker 构建 + 推送 + 部署的 GitHub Actions 工作流 | `/docker-build-deploy` |
-| 📋 [release-notes-generator](./release-notes-generator/) | 打 tag 时自动对比变更，生成标准化 Release Notes | `/release-notes v1.1.0` |
+| 🎨 [github-profile-beautifier](./github-profile-beautifier/) | 一键生成 GitHub 个人主页 README | `/github-profile-beautifier username` |
+| 🐳 [docker-build-deploy](./docker-build-deploy/) | 一键生成 Docker CI/CD GitHub Actions 工作流 | `/docker-build-deploy` |
+| 📋 [release-notes-generator](./release-notes-generator/) | 打 tag 时自动生成标准化 Release Notes | `/release-notes v1.1.0` |
 
 ## 🚀 安装
 
 ```bash
-# 安装全部 skills（推荐）
+# 安装全部
 npx skills add wu529778790/shenzjd-skills -y
 
-# 只安装指定 skill
+# 安装指定 skill
 npx skills add wu529778790/shenzjd-skills -s github-profile-beautifier -y
 npx skills add wu529778790/shenzjd-skills -s docker-build-deploy -y
+npx skills add wu529778790/shenzjd-skills -s release-notes-generator -y
 ```
 
 支持：Claude Code、Cursor、Copilot、Windsurf、Gemini CLI、Cline、Aider 等 67+ 种 AI 工具。
-
-## 📁 目录结构
-
-```
-shenzjd-skills/
-├── README.md
-├── github-profile-beautifier/     # GitHub Profile 生成器
-│   ├── SKILL.md
-│   ├── README.md                  # 详细介绍
-│   └── templates/
-├── docker-build-deploy/           # Docker 构建部署
-│   ├── SKILL.md
-│   ├── README.md                  # 详细介绍
-│   └── templates/
-```
 
 ## 📄 许可证
 
