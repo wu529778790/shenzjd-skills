@@ -2,32 +2,11 @@
   "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
   "skills": [
     {
-      "name": "api-doc-generator",
-      "type": "skill-md",
-      "description": "Use when user wants to generate API documentation, create OpenAPI/Swagger specs, document REST or GraphQL endpoints, or auto-generate docs from code",
-      "url": "./api-doc-generator/SKILL.md",
-      "digest": "sha256:9ba7c8030d4d6e6d1acda3923d8d7d1f15258953ea0f6a02a87a9d3c2871169d"
-    },
-    {
-      "name": "git-hooks-setup",
-      "type": "skill-md",
-      "description": "Use when user wants to set up git hooks, configure pre-commit checks, enforce commit message conventions, or automate linting and formatting on commit",
-      "url": "./git-hooks-setup/SKILL.md",
-      "digest": "sha256:f2b1faa99714bed2d47d4efbebe6f3037e7fbf60ce10372efeeef05b52a27cdf"
-    },
-    {
       "name": "release-notes-generator",
       "type": "skill-md",
       "description": "Use when creating git tags, releases, or version bumps, or when user wants to generate changelogs and release notes from git history",
       "url": "./release-notes-generator/SKILL.md",
       "digest": "sha256:911f73e5f55b08a3bdad79ef4e700e63878318ffbce67d703be536a9ce8bf746"
-    },
-    {
-      "name": "performance-profiler",
-      "type": "skill-md",
-      "description": "Use when user wants to analyze project performance, find bottlenecks, check bundle size, detect slow queries, or get optimization recommendations for their codebase",
-      "url": "./performance-profiler/SKILL.md",
-      "digest": "sha256:d2a63b9d1d05b73cb59327d8c5e52dd1744c7aed3750399672e8a620e57c0729"
     },
     {
       "name": "docker-build-deploy",
@@ -37,6 +16,27 @@
       "digest": "sha256:551e42e621c1fb7546f076fbef690623da8cf4f7cc38d6895cb1c5740916535c"
     },
     {
+      "name": "github-profile-beautifier",
+      "type": "skill-md",
+      "description": "Use when user wants to create or improve their GitHub profile README, generate a new profile page, or beautify their existing GitHub homepage with stats, projects, and tech stack badges",
+      "url": "./github-profile-beautifier/SKILL.md",
+      "digest": "sha256:e15d9491844c813c7d10a917711850305a4e2ad36a72778575e825a7ec600c2b"
+    },
+    {
+      "name": "performance-profiler",
+      "type": "skill-md",
+      "description": "Use when user wants to analyze project performance, find bottlenecks, check bundle size, detect slow queries, or get optimization recommendations for their codebase",
+      "url": "./performance-profiler/SKILL.md",
+      "digest": "sha256:d2a63b9d1d05b73cb59327d8c5e52dd1744c7aed3750399672e8a620e57c0729"
+    },
+    {
+      "name": "api-doc-generator",
+      "type": "skill-md",
+      "description": "Use when user wants to generate API documentation, create OpenAPI/Swagger specs, document REST or GraphQL endpoints, or auto-generate docs from code",
+      "url": "./api-doc-generator/SKILL.md",
+      "digest": "sha256:9ba7c8030d4d6e6d1acda3923d8d7d1f15258953ea0f6a02a87a9d3c2871169d"
+    },
+    {
       "name": "db-migration-helper",
       "type": "skill-md",
       "description": "Use when user wants to create database migrations, compare model changes, generate SQL migration files, or manage schema changes for MySQL, PostgreSQL, or SQLite",
@@ -44,11 +44,11 @@
       "digest": "sha256:066addca618b85099907fc0642d5db58b4fd2770876a5b4f35dec19a118b65ac"
     },
     {
-      "name": "github-profile-beautifier",
+      "name": "git-hooks-setup",
       "type": "skill-md",
-      "description": "Use when user wants to create or improve their GitHub profile README, generate a new profile page, or beautify their existing GitHub homepage with stats, projects, and tech stack badges",
-      "url": "./github-profile-beautifier/SKILL.md",
-      "digest": "sha256:e15d9491844c813c7d10a917711850305a4e2ad36a72778575e825a7ec600c2b"
+      "description": "Use when user wants to set up git hooks, configure pre-commit checks, enforce commit message conventions, or automate linting and formatting on commit",
+      "url": "./git-hooks-setup/SKILL.md",
+      "digest": "sha256:f2b1faa99714bed2d47d4efbebe6f3037e7fbf60ce10372efeeef05b52a27cdf"
     },
     {
       "name": "dependency-audit",
