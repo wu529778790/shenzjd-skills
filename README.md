@@ -24,6 +24,24 @@
 /github-profile-beautifier username --sort stars --theme tokyonight
 ```
 
+### 🐳 docker-build-deploy
+
+一键生成 Docker 构建 + 推送 + 部署的 GitHub Actions 工作流。
+
+**功能特性：**
+- ✅ 自动检测项目类型，生成优化 Dockerfile（多阶段构建、非 root、健康检查）
+- ✅ 推送到 GHCR（GitHub Container Registry）
+- ✅ 部署到服务器（SSH 拉取 → 停旧容器 → 启新容器 → 清理）
+- ✅ 支持 env 文件注入
+- ✅ GHA 缓存加速构建
+
+**用法：**
+```
+/docker-build-deploy
+/docker-build-deploy --port 8080
+/docker-build-deploy --port 8080 --env-file /opt/app/.env
+```
+
 ---
 
 ## 🚀 如何使用
@@ -65,16 +83,14 @@ cp -r shenzjd-skills/github-profile-beautifier ~/.claude/skills/
 ```
 shenzjd-skills/
 ├── README.md
-├── github-profile-beautifier/
-│   ├── SKILL.md                   # Skill 主文件（执行流程 + 指令）
-│   └── templates/                 # 模板文件
-│       ├── radical.md
-│       ├── tokyonight.md
-│       ├── dracula.md
-│       ├── minimalist.md
-│       ├── professional.md
-│       ├── themes.json            # 主题配置
-│       └── README.md              # 模板使用说明
+├── github-profile-beautifier/     # GitHub Profile 生成器
+│   ├── SKILL.md
+│   └── templates/
+├── docker-build-deploy/           # Docker 构建部署
+│   ├── SKILL.md
+│   └── templates/
+│       ├── docker-deploy.yml      # GitHub Actions 工作流模板
+│       └── Dockerfile.nodejs      # Node.js Dockerfile 模板
 ```
 
 ---
