@@ -1,6 +1,6 @@
 ---
 name: docker-build-deploy
-description: Use when user wants to containerize a project, set up Docker CI/CD with GitHub Actions, push images to a container registry, or deploy containers to a remote server
+description: Use when user wants to containerize a project, set up Docker CI/CD with GitHub Actions, push images to GHCR or Docker Hub, deploy containers to a remote server, or generate optimized Dockerfiles
 ---
 
 # Docker Build & Deploy

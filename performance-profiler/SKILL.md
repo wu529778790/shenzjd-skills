@@ -1,6 +1,6 @@
 ---
 name: performance-profiler
-description: Use when user wants to analyze project performance, find bottlenecks, check bundle size, detect slow queries, or get optimization recommendations for their codebase
+description: Use when user wants to analyze project performance, find bottlenecks, check bundle size, detect slow queries, optimize load time, reduce bundle size, or get optimization recommendations for their codebase
 ---
 
 # Performance Profiler

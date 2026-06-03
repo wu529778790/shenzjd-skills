@@ -1,6 +1,6 @@
 ---
 name: db-migration-helper
-description: Use when user wants to create database migrations, compare model changes, generate SQL migration files, or manage schema changes for MySQL, PostgreSQL, or SQLite
+description: Use when user wants to create database migrations, compare model changes, generate SQL migration files, manage schema changes, or handle database versioning for MySQL, PostgreSQL, or SQLite
 ---
 
 # DB Migration Helper

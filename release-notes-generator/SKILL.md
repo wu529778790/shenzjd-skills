@@ -1,6 +1,6 @@
 ---
 name: release-notes-generator
-description: Use when creating git tags, releases, or version bumps, or when user wants to generate changelogs and release notes from git history
+description: Use when creating git tags, releases, or version bumps, or when user wants to generate changelogs, release notes, or version documentation from git history with conventional commits
 ---
 
 # Release Notes Generator

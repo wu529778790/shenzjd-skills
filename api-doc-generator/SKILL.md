@@ -1,6 +1,6 @@
 ---
 name: api-doc-generator
-description: Use when user wants to generate API documentation, create OpenAPI/Swagger specs, document REST or GraphQL endpoints, or auto-generate docs from code
+description: Use when user wants to generate API documentation, create OpenAPI/Swagger specs, document REST or GraphQL endpoints, auto-generate docs from code, or produce interactive API reference pages
 ---
 
 # API Doc Generator

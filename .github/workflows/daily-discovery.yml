@@ -1,0 +1,41 @@
+name: Daily Skills Discovery
+
+on:
+  schedule:
+    - cron: '23 8 * * *'  # 每天 UTC 08:23（北京时间 16:23）
+  workflow_dispatch:
+
+jobs:
+  discover:
+    name: Register on skills.sh
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install skills to trigger discovery
+        run: |
+          echo "🔍 Registering skills on skills.sh..."
+          npx skills add ${{ github.repository }} -y --all 2>&1 || true
+
+      - name: Verify all skills are listed
+        run: |
+          echo "📋 Checking skill discovery..."
+          npx skills add ${{ github.repository }} -y --list 2>&1
+
+      - name: Search skills.sh for our skills
+        run: |
+          echo "🔎 Searching skills.sh..."
+          for skill in release-notes-generator docker-build-deploy github-profile-beautifier performance-profiler api-doc-generator db-migration-helper git-hooks-setup dependency-audit; do
+            result=$(curl -s "https://skills.sh/api/search?q=${skill}&limit=1" 2>/dev/null)
+            count=$(echo "$result" | python3 -c "import sys,json; print(json.load(sys.stdin).get('count',0))" 2>/dev/null || echo "0")
+            if [ "$count" -gt 0 ]; then
+              installs=$(echo "$result" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['skills'][0].get('installs',0) if d['skills'] else 0)" 2>/dev/null || echo "?")
+              echo "  ✅ $skill — found, installs: $installs"
+            else
+              echo "  ⏳ $skill — not yet indexed"
+            fi
+          done

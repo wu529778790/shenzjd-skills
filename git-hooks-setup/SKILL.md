@@ -1,6 +1,6 @@
 ---
 name: git-hooks-setup
-description: Use when user wants to set up git hooks, configure pre-commit checks, enforce commit message conventions, or automate linting and formatting on commit
+description: Use when user wants to set up git hooks, configure pre-commit checks, enforce commit message conventions, automate linting and formatting on commit, or standardize team development workflow with husky or lefthook
 ---
 
 # Git Hooks Setup

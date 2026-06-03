@@ -1,6 +1,6 @@
 ---
 name: github-profile-beautifier
-description: Use when user wants to create or improve their GitHub profile README, generate a new profile page, or beautify their existing GitHub homepage with stats, projects, and tech stack badges
+description: Use when user wants to create or improve their GitHub profile README, generate a new profile page, beautify their existing GitHub homepage, or add stats cards, project showcase, and tech stack badges
 ---
 
 # GitHub Profile Beautifier

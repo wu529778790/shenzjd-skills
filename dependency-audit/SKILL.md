@@ -1,6 +1,6 @@
 ---
 name: dependency-audit
-description: Use when user wants to audit dependencies for security vulnerabilities, check for outdated packages, verify license compliance, or get upgrade recommendations
+description: Use when user wants to audit dependencies for security vulnerabilities, CVE scanning, check for outdated packages, verify license compliance, or get upgrade recommendations for npm, pip, or go modules
 ---
 
 # Dependency Audit
