@@ -107,7 +107,6 @@ jobs:
 
           first=true
           while IFS= read -r skill_file; do
-            skill_dir=$(dirname "$skill_file")
             skill_name=$(sed -n '/^---$/,/^---$/p' "$skill_file" | grep -E "^name:" | sed 's/^name: *//' | tr -d '"' | tr -d "'")
             skill_desc=$(sed -n '/^---$/,/^---$/p' "$skill_file" | grep -E "^description:" | sed 's/^description: *//' | tr -d '"' | tr -d "'")
             digest=$(shasum -a 256 "$skill_file" | awk '{print $1}')
@@ -118,21 +117,16 @@ jobs:
               echo ',' >> .well-known/agent-skills/index.json
             fi
 
-            cat >> .well-known/agent-skills/index.json <<EOF
-    {
-      "name": "$skill_name",
-      "type": "skill-md",
-      "description": "$skill_desc",
-      "url": "./$skill_file",
-      "digest": "sha256:$digest"
-    }
-EOF
+            printf '    {\n      "name": "%s",\n      "type": "skill-md",\n      "description": "%s",\n      "url": "./%s",\n      "digest": "sha256:%s"\n    }' \
+              "$skill_name" "$skill_desc" "$skill_file" "$digest" \
+              >> .well-known/agent-skills/index.json
           done < <(find . -name "SKILL.md" -not -path "./.git/*" -not -path "./.well-known/*" | sed 's|^\./||')
 
+          echo '' >> .well-known/agent-skills/index.json
           echo '  ]' >> .well-known/agent-skills/index.json
           echo '}' >> .well-known/agent-skills/index.json
 
-          echo "📋 Generated index.json:"
+          echo "Generated index.json:"
           cat .well-known/agent-skills/index.json
 
       - name: Commit index if changed
