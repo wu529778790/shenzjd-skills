@@ -2,6 +2,13 @@
   "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
   "skills": [
     {
+      "name": "release-notes-generator",
+      "type": "skill-md",
+      "description": "Use when creating git tags, releases, or version bumps, or when user wants to generate changelogs and release notes from git history",
+      "url": "./release-notes-generator/SKILL.md",
+      "digest": "sha256:911f73e5f55b08a3bdad79ef4e700e63878318ffbce67d703be536a9ce8bf746"
+    },
+    {
       "name": "docker-build-deploy",
       "type": "skill-md",
       "description": "Use when user wants to containerize a project, set up Docker CI/CD with GitHub Actions, push images to a container registry, or deploy containers to a remote server",
@@ -14,13 +21,6 @@
       "description": "Use when user wants to create or improve their GitHub profile README, generate a new profile page, or beautify their existing GitHub homepage with stats, projects, and tech stack badges",
       "url": "./github-profile-beautifier/SKILL.md",
       "digest": "sha256:e15d9491844c813c7d10a917711850305a4e2ad36a72778575e825a7ec600c2b"
-    },
-    {
-      "name": "release-notes-generator",
-      "type": "skill-md",
-      "description": "Use when creating git tags, releases, or version bumps, or when user wants to generate changelogs and release notes from git history",
-      "url": "./release-notes-generator/SKILL.md",
-      "digest": "sha256:911f73e5f55b08a3bdad79ef4e700e63878318ffbce67d703be536a9ce8bf746"
     }
   ]
 }
