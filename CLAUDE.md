@@ -4,19 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a collection of Claude Code skills (slash-command plugins). Each skill lives in `skills/<skill-name>/` and consists of a `SKILL.md` definition file plus supporting resources (templates, configs). When a user invokes a skill, Claude Code reads its `SKILL.md` and follows the documented execution flow.
+This is a collection of Claude Code skills (slash-command plugins). Each skill lives in a top-level directory (e.g. `github-profile-beautifier/`) and consists of a `SKILL.md` definition file plus supporting resources (templates, configs). When a user invokes a skill, Claude Code reads its `SKILL.md` and follows the documented execution flow.
 
 The project and all documentation are written in **Chinese (Mandarin)**.
 
 ## Skill Structure
 
 ```
-skills/
-  <skill-name>/
-    SKILL.md              # Entry point: YAML frontmatter + execution flow
-    templates/            # Skill-specific templates and configs
-      themes.json         # Theme definitions (colors, badges, styles)
-      *.md                # Handlebars-style Markdown templates
+<skill-name>/
+  SKILL.md              # Entry point: YAML frontmatter + execution flow
+  templates/            # Skill-specific templates and configs
+    themes.json         # Theme definitions (colors, badges, styles)
+    *.md                # Handlebars-style Markdown templates
 ```
 
 **SKILL.md** contains:
@@ -39,9 +38,9 @@ skills/
 
 ## Adding a New Skill
 
-1. Create `skills/<skill-name>/SKILL.md` with YAML frontmatter (`description` field is critical for skill matching)
+1. Create `<skill-name>/SKILL.md` with YAML frontmatter (`description` field is critical for skill matching)
 2. Document the execution flow as numbered steps with embedded pseudocode
-3. Add any templates to `skills/<skill-name>/templates/`
+3. Add any templates to `<skill-name>/templates/`
 4. Register in the README.md skills table
 
 ## Claude Code Configuration

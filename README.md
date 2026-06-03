@@ -53,7 +53,7 @@ git clone https://github.com/wu529778790/shenzjd-skills.git
 
 2. 复制 skills 到你的 Claude Code 目录
 ```bash
-cp -r skills/* ~/.claude/skills/
+cp -r github-profile-beautifier ~/.claude/skills/
 ```
 
 3. 重启 Claude Code
@@ -72,19 +72,16 @@ cp -r skills/* ~/.claude/skills/
 ```
 shenzjd-skills/
 ├── README.md                          # 项目说明
-├── skills/
-│   └── github-profile-beautifier/     # GitHub Profile 生成器
-│       ├── SKILL.md                   # Skill 主文件
-│       └── templates/                 # 模板文件
-│           ├── radical.md             # Radical 主题
-│           ├── tokyonight.md          # Tokyo Night 主题
-│           ├── dracula.md             # Dracula 主题
-│           ├── minimalist.md          # Minimalist 主题
-│           ├── professional.md        # Professional 主题
-│           ├── themes.json            # 主题配置
-│           └── README.md              # 模板使用说明
-└── docs/                              # 文档
-    └── examples/                      # 示例
+├── github-profile-beautifier/         # GitHub Profile 生成器
+│   ├── SKILL.md                       # Skill 主文件
+│   └── templates/                     # 模板文件
+│       ├── radical.md                 # Radical 主题
+│       ├── tokyonight.md              # Tokyo Night 主题
+│       ├── dracula.md                 # Dracula 主题
+│       ├── minimalist.md              # Minimalist 主题
+│       ├── professional.md            # Professional 主题
+│       ├── themes.json                # 主题配置
+│       └── README.md                  # 模板使用说明
 ```
 
 ---
@@ -95,7 +92,7 @@ shenzjd-skills/
 
 ### 如何添加新 Skill
 
-1. 在 `skills/` 目录创建新文件夹
+1. 在项目根目录创建新文件夹（如 `my-skill/`）
 2. 创建 `SKILL.md` 文件（遵循 skill 格式）
 3. 添加必要的模板和配置文件
 4. 更新 README.md
