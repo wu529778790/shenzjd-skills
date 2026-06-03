@@ -1,0 +1,102 @@
+---
+name: performance-profiler
+description: Use when user wants to analyze project performance, find bottlenecks, check bundle size, detect slow queries, or get optimization recommendations for their codebase
+---
+
+# Performance Profiler
+
+一键分析项目性能瓶颈，输出优先级排序的优化建议。
+
+## Overview
+
+扫描项目代码和配置，检测性能问题：bundle 体积、依赖膨胀、大文件、N+1 查询模式、未优化的资源。输出按影响程度排序的可执行优化建议报告。
+
+## When to Use
+
+- 用户想分析项目性能
+- 用户提到 bundle size、加载慢、性能优化
+- 用户想知道哪些依赖拖慢了项目
+- 用户输入 `/performance-profiler`
+
+**When NOT to Use:**
+- 用户想做运行时 profiling（需要专门的 APM 工具）
+- 用户想做负载测试
+- 用户只是想看代码覆盖率
+
+## Core Pattern
+
+### Step 1: 检测项目类型
+
+| 检测文件 | 项目类型 | 分析重点 |
+|---------|---------|---------|
+| `package.json` | Node.js / 前端 | bundle size、依赖数量、tree-shaking |
+| `go.mod` | Go | 二进制大小、依赖数量 |
+| `requirements.txt` / `pyproject.toml` | Python | 依赖数量、重复依赖 |
+| `Cargo.toml` | Rust | 编译时间、依赖数量 |
+
+### Step 2: 分析依赖
+
+```bash
+# Node.js
+npx cost-of-modules --no-install 2>/dev/null || echo "跳过"
+cat package.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'Dependencies: {len(d.get(\"dependencies\",{}))}, DevDependencies: {len(d.get(\"devDependencies\",{}))}')"
+
+# Go
+cat go.mod | grep -c "require" || echo "0"
+
+# Python
+wc -l requirements.txt 2>/dev/null || echo "0"
+```
+
+统计：
+- 直接依赖数量
+- 重复依赖（不同包引入同一依赖的不同版本）
+- 可能的冗余依赖
+
+### Step 3: 扫描代码模式
+
+**前端/Node.js 重点：**
+- 检查 `import`/`require` 是否有 barrel file（`index.ts` re-export 所有模块）
+- 检查是否有大型静态文件（>500KB 的图片/字体）
+- 检查是否有未使用的 CSS/JS 文件
+- 检查 `next.config.js` / `vite.config.ts` 的优化配置
+
+**Go 重点：**
+- 检查是否有不必要的 `init()` 函数
+- 检查大 struct 的值传递（应改指针）
+
+**Python 重点：**
+- 检查是否有 `import *`
+- 检查是否有同步 I/O 在异步上下文中
+
+### Step 4: 生成报告
+
+使用 `templates/report.md` 模板，输出：
+
+1. **总览** — 依赖数量、项目健康度评分
+2. **高优先级** — 影响最大的问题（bundle 膨胀、冗余依赖）
+3. **中优先级** — 代码层面的优化点
+4. **低优先级** — 建议性改进
+5. **具体修复命令** — 每个问题附带可执行的修复命令
+
+## Quick Reference
+
+```bash
+/performance-profiler              # 分析当前项目
+/performance-profiler --fix        # 分析并自动修复可修复的问题
+/performance-profiler --json       # 输出 JSON 格式报告
+```
+
+| 参数 | 说明 | 默认值 |
+|------|------|--------|
+| `--fix` | 自动修复可安全修复的问题 | false |
+| `--json` | 输出 JSON 格式 | false |
+
+## Common Mistakes
+
+| 错误 | 正确做法 | 原因 |
+|------|----------|------|
+| 只看依赖数量不看体积 | 同时分析包体积 | 10 个小包可能比 1 个大包更好 |
+| 建议删除所有 devDependencies | devDependencies 不进生产 | 它们不影响线上性能 |
+| 忽略 lock 文件 | 分析 lock 文件中的实际依赖树 | package.json 声明 ≠ 实际安装 |
+| 不区分生产/开发依赖 | 重点分析 dependencies | devDependencies 不影响 bundle |
