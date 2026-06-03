@@ -30,6 +30,13 @@
       "digest": "sha256:5478eee44969f606282b44e6b2b2da858ece43cd5b63669ae5c1f4b5b5566d30"
     },
     {
+      "name": "diagram-generator",
+      "type": "skill-md",
+      "description": "Use when user wants to create architecture diagrams, flowcharts, sequence diagrams, ER diagrams, or visualize system design, workflows, and data pipelines",
+      "url": "./diagram-generator/SKILL.md",
+      "digest": "sha256:2cd63fb3bf7fda5d65bb6c8de237fccf02826a1bcd7dbb1876eec1137eb330ae"
+    },
+    {
       "name": "docker-build-deploy",
       "type": "skill-md",
       "description": "Use when user wants to containerize a project, set up Docker CI/CD with GitHub Actions, push images to GHCR or Docker Hub, deploy containers to a remote server, or generate optimized Dockerfiles",
