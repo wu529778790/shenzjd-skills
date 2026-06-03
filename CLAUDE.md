@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a collection of Claude Code skills (slash-command plugins). Each skill lives in a top-level directory (e.g. `github-profile-beautifier/`) and consists of a `SKILL.md` definition file plus supporting resources (templates, configs). When a user invokes a skill, Claude Code reads its `SKILL.md` and follows the documented execution flow.
+A collection of AI coding assistant skills — prompt/rule documents that work across Claude Code, Cursor, Copilot, Windsurf, and other AI programming tools. Each skill is a `SKILL.md` file containing execution flow, parameters, and edge case handling that any AI tool can follow.
 
 The project and all documentation are written in **Chinese (Mandarin)**.
 
@@ -13,13 +13,13 @@ The project and all documentation are written in **Chinese (Mandarin)**.
 ```
 <skill-name>/
   SKILL.md              # Entry point: YAML frontmatter + execution flow
-  templates/            # Skill-specific templates and configs
-    themes.json         # Theme definitions (colors, badges, styles)
+  templates/            # Skill-specific templates and configs (optional)
+    themes.json         # Theme definitions
     *.md                # Handlebars-style Markdown templates
 ```
 
 **SKILL.md** contains:
-- YAML frontmatter with `description` (used by Claude Code to match user requests to skills)
+- YAML frontmatter with `description` (used by tools like Claude Code to match user requests to skills)
 - Step-by-step execution flow with embedded pseudocode
 - Edge case handling (missing CLI tools, network errors, etc.)
 
