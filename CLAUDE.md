@@ -38,6 +38,7 @@ Uses a **mixed language strategy**: AI-facing sections (frontmatter `description
 | `git-hooks-setup` | User wants to set up git hooks | Configures husky/lefthook with commitlint |
 | `performance-profiler` | User wants to profile app performance | Analyzes bottlenecks and generates optimization reports |
 | `release-notes-generator` | User wants to generate release notes | Creates changelogs from git history and PR data |
+| `token-burner` | User wants to burn tokens productively | Auto-discovers and executes code improvement tasks autonomously |
 
 ## Runtime Dependencies
 
