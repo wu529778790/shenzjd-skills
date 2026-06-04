@@ -7,7 +7,11 @@
 ## ⚡ Quick Install
 
 ```bash
-npx skills add wu529778790/shenzjd-skills -y
+# Install all skills
+npx skills add wu529778790/shenzjd-skills --all -y
+
+# Install specific skill
+npx skills add wu529778790/shenzjd-skills -s token-burner -y
 ```
 
 Supports Claude Code, Cursor, Copilot, Windsurf, Gemini CLI, Cline, Aider, and **67+ AI tools**.
