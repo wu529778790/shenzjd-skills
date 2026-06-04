@@ -59,11 +59,3 @@ npx skills add wu529778790/shenzjd-skills -s release-notes-generator -y
 npx skills add wu529778790/shenzjd-skills -s github-profile-beautifier -y
 npx skills add wu529778790/shenzjd-skills -s token-burner -y
 ```
-
-## 📄 License
-
-MIT
-
----
-
-**shenzjd** - [GitHub](https://github.com/wu529778790) - [Website](https://shenzjd.com)
