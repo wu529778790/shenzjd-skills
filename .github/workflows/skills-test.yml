@@ -1,0 +1,73 @@
+name: Skills Integration Test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/SKILL.md'
+      - 'tests/**'
+      - '.github/workflows/skills-test.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '**/SKILL.md'
+      - 'tests/**'
+      - '.github/workflows/skills-test.yml'
+  workflow_dispatch:
+
+jobs:
+  validate-structure:
+    name: Validate Skills Structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run structure validation
+        run: |
+          chmod +x tests/validate-skills.sh
+          ./tests/validate-skills.sh
+
+  run-unit-tests:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+    needs: validate-structure
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd tests/fixtures/nodejs-express
+          npm install
+
+      - name: Run all unit tests
+        run: |
+          chmod +x tests/skills/*.test.sh
+          ./tests/run-all-tests.sh
+
+  summary:
+    name: Test Summary
+    runs-on: ubuntu-latest
+    needs: [validate-structure, run-unit-tests]
+    if: always()
+    steps:
+      - name: Print summary
+        run: |
+          echo "📊 Integration Test Summary"
+          echo "=========================="
+          echo ""
+          echo "✅ validate-structure: ${{ needs.validate-structure.result }}"
+          echo "✅ run-unit-tests: ${{ needs.run-unit-tests.result }}"
+          echo ""
+
+          if [ "${{ needs.validate-structure.result }}" = "failure" ] || \
+             [ "${{ needs.run-unit-tests.result }}" = "failure" ]; then
+            echo "❌ Some tests failed"
+            exit 1
+          fi
+
+          echo "✅ All tests passed"
