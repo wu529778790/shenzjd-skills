@@ -184,6 +184,26 @@ cat $SKILL_DIR/references/structural.md     # 结构图
 <text x="X+12" y="Y+16" fill="#fbbf24" font-size="9" font-weight="600">Region Name</text>
 ```
 
+**XML 转义规则（重要）：**
+
+SVG 是 XML 格式，以下字符必须转义：
+
+| 字符 | 转义 | 使用场景 |
+|------|------|---------|
+| `&` | `&amp;` | 标签文字中的 "A & B" |
+| `<` | `&lt;` | 比较符号 |
+| `>` | `&gt;` | 比较符号 |
+| `"` | `&quot;` | 属性值中的双引号 |
+
+**`<style>` 标签必须用 CDATA 包裹：**
+
+```svg
+<style><![CDATA[
+  @import url('https://fonts.googleapis.com/css2?family=...');
+  text { font-family: 'JetBrains Mono', monospace; }
+]]></style>
+```
+
 ### Step 6: 保存文件
 
 - 保存为 `.svg` 文件
