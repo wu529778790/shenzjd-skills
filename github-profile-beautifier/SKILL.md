@@ -37,7 +37,7 @@ description: Use when user wants to create or improve their GitHub profile READM
 command -v gh || { echo "请先安装 gh CLI: brew install gh"; exit 1; }
 
 # 验证用户存在
-gh api users/$USERNAME > /dev/null 2>&1 || echo "用户不存在" && exit 1
+gh api users/$USERNAME > /dev/null 2>&1 || { echo "用户不存在"; exit 1; }
 
 # 获取用户信息和仓库
 gh api users/$USERNAME --jq '.login,.name,.bio'

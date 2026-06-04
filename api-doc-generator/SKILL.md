@@ -37,7 +37,7 @@ description: Use when user wants to generate API documentation, create OpenAPI/S
 
 ```bash
 # 快速检测
-grep -r "app\.\(get\|post\|put\|delete\|patch\)" --include="*.ts" --include="*.js" --include="*.go" --include="*.py" -l
+grep -rE "app\.(get|post|put|delete|patch)" --include="*.ts" --include="*.js" --include="*.go" --include="*.py" -l
 ```
 
 ### Step 2: 提取接口信息

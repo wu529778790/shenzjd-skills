@@ -69,10 +69,10 @@
 <div align="center">
 
 {{#if website}}
-[![Website](https://img.shields.io/badge/Website-{{website_name|default:"个人网站"}}-2E86AB?style=for-the-badge&logo=googlechrome&logoColor=white)]({{website}})
+[![Website](https://img.shields.io/badge/Website-{{#if website_name}}{{website_name}}{{else}}个人网站{{/if}}-2E86AB?style=for-the-badge&logo=googlechrome&logoColor=white)]({{website}})
 {{/if}}
 {{#if blog}}
-[![Blog](https://img.shields.io/badge/Blog-{{blog_name|default:"技术博客"}}-A23B72?style=for-the-badge&logo=blogger&logoColor=white)]({{blog}})
+[![Blog](https://img.shields.io/badge/Blog-{{#if blog_name}}{{blog_name}}{{else}}技术博客{{/if}}-A23B72?style=for-the-badge&logo=blogger&logoColor=white)]({{blog}})
 {{/if}}
 {{#if linkedin}}
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-{{linkedin}}-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]({{linkedin_url}})

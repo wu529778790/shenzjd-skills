@@ -43,5 +43,5 @@ cp -r shenzjd-skills/git-hooks-setup ~/.claude/skills/
 | 方案 | 适用场景 |
 |------|---------|
 | husky | Node.js 项目（推荐） |
-| lefhook | 任何项目，更快 |
+| lefthook | 任何项目，更快 |
 | 原生 git hooks | 非 Node.js 项目 |

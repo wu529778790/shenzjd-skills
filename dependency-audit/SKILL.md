@@ -51,7 +51,7 @@ for name,v in vulns.items():
 
 # Go
 go install golang.org/x/vuln/cmd/govulncheck@latest
-govulncheck ./... 2>/dev/null
+$(go env GOPATH)/bin/govulncheck ./... 2>/dev/null
 
 # Python
 pip-audit 2>/dev/null || echo "pip-audit 未安装，运行: pip install pip-audit"

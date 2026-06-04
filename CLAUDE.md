@@ -30,6 +30,14 @@ The project and all documentation are written in **Chinese (Mandarin)**.
 | Skill | Trigger | Description |
 |-------|---------|-------------|
 | `github-profile-beautifier` | User wants to create/improve GitHub profile README | Generates themed profile READMEs using GitHub API data |
+| `api-doc-generator` | User wants to generate API documentation | Auto-generates OpenAPI/Swagger specs from code |
+| `db-migration-helper` | User wants to create database migrations | Analyzes model changes, generates safe migration SQL |
+| `dependency-audit` | User wants to audit project dependencies | Scans for vulnerabilities across npm/pip/go/cargo |
+| `diagram-generator` | User wants to generate diagrams | Creates Mermaid/Excalidraw diagrams from descriptions |
+| `docker-build-deploy` | User wants to containerize and deploy | Generates Docker CI/CD with GitHub Actions workflows |
+| `git-hooks-setup` | User wants to set up git hooks | Configures husky/lefthook with commitlint |
+| `performance-profiler` | User wants to profile app performance | Analyzes bottlenecks and generates optimization reports |
+| `release-notes-generator` | User wants to generate release notes | Creates changelogs from git history and PR data |
 
 ## Runtime Dependencies
 

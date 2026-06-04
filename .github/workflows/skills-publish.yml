@@ -31,6 +31,8 @@ jobs:
           echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: Validate frontmatter
+        env:
+          SKILLS: ${{ steps.find.outputs.skills }}
         run: |
           errors=0
           while IFS= read -r skill_file; do
@@ -80,7 +82,7 @@ jobs:
               echo "  📄 $template_count template(s)"
             fi
 
-          done <<< "${{ steps.find.outputs.skills }}"
+          done <<< "$SKILLS"
 
           if [ $errors -gt 0 ]; then
             echo ""
@@ -103,31 +105,20 @@ jobs:
         run: |
           mkdir -p .well-known/agent-skills
 
-          # Start JSON
-          echo '{' > .well-known/agent-skills/index.json
-          echo '  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",' >> .well-known/agent-skills/index.json
-          echo '  "skills": [' >> .well-known/agent-skills/index.json
-
-          first=true
+          # Build skills array with jq for safe JSON generation
+          skills_json="[]"
           while IFS= read -r skill_file; do
             skill_name=$(sed -n '/^---$/,/^---$/p' "$skill_file" | grep -E "^name:" | sed 's/^name: *//' | tr -d '"' | tr -d "'")
             skill_desc=$(sed -n '/^---$/,/^---$/p' "$skill_file" | grep -E "^description:" | sed 's/^description: *//' | tr -d '"' | tr -d "'")
             digest=$(shasum -a 256 "$skill_file" | awk '{print $1}')
 
-            if [ "$first" = true ]; then
-              first=false
-            else
-              echo ',' >> .well-known/agent-skills/index.json
-            fi
-
-            printf '    {\n      "name": "%s",\n      "type": "skill-md",\n      "description": "%s",\n      "url": "./%s",\n      "digest": "sha256:%s"\n    }' \
-              "$skill_name" "$skill_desc" "$skill_file" "$digest" \
-              >> .well-known/agent-skills/index.json
+            skills_json=$(echo "$skills_json" | jq --arg name "$skill_name" --arg desc "$skill_desc" --arg url "./$skill_file" --arg digest "sha256:$digest" \
+              '. + [{"name": $name, "type": "skill-md", "description": $desc, "url": $url, "digest": $digest}]')
           done < <(find . -name "SKILL.md" -not -path "./.git/*" -not -path "./.well-known/*" | sed 's|^\./||')
 
-          echo '' >> .well-known/agent-skills/index.json
-          echo '  ]' >> .well-known/agent-skills/index.json
-          echo '}' >> .well-known/agent-skills/index.json
+          jq -n --argjson skills "$skills_json" \
+            '{"$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json", "skills": $skills}' \
+            > .well-known/agent-skills/index.json
 
           echo "Generated index.json:"
           cat .well-known/agent-skills/index.json
@@ -152,15 +143,17 @@ jobs:
           node-version: '20'
 
       - name: Test install with npx skills
+        env:
+          WORKSPACE: ${{ github.workspace }}
         run: |
           echo "🧪 Testing skill installation..."
           mkdir -p /tmp/skill-test && cd /tmp/skill-test
 
           # Test: list available skills from local repo
-          npx skills add ${{ github.workspace }} -y --list 2>&1 || true
+          npx skills add "$WORKSPACE" -y --list 2>&1 || true
 
           # Test: install to claude-code (copy mode)
-          npx skills add ${{ github.workspace }} -y -a claude-code --copy 2>&1
+          npx skills add "$WORKSPACE" -y -a claude-code --copy 2>&1
 
           # Verify installation
           echo ""
@@ -181,14 +174,16 @@ jobs:
     name: Post-publish Check
     runs-on: ubuntu-latest
     needs: [validate, build-index, test-install]
-    if: startsWith(github.ref, 'refs/tags/')
+    if: always() && needs.validate.result == 'success' && needs.build-index.result == 'success' && needs.test-install.result == 'success'
     steps:
       - uses: actions/checkout@v4
 
       - name: Check skills.sh discoverability
+        env:
+          REPO_OWNER: ${{ github.repository_owner }}
         run: |
           echo "🔍 Checking skills.sh search API..."
-          response=$(curl -s "https://skills.sh/api/search?q=${{ github.repository_owner }}&limit=5" 2>&1 || echo '{"skills":[]}')
+          response=$(curl -s "https://skills.sh/api/search?q=${REPO_OWNER}&limit=5" 2>&1 || echo '{"skills":[]}')
           echo "Response: $response"
 
           count=$(echo "$response" | grep -o '"count":[0-9]*' | cut -d: -f2 || echo "0")
@@ -196,15 +191,17 @@ jobs:
           echo "📊 Found $count skill(s) from this owner on skills.sh"
 
       - name: Print install instructions
+        env:
+          REPO: ${{ github.repository }}
         run: |
           echo ""
           echo "🎉 Skill published! Users can install with:"
           echo ""
-          echo "  npx skills add ${{ github.repository }} -y"
+          echo "  npx skills add ${REPO} -y"
           echo ""
           echo "  Or per-skill:"
           while IFS= read -r skill_file; do
             skill_name=$(sed -n '/^---$/,/^---$/p' "$skill_file" | grep -E "^name:" | sed 's/^name: *//' | tr -d '"' | tr -d "'")
-            echo "  npx skills add ${{ github.repository }} -s $skill_name -y"
+            echo "  npx skills add ${REPO} -s $skill_name -y"
           done < <(find . -name "SKILL.md" -not -path "./.git/*" -not -path "./.well-known/*" | sed 's|^\./||')
           echo ""

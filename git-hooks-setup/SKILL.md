@@ -46,7 +46,7 @@ cat package.json | python3 -c "import sys,json; d=json.load(sys.stdin); print([k
 | 方案 | 适用场景 | 优点 |
 |------|---------|------|
 | husky | Node.js 项目 | 团队协作友好，配置即代码 |
-| lefhook | 任何项目 | 更快，Go 编写 |
+| lefthook | 任何项目 | 更快，Go 编写 |
 | 原生 git hooks | 非 Node.js 项目 | 无依赖 |
 
 ### Step 3: 生成配置
