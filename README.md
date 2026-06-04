@@ -2,6 +2,8 @@
 
 > 10 production-ready AI coding skill modules. One-line install, covering the full DevOps pipeline.
 
+English | [中文](README.zh.md)
+
 [![skills.sh](https://img.shields.io/badge/skills.sh-find%20me-blue)](https://skills.sh/wu529778790/shenzjd-skills)
 
 ## ⚡ Quick Install
