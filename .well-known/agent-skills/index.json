@@ -30,6 +30,13 @@
       "digest": "sha256:12c9913b79e0885e5a81ce1aa8cbb8982f00e9b3b0c874ccae51a9bbe679af23"
     },
     {
+      "name": "token-burner",
+      "type": "skill-md",
+      "description": "Use when user wants to burn tokens productively before they expire, run autonomous code improvement sessions, auto-discover and execute tasks across a project, or maximize token usage with automated code review, testing, and documentation",
+      "url": "./token-burner/SKILL.md",
+      "digest": "sha256:420347d9fe0c7fd5eda26d532c7003dd169a3d4b6503e8abecb3ca044d8e7abc"
+    },
+    {
       "name": "diagram-generator",
       "type": "skill-md",
       "description": "Use when user wants to create architecture diagrams, flowcharts, sequence diagrams, ER diagrams, or visualize system design, workflows, and data pipelines",
