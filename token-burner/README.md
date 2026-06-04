@@ -18,20 +18,22 @@ cp -r shenzjd-skills/token-burner ~/.claude/skills/
 
 ## Usage
 
+Note: Parameters are natural language hints parsed by the AI. Without parameters, the AI will ask interactively.
+
 ```bash
 /token-burner                          # Scan and execute all tasks
-/token-burner --types "test,docs"      # Only test and doc tasks
-/token-burner --max-tasks 10           # Limit to 10 tasks
-/token-burner --dry-run                # Scan only, don't execute
-/token-burner --project /path/to/repo  # Target specific project
+/token-burner 只跑测试和文档            # Only test and doc tasks
+/token-burner 最多跑 10 个任务          # Limit to 10 tasks
+/token-burner 只扫描不执行              # Scan only, don't execute
+/token-burner 扫描 /path/to/repo       # Target specific project
 ```
 
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| `--types` | Filter task types (test/docs/review/refactor/audit/clean) | All |
-| `--max-tasks` | Maximum tasks to execute | 20 |
-| `--dry-run` | Scan only, don't execute | false |
-| `--project` | Target project path | Current directory |
+| Hint | Description | Default |
+|------|-------------|---------|
+| 只跑 `type` | Filter task types (security/bug/test/docs/refactor/clean) | All |
+| 最多跑 `N` 个任务 | Maximum tasks to execute | 20 |
+| 只扫描不执行 | Scan only, don't execute | false |
+| 扫描 `path` | Target project path | Current directory |
 
 ## How It Works
 

@@ -43,11 +43,11 @@ git diff --stat HEAD~3        # 变更范围
 git status --porcelain        # 未提交变更
 ```
 
-**任务发现引擎：**
+**任务发现引擎：**（详见 `templates/task-discovery.md`）
 
 | 任务类型 | 发现方式 | 优先级 |
 |---------|---------|--------|
-| 🔒 依赖安全 | `npm audit` / `govulncheck` / `pip-audit` | P0 - 立即执行 |
+| 🔒 依赖安全 | 如果 `dependency-audit` skill 可用则委派，否则直接运行审计工具 | P0 - 立即执行 |
 | 🐛 代码缺陷 | 分析 `git diff` 中的逻辑问题 | P0 - 立即执行 |
 | 🧪 测试覆盖 | 找无测试的源文件，检查覆盖率 | P1 - 高优先级 |
 | 📝 文档缺失 | 检查 README、函数注释、API 文档 | P2 - 中优先级 |
@@ -71,6 +71,18 @@ git status --porcelain        # 未提交变更
 - P2 任务（文档、重构）→ 可以执行
 - P3 任务（清理）→ 只在有剩余 token 时执行
 
+**前置依赖检查：**
+
+执行前先检查所需工具是否可用，缺失时跳过对应任务类型而非静默失败：
+
+```bash
+# 检查工具可用性
+command -v jq >/dev/null 2>&1 || echo "⚠️ jq 未安装，安全审计任务将跳过"
+command -v npm >/dev/null 2>&1 || echo "⚠️ npm 未安装，Node.js 审计将跳过"
+command -v go >/dev/null 2>&1 || echo "⚠️ go 未安装，Go 审计将跳过"
+command -v pip-audit >/dev/null 2>&1 || echo "⚠️ pip-audit 未安装，Python 审计将跳过"
+```
+
 **过滤规则：**
 - 跳过 `node_modules/`、`vendor/`、`.git/` 等目录
 - 跳过已由其他 skill 覆盖的任务（如 git-hooks-setup 已配置的）
@@ -82,14 +94,19 @@ git status --porcelain        # 未提交变更
 
 ```
 对每个 task in 队列:
-  1. Agent(task.prompt, {
-       isolation: "worktree",
-       label: "token-burner:" + task.type
-     })
-  2. 在 worktree 中跑测试验证
-  3. 如果测试通过 → 合并到主分支
-  4. 如果测试失败 → 回滚，记录失败原因
-  5. 更新任务状态
+  retries = 0
+  max_retries = 3
+  while retries < max_retries:
+    1. Agent(task.prompt, {
+         isolation: "worktree",
+         label: "token-burner:" + task.type
+       })
+    2. 在 worktree 中跑测试验证
+    3. 如果测试通过 → 合并到主分支，break
+    4. 如果测试失败 → retries++
+       - 如果 retries < max_retries → 回滚 worktree，重试
+       - 如果 retries >= max_retries → 记录失败原因，跳过此任务
+    5. 更新任务状态
 ```
 
 **每种任务的执行策略：**
@@ -139,20 +156,22 @@ git status --porcelain        # 未提交变更
 
 ## Quick Reference
 
+注意：以下参数是自然语言提示，AI 会尝试从输入中解析。如果不带参数直接调用，AI 会交互式询问。
+
 ```bash
 /token-burner                          # 扫描当前项目，自主执行所有任务
-/token-burner --types "test,docs"      # 只执行测试和文档任务
-/token-burner --max-tasks 10           # 最多执行 10 个任务
-/token-burner --dry-run                # 只扫描，不执行
-/token-burner --project /path/to/repo  # 指定项目路径
+/token-burner 只跑测试和文档            # 只执行测试和文档任务
+/token-burner 最多跑 10 个任务          # 限制任务数
+/token-burner 只扫描不执行              # dry-run 模式
+/token-burner 扫描 /path/to/repo       # 指定项目路径
 ```
 
-| 参数 | 说明 | 默认值 |
+| 提示 | 说明 | 默认值 |
 |------|------|--------|
-| `--types` | 任务类型过滤（test/docs/review/refactor/audit/clean） | 全部 |
-| `--max-tasks` | 最大执行任务数 | 20 |
-| `--dry-run` | 只扫描不执行 | false |
-| `--project` | 指定项目路径 | 当前目录 |
+| 只跑 `类型` | 任务类型过滤（security/bug/test/docs/refactor/clean） | 全部 |
+| 最多跑 `N` 个任务 | 最大执行任务数 | 20 |
+| 只扫描不执行 | dry-run 模式 | false |
+| 扫描 `路径` | 指定项目路径 | 当前目录 |
 
 ## Common Mistakes
 

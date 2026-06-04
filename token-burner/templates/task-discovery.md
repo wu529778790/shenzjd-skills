@@ -27,14 +27,27 @@ test -f pom.xml -o -f build.gradle && echo "java"
 
 **依赖安全扫描：**
 ```bash
-# Node.js
-npm audit --json 2>/dev/null | jq '.vulnerabilities | length'
+# Node.js（需要 jq 和 package-lock.json）
+if command -v jq >/dev/null 2>&1 && test -f package-lock.json; then
+  audit_result=$(npm audit --json 2>/dev/null)
+  if [ $? -ne 0 ] && [ -n "$audit_result" ]; then
+    echo "$audit_result" | jq '.vulnerabilities | length' 2>/dev/null || echo "audit parse failed"
+  fi
+elif ! test -f package-lock.json; then
+  echo "⚠️ 缺少 package-lock.json，跳过 npm audit"
+fi
 
-# Go
-$(go env GOPATH)/bin/govulncheck ./... 2>/dev/null
+# Go（需要 govulncheck）
+if command -v go >/dev/null 2>&1; then
+  $(go env GOPATH)/bin/govulncheck ./... 2>/dev/null || echo "⚠️ govulncheck 未安装或执行失败"
+fi
 
-# Python
-pip-audit 2>/dev/null
+# Python（需要 pip-audit）
+if command -v pip-audit >/dev/null 2>&1; then
+  pip-audit 2>/dev/null || echo "⚠️ pip-audit 执行失败"
+else
+  echo "⚠️ pip-audit 未安装，运行: pip install pip-audit"
+fi
 ```
 
 **代码缺陷检测：**
@@ -46,7 +59,8 @@ pip-audit 2>/dev/null
 
 **无测试文件检测：**
 ```bash
-# Node.js - 找没有对应测试的源文件
+# Node.js - 找没有对应测试的源文件（需要 shopt -s globstar 递归匹配）
+shopt -s globstar
 for f in src/**/*.ts; do
   test_file="${f%.ts}.test.ts"
   test -f "$test_file" || echo "Missing test: $f"
@@ -117,7 +131,7 @@ impact_score:
 risk_score:
   change_business_logic = 0.8
   add_tests = 0.4
-  add_docs = 0.2
+  add_docs = 0.4
   read_only_analysis = 0.1
 ```
 
@@ -128,7 +142,7 @@ risk_score:
 ```json
 {
   "id": "task-001",
-  "type": "test|docs|review|refactor|audit|clean",
+  "type": "security|bug|test|docs|refactor|clean",
   "priority": "P0|P1|P2|P3",
   "file": "path/to/file",
   "description": "简短描述",
