@@ -36,7 +36,7 @@ cp -r shenzjd-skills/github-profile-beautifier ~/.claude/skills/
 | radical | Vibrant, colorful | Personal projects, creative dev (default) |
 | tokyonight | Modern, dark | Tech showcase |
 | dracula | Dark, purple | Dark theme, eye-friendly |
-| minimalist | Clean, professional | Corporate users, formal场合 |
+| minimalist | Clean, professional | Corporate users, formal occasions |
 | professional | Business, blue | Job seekers, corporate showcase |
 
 ## Prerequisites
