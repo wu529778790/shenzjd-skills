@@ -126,32 +126,21 @@ cat $SKILL_DIR/references/structural.md     # 结构图
 **溢出预防（必须遵守）：**
 
 1. **先计算所有组件位置，再画区域边界** — 列出每个组件的 y+height，区域边界高度 = 最低组件 y+height + 20px 内边距
-2. **viewBox 必须最后确定** — 扫描所有元素的最大 x+width 和 y+height，viewBox 宽高 = 最大值 + 60px（两侧各 30px）
-3. **检查清单** — 画完后逐项验证：
+2. **viewBox 最后确定** — 写完所有 SVG 元素后，扫描全部元素的坐标，viewBox = 所有内容 + 四周 30px padding
+3. **区域边界也是元素** — 它们有自己的 x/width/y/height，必须纳入 viewBox 计算
+4. **检查清单** — 画完后逐项验证：
    - [ ] 每个区域边界完全包含其所有子组件
-   - [ ] 没有组件超出 viewBox
-   - [ ] 虚线边界（stroke-dasharray）不会被 viewBox 裁切（预留额外 20px）
-   - [ ] 图例在所有内容下方，不重叠
-   - [ ] 标题在顶部，不重叠
+   - [ ] 没有元素（包括边界框）超出 viewBox
    - [ ] 区域标签在组件框遮罩层之上（标签 y < 区域边界 y）
 
-**布局计算示例（TTB 架构图）：**
+**布局计算方法：**
 
 ```
-1. 列出每行的 y 坐标和组件数量
-   Row 1: y=70, 4 个组件 → max_y = 70+50 = 120
-   Row 2: y=170, 2 个组件 → max_y = 170+50 = 220
-   Row 3: y=280, 3 行 × 50px → max_y = 280+3×50+2×40 = 490
-   Row 4: y=530, 3 个组件 → max_y = 530+45 = 575
-
-2. 计算区域边界
-   Skills region: y=245, height = 490-245+20 = 265
-   Infrastructure: y=505, height = 575-505+20 = 90
-
-3. 计算 viewBox
-   max_x = 最右组件 x+width = 640+200 = 840
-   max_y = 575 (最底组件)
-   viewBox = "0 0 840+60 575+30+85(legend)+30 = 0 0 900 690"
+1. 列出所有组件的坐标（x, y, width, height）
+2. 画区域边界（边界本身也是元素，有自己的坐标）
+3. 画图例和标题
+4. 扫描全部元素，找到最大 x+width 和最大 y+height
+5. viewBox = "0 0 (max_x+60) (max_y+60)"（四周各 30px padding）
 ```
 
 **基础 SVG 模板：**
