@@ -1,46 +1,46 @@
 # 🛠️ AI Coding Skills
 
-> 9 个生产级 AI 编程技能模块，一行命令安装，覆盖 DevOps 全链路。
+> 9 production-ready AI coding skill modules. One-line install, covering the full DevOps pipeline.
 
 [![skills.sh](https://img.shields.io/badge/skills.sh-find%20me-blue)](https://skills.sh/wu529778790/shenzjd-skills)
 
-## ⚡ 一键安装
+## ⚡ Quick Install
 
 ```bash
 npx skills add wu529778790/shenzjd-skills -y
 ```
 
-支持 Claude Code、Cursor、Copilot、Windsurf、Gemini CLI、Cline、Aider 等 **67+ 种 AI 工具**。
+Supports Claude Code, Cursor, Copilot, Windsurf, Gemini CLI, Cline, Aider, and **67+ AI tools**.
 
-## 📦 Skills 一览
+## 📦 Skills Overview
 
-| Skill | 一句话说明 | 安装后使用 |
-|-------|-----------|-----------|
-| 🎨 **github-profile-beautifier** | 自动生成 GitHub 个人主页 README | `/github-profile-beautifier username` |
-| 🐳 **docker-build-deploy** | Docker CI/CD + GitHub Actions 一键部署 | `/docker-build-deploy` |
-| 📋 **release-notes-generator** | 打 tag 自动生成标准化 Release Notes | `/release-notes v1.1.0` |
-| ⚡ **performance-profiler** | 扫描性能瓶颈，输出优化建议 | `/performance-profiler` |
-| 📖 **api-doc-generator** | 从代码生成 OpenAPI/Swagger 文档 | `/api-doc-generator` |
-| 🗄️ **db-migration-helper** | Model 变更 → 安全迁移 SQL | `/db-migration-helper` |
-| 🪝 **git-hooks-setup** | 一键配置 husky/lefthook + commitlint | `/git-hooks-setup` |
-| 🔒 **dependency-audit** | CVE 漏洞 + 过时依赖 + License 合规 | `/dependency-audit` |
-| 📊 **diagram-generator** | 架构图/流程图/时序图自动生成 | `/diagram-generator` |
+| Skill | Description | Usage |
+|-------|-------------|-------|
+| 🎨 **github-profile-beautifier** | Auto-generate GitHub profile README | `/github-profile-beautifier username` |
+| 🐳 **docker-build-deploy** | Docker CI/CD + GitHub Actions one-click deploy | `/docker-build-deploy` |
+| 📋 **release-notes-generator** | Auto-generate standardized Release Notes on tag | `/release-notes v1.1.0` |
+| ⚡ **performance-profiler** | Scan performance bottlenecks, output optimization tips | `/performance-profiler` |
+| 📖 **api-doc-generator** | Generate OpenAPI/Swagger docs from code | `/api-doc-generator` |
+| 🗄️ **db-migration-helper** | Model changes → safe migration SQL | `/db-migration-helper` |
+| 🪝 **git-hooks-setup** | One-click husky/lefthook + commitlint setup | `/git-hooks-setup` |
+| 🔒 **dependency-audit** | CVE vulnerabilities + outdated deps + license compliance | `/dependency-audit` |
+| 📊 **diagram-generator** | Auto-generate architecture/flow/sequence diagrams | `/diagram-generator` |
 
-## 🎯 覆盖场景
+## 🎯 Coverage
 
 ```
-代码 → 性能分析 → API 文档 → 测试
+Code → Performance Analysis → API Docs → Testing
   ↓
-提交 → Git Hooks → Commit 规范
+Commit → Git Hooks → Commit Conventions
   ↓
-构建 → Docker CI/CD → 部署
+Build → Docker CI/CD → Deployment
   ↓
-依赖 → 安全审计 → License 合规
+Dependencies → Security Audit → License Compliance
   ↓
-发布 → Release Notes → 版本管理
+Release → Release Notes → Version Management
 ```
 
-## 📂 单独安装某个 Skill
+## 📂 Install Individual Skills
 
 ```bash
 npx skills add wu529778790/shenzjd-skills -s performance-profiler -y
@@ -60,4 +60,4 @@ MIT
 
 ---
 
-**神族九帝** - [GitHub](https://github.com/wu529778790) - [Website](https://shenzjd.com)
+**shenzjd** - [GitHub](https://github.com/wu529778790) - [Website](https://shenzjd.com)

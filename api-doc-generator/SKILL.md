@@ -13,15 +13,15 @@ description: Use when user wants to generate API documentation, create OpenAPI/S
 
 ## When to Use
 
-- 用户想给项目生成 API 文档
-- 用户提到 OpenAPI、Swagger、API 文档
-- 用户有 REST/GraphQL 接口需要文档化
-- 用户输入 `/api-doc-generator`
+- User wants to generate API documentation for a project
+- User mentions OpenAPI, Swagger, or API docs
+- User has REST/GraphQL endpoints that need documentation
+- User inputs `/api-doc-generator`
 
 **When NOT to Use:**
-- 用户只是想写 README 里的 API 说明
-- 用户想做 API 测试（那是另一个 skill）
-- 用户的项目没有 HTTP 接口
+- User only wants to write API descriptions in README
+- User wants to test APIs (that's a different skill)
+- User's project has no HTTP endpoints
 
 ## Core Pattern
 

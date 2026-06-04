@@ -13,15 +13,15 @@ description: Use when user wants to create database migrations, compare model ch
 
 ## When to Use
 
-- 用户要写数据库迁移
-- 用户改了 model/entity 定义想同步到数据库
-- 用户提到 migration、schema change、数据库变更
-- 用户输入 `/db-migration-helper`
+- User wants to create database migrations
+- User modified model/entity definitions and wants to sync to database
+- User mentions migration, schema change, or database updates
+- User inputs `/db-migration-helper`
 
 **When NOT to Use:**
-- 用户只是想看当前数据库结构
-- 用户想做数据迁移（不是 schema 变更）
-- 用户用 ORM 的自动迁移（如 Prisma migrate、Alembic）
+- User only wants to view current database structure
+- User wants data migration (not schema changes)
+- User uses ORM auto-migration (e.g., Prisma migrate, Alembic)
 
 ## Core Pattern
 

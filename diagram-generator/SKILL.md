@@ -13,15 +13,15 @@ description: Use when user wants to create architecture diagrams, flowcharts, se
 
 ## When to Use
 
-- 用户想画架构图、流程图、时序图
-- 用户提到 diagram、flowchart、architecture、ER diagram
-- 用户想可视化系统设计、数据流、API 调用链
-- 用户输入 `/diagram-generator`
+- User wants to create architecture diagrams, flowcharts, or sequence diagrams
+- User mentions diagram, flowchart, architecture, or ER diagram
+- User wants to visualize system design, data flow, or API call chains
+- User inputs `/diagram-generator`
 
 **When NOT to Use:**
-- 用户只是想看代码结构（用 AST 分析）
-- 用户想要 UI 原型/线框图（那是另一个领域）
-- 用户想要编辑已有图表（提供原始文件即可）
+- User only wants to view code structure (use AST analysis)
+- User wants UI prototypes/wireframes (different domain)
+- User wants to edit existing diagrams (provide the original file)
 
 ## Core Pattern
 

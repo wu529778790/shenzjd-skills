@@ -13,15 +13,15 @@ description: Use when user wants to analyze project performance, find bottleneck
 
 ## When to Use
 
-- 用户想分析项目性能
-- 用户提到 bundle size、加载慢、性能优化
-- 用户想知道哪些依赖拖慢了项目
-- 用户输入 `/performance-profiler`
+- User wants to analyze project performance
+- User mentions bundle size, slow loading, or performance optimization
+- User wants to know which dependencies are slowing down the project
+- User inputs `/performance-profiler`
 
 **When NOT to Use:**
-- 用户想做运行时 profiling（需要专门的 APM 工具）
-- 用户想做负载测试
-- 用户只是想看代码覆盖率
+- User wants runtime profiling (requires dedicated APM tools)
+- User wants load testing
+- User only wants to view code coverage
 
 ## Core Pattern
 

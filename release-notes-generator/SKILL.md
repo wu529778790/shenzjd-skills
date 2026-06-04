@@ -13,14 +13,14 @@ description: Use when creating git tags, releases, or version bumps, or when use
 
 ## When to Use
 
-- 用户要打 tag / 创建 release
-- 用户想总结版本变更
-- 用户提到 changelog、release notes、版本说明
-- 用户输入 `/release-notes`
+- User wants to create a tag or release
+- User wants to summarize version changes
+- User mentions changelog, release notes, or version documentation
+- User inputs `/release-notes`
 
 **When NOT to Use:**
-- 用户只是想看 git log
-- 用户想修改已有的 release notes
+- User only wants to view git log
+- User wants to modify existing release notes
 
 ## Core Pattern
 

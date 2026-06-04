@@ -1,49 +1,49 @@
 # Dependency Audit
 
-扫描项目依赖，检测安全漏洞、过时包和 license 合规问题。
+Scan project dependencies for security vulnerabilities, outdated packages, and license compliance issues.
 
-## 安装
+## Installation
 
 ```bash
-# npx skills（推荐）
+# npx skills (recommended)
 npx skills add wu529778790/shenzjd-skills -s dependency-audit -y
 
-# 手动（Claude Code）
+# Manual (Claude Code)
 git clone https://github.com/wu529778790/shenzjd-skills.git
 cp -r shenzjd-skills/dependency-audit ~/.claude/skills/
 
-# 手动（Cursor）
-# 将 SKILL.md 内容复制到 .cursorrules 或 .cursor/rules/
+# Manual (Cursor)
+# Copy SKILL.md content to .cursorrules or .cursor/rules/
 ```
 
-## 使用
+## Usage
 
 ```bash
-/dependency-audit                    # 完整审计
-/dependency-audit --security         # 只检查安全漏洞
-/dependency-audit --licenses         # 只检查 license
-/dependency-audit --fix              # 自动修复
+/dependency-audit                    # Full audit
+/dependency-audit --security         # Security vulnerabilities only
+/dependency-audit --licenses         # License compliance only
+/dependency-audit --fix              # Auto-fix safe upgrades
 ```
 
-| 参数 | 说明 | 默认值 |
-|------|------|--------|
-| `--security` | 只检查安全漏洞 | false |
-| `--licenses` | 只检查 license 合规 | false |
-| `--fix` | 自动修复可安全升级的依赖 | false |
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `--security` | Security vulnerabilities only | false |
+| `--licenses` | License compliance only | false |
+| `--fix` | Auto-fix safe upgrades | false |
 
-## 审计维度
+## Audit Dimensions
 
-| 维度 | 检测内容 |
-|------|---------|
-| 安全漏洞 | CVE 扫描、严重程度分级 |
-| 过时依赖 | major/minor/patch 升级检测 |
-| License 合规 | GPL/AGPL/自定义许可证检测 |
-| 重复依赖 | 不同版本的同一依赖 |
+| Dimension | What It Checks |
+|-----------|---------------|
+| Security Vulnerabilities | CVE scanning, severity classification |
+| Outdated Dependencies | major/minor/patch upgrade detection |
+| License Compliance | GPL/AGPL/custom license detection |
+| Duplicate Dependencies | Same dependency at different versions |
 
-## 支持的生态
+## Supported Ecosystems
 
-| 生态 | 检测工具 |
-|------|---------|
+| Ecosystem | Detection Tool |
+|-----------|---------------|
 | npm / yarn / pnpm | npm audit |
 | Go | govulncheck |
 | Python | pip-audit |

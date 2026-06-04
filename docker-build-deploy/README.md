@@ -1,22 +1,22 @@
 # 🐳 Docker Build & Deploy
 
-一键生成 Docker 构建 + 推送到 GHCR + 部署到服务器的 GitHub Actions 工作流。
+One-click generation of Docker build + push to GHCR + deploy to server GitHub Actions workflows.
 
-## 安装
+## Installation
 
 ```bash
-# npx skills（推荐）
+# npx skills (recommended)
 npx skills add wu529778790/shenzjd-skills -s docker-build-deploy -y
 
-# 手动（Claude Code）
+# Manual (Claude Code)
 git clone https://github.com/wu529778790/shenzjd-skills.git
 cp -r shenzjd-skills/docker-build-deploy ~/.claude/skills/
 
-# 手动（Cursor）
-# 将 SKILL.md 内容复制到 .cursorrules 或 .cursor/rules/
+# Manual (Cursor)
+# Copy SKILL.md content to .cursorrules or .cursor/rules/
 ```
 
-## 使用
+## Usage
 
 ```bash
 /docker-build-deploy
@@ -24,34 +24,34 @@ cp -r shenzjd-skills/docker-build-deploy ~/.claude/skills/
 /docker-build-deploy --port 8080 --env-file /opt/app/.env
 ```
 
-| 参数 | 说明 | 默认值 |
-|------|------|--------|
-| `--port` | 容器对外端口 | 3000 |
-| `--env-file` | 服务器 env 文件路径 | 空 |
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `--port` | Container exposed port | 3000 |
+| `--env-file` | Server env file path | empty |
 
-## 生成的文件
+## Generated Files
 
-**`.github/workflows/docker-deploy.yml`** — 两个 Job：
+**`.github/workflows/docker-deploy.yml`** — Two jobs:
 
-1. **build-and-push**：登录 GHCR → Buildx 构建 → 推送（latest + sha）→ GHA 缓存
-2. **deploy**（仅 main）：SSH → 拉取镜像 → 停旧容器 → 启新容器 → 清理
+1. **build-and-push**: Login to GHCR → Buildx build → Push (latest + sha) → GHA cache
+2. **deploy** (main only): SSH → Pull image → Stop old container → Start new container → Cleanup
 
-**`Dockerfile`**（如需要）— 自动检测项目类型：
+**`Dockerfile`** (if needed) — Auto-detects project type:
 
-| 项目类型 | 检测依据 | 基础镜像 |
-|---------|---------|---------|
-| Node.js | `package.json` | `node:20-alpine`（多阶段） |
+| Project Type | Detection | Base Image |
+|-------------|-----------|------------|
+| Node.js | `package.json` | `node:20-alpine` (multi-stage) |
 | Go | `go.mod` | `golang:alpine` → `alpine` |
 | Python | `requirements.txt` | `python:3.12-slim` |
 
-## 前置条件
+## Prerequisites
 
-在 GitHub repo Settings → Secrets 中配置：
+Configure in GitHub repo Settings → Secrets:
 
-| Secret | 说明 |
-|--------|------|
-| `DEPLOY_HOST` | 服务器 IP |
-| `DEPLOY_USER` | SSH 用户名 |
-| `DEPLOY_PASSWORD` | SSH 密码或私钥 |
+| Secret | Description |
+|--------|-------------|
+| `DEPLOY_HOST` | Server IP |
+| `DEPLOY_USER` | SSH username |
+| `DEPLOY_PASSWORD` | SSH password or private key |
 
-服务器需要已安装 Docker 且 SSH 端口开放。
+Server must have Docker installed and SSH port open.

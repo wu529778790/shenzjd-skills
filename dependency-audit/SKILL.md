@@ -13,15 +13,15 @@ description: Use when user wants to audit dependencies for security vulnerabilit
 
 ## When to Use
 
-- 用户想检查项目依赖安全
-- 用户提到 CVE、漏洞、安全审计
-- 用户想知道哪些依赖过时了
-- 用户输入 `/dependency-audit`
+- User wants to check project dependency security
+- User mentions CVE, vulnerability, or security audit
+- User wants to know which dependencies are outdated
+- User inputs `/dependency-audit`
 
 **When NOT to Use:**
-- 用户只是想更新依赖版本
-- 用户想做代码级别的安全审查（那是 security-review）
-- 用户想分析运行时依赖（需要 APM 工具）
+- User only wants to update dependency versions
+- User wants code-level security review (that's security-review)
+- User wants to analyze runtime dependencies (requires APM tools)
 
 ## Core Pattern
 

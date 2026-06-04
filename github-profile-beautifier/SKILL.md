@@ -13,16 +13,16 @@ description: Use when user wants to create or improve their GitHub profile READM
 
 ## When to Use
 
-- 用户想要创建 GitHub 个人主页（无论是否已有 README）
-- 用户想要新建 GitHub 个人主页 README
-- 用户想要美化现有的 README
-- 用户想要展示项目和技术栈
-- 用户输入 `/github-profile-beautifier [username]`
+- User wants to create a GitHub profile page (with or without existing README)
+- User wants to generate a new GitHub profile README
+- User wants to beautify an existing README
+- User wants to showcase projects and tech stack
+- User inputs `/github-profile-beautifier [username]`
 
 **When NOT to Use:**
-- 用户只是想修改现有 README 的小部分
-- 用户已经有完美的 README，只是想微调
-- 用户想要创建非 GitHub 平台的个人主页（如个人网站、博客等）
+- User only wants to make small edits to an existing README
+- User already has a perfect README and just wants minor tweaks
+- User wants to create a personal page on a non-GitHub platform (e.g., personal website, blog)
 
 ## Core Pattern
 

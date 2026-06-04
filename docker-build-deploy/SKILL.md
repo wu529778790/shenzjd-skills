@@ -13,15 +13,15 @@ description: Use when user wants to containerize a project, set up Docker CI/CD 
 
 ## When to Use
 
-- 用户要把项目容器化并部署
-- 用户需要 GitHub Actions 自动构建 Docker 镜像
-- 用户提到 Docker、GHCR、容器部署、CI/CD
-- 用户输入 `/docker-build-deploy`
+- User wants to containerize a project and deploy it
+- User needs GitHub Actions to automatically build Docker images
+- User mentions Docker, GHCR, container deployment, or CI/CD
+- User inputs `/docker-build-deploy`
 
 **When NOT to Use:**
-- 用户只是想写 Dockerfile
-- 用户用 Kubernetes 部署（流程不同）
-- 用户不用 GitHub Actions
+- User only wants to write a Dockerfile
+- User deploys with Kubernetes (different workflow)
+- User doesn't use GitHub Actions
 
 ## Core Pattern
 

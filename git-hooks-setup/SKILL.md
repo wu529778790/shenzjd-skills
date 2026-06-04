@@ -13,15 +13,15 @@ description: Use when user wants to set up git hooks, configure pre-commit check
 
 ## When to Use
 
-- 用户想配置 git hooks
-- 用户提到 pre-commit、commit message 规范
-- 用户想自动化 lint/format 检查
-- 用户输入 `/git-hooks-setup`
+- User wants to set up git hooks
+- User mentions pre-commit or commit message conventions
+- User wants to automate lint/format checks
+- User inputs `/git-hooks-setup`
 
 **When NOT to Use:**
-- 用户只是想看当前的 git hooks 配置
-- 用户想用 CI 做检查（不需要本地 hooks）
-- 用户的项目已有完整的 hooks 配置
+- User only wants to view current git hooks configuration
+- User wants CI-based checks (no local hooks needed)
+- User's project already has a complete hooks setup
 
 ## Core Pattern
 

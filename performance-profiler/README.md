@@ -1,48 +1,48 @@
 # Performance Profiler
 
-一键分析项目性能瓶颈，输出优先级排序的优化建议。
+One-click analysis of project performance bottlenecks with prioritized optimization recommendations.
 
-## 安装
+## Installation
 
 ```bash
-# npx skills（推荐）
+# npx skills (recommended)
 npx skills add wu529778790/shenzjd-skills -s performance-profiler -y
 
-# 手动（Claude Code）
+# Manual (Claude Code)
 git clone https://github.com/wu529778790/shenzjd-skills.git
 cp -r shenzjd-skills/performance-profiler ~/.claude/skills/
 
-# 手动（Cursor）
-# 将 SKILL.md 内容复制到 .cursorrules 或 .cursor/rules/
+# Manual (Cursor)
+# Copy SKILL.md content to .cursorrules or .cursor/rules/
 ```
 
-## 使用
+## Usage
 
 ```bash
-/performance-profiler              # 分析当前项目
-/performance-profiler --fix        # 分析并自动修复
-/performance-profiler --json       # JSON 格式输出
+/performance-profiler              # Analyze current project
+/performance-profiler --fix        # Analyze and auto-fix
+/performance-profiler --json       # JSON format output
 ```
 
-| 参数 | 说明 | 默认值 |
-|------|------|--------|
-| `--fix` | 自动修复可安全修复的问题 | false |
-| `--json` | 输出 JSON 格式报告 | false |
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `--fix` | Auto-fix safe issues | false |
+| `--json` | Output JSON format report | false |
 
-## 分析维度
+## Analysis Dimensions
 
-| 维度 | 检测内容 |
-|------|---------|
-| 依赖健康 | 冗余依赖、重复依赖、过时依赖 |
-| Bundle 体积 | 大文件、未 tree-shake 的导入 |
-| 代码模式 | barrel file、import *、同步 I/O |
-| 配置优化 | 构建工具配置、缓存策略 |
+| Dimension | What It Checks |
+|-----------|---------------|
+| Dependency Health | Redundant deps, duplicate deps, outdated deps |
+| Bundle Size | Large files, un-tree-shaken imports |
+| Code Patterns | barrel file, import *, sync I/O |
+| Config Optimization | Build tool config, caching strategy |
 
-## 支持的项目类型
+## Supported Project Types
 
-| 类型 | 检测依据 |
-|------|---------|
-| Node.js / 前端 | `package.json` |
+| Type | Detection |
+|------|-----------|
+| Node.js / Frontend | `package.json` |
 | Go | `go.mod` |
 | Python | `requirements.txt` / `pyproject.toml` |
 | Rust | `Cargo.toml` |
