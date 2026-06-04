@@ -239,7 +239,22 @@ SVG 是 XML 格式，以下字符必须转义：
 ]]></style>
 ```
 
-### Step 6: 保存文件
+### Step 6: QA 质量检查
+
+生成完成后，读取 `references/qa-checklist.md` 逐项检查：
+
+```bash
+# 读取 QA 检查清单
+cat $SKILL_DIR/references/qa-checklist.md
+```
+
+**必须通过的检查项：**
+- 视觉一致性（颜色、大小、间距统一）
+- 布局合理性（无重叠、流向清晰）
+- SVG 规范（viewBox、转义、图层顺序）
+- 边界处理（区域包含子组件）
+
+### Step 7: 保存文件
 
 - 保存为 `.svg` 文件
 - 如果输入是文件，保存到 `{inputFileDir}/diagram/`
