@@ -41,7 +41,7 @@
       "type": "skill-md",
       "description": "Use when user wants to create architecture diagrams, flowcharts, sequence diagrams, ER diagrams, or visualize system design, workflows, data pipelines, class hierarchies, org charts, mind maps, or timelines. Output is always a professional dark-themed SVG file.",
       "url": "./diagram-generator/SKILL.md",
-      "digest": "sha256:a26967fc68f5f0769f32370f1d1afd60c1b076793161f9a1196f51eba54f5b83"
+      "digest": "sha256:a3c1e92557a5c4f9d7067e0bd4704f86023e7b5cebe620d58eaa32b2868e9c55"
     },
     {
       "name": "docker-build-deploy",
