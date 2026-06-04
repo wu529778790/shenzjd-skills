@@ -85,13 +85,13 @@
 <div align="center">
 
 {{#if website}}
-[![Website](https://img.shields.io/badge/Website-{{#if website_name}}{{website_name}}{{else}}个人网站{{/if}}-bd93f9?style=for-the-badge&logo=googlechrome&logoColor=white)]({{website}})
+[![Website](https://img.shields.io/badge/Website-{{#if website_name}}{{website_name}}{{else}}Personal Website{{/if}}-bd93f9?style=for-the-badge&logo=googlechrome&logoColor=white)]({{website}})
 {{/if}}
 {{#if blog}}
-[![Blog](https://img.shields.io/badge/Blog-{{#if blog_name}}{{blog_name}}{{else}}技术博客{{/if}}-50fa7b?style=for-the-badge&logo=blogger&logoColor=white)]({{blog}})
+[![Blog](https://img.shields.io/badge/Blog-{{#if blog_name}}{{blog_name}}{{else}}Tech Blog{{/if}}-50fa7b?style=for-the-badge&logo=blogger&logoColor=white)]({{blog}})
 {{/if}}
 {{#if email}}
-[![Email](https://img.shields.io/badge/Email-发送邮件-ff79c6?style=for-the-badge&logo=gmail&logoColor=white)](mailto:{{email}})
+[![Email](https://img.shields.io/badge/Email-Send%20Email-ff79c6?style=for-the-badge&logo=gmail&logoColor=white)](mailto:{{email}})
 {{/if}}
 {{#if linkedin}}
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-{{linkedin}}-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)]({{linkedin_url}})

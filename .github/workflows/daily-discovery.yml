@@ -43,7 +43,7 @@ jobs:
           echo "🔎 Searching skills.sh..."
           for skill in release-notes-generator docker-build-deploy github-profile-beautifier performance-profiler api-doc-generator db-migration-helper git-hooks-setup dependency-audit diagram-generator token-burner; do
             result=$(curl -s "https://skills.sh/api/search?q=${skill}&limit=1" 2>/dev/null)
-            count=$(echo "$result" | jq -r '.count // 0' 2>/dev/null || echo "0")
+            count=$(echo "$result" | jq -r '.count // 0 | tonumber' 2>/dev/null || echo "0")
             if [ "$count" -gt 0 ]; then
               installs=$(echo "$result" | jq -r '.skills[0].installs // "?"' 2>/dev/null || echo "?")
               echo "  ✅ $skill — found, installs: $installs"

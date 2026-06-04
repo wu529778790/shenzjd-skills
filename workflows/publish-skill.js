@@ -10,91 +10,9 @@ export const meta = {
   ],
 }
 
-const SKILL_TEMPLATE = `---
-name: {{name}}
-description: {{description}}
----
-
-# {{emoji}} {{title}}
-
-{{overview}}
-
-## Overview
-
-{{detailed_overview}}
-
-## When to Use
-
-- {{when_to_use_1}}
-- {{when_to_use_2}}
-- User inputs \`/{{name}}\`
-
-**When NOT to Use:**
-- {{when_not_to_use_1}}
-- {{when_not_to_use_2}}
-
-## Core Pattern
-
-### Step 1: {{step1_title}}
-
-{{step1_content}}
-
-### Step 2: {{step2_title}}
-
-{{step2_content}}
-
-## Quick Reference
-
-\`\`\`
-/{{name}}                    # {{usage_default}}
-/{{name}} --option value     # {{usage_option}}
-\`\`\`
-
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| \`--option\` | {{option_desc}} | {{option_default}} |
-
-## Common Mistakes
-
-| Error | Correct Approach | Reason |
-|-------|-----------------|--------|
-| {{mistake_1_error}} | {{mistake_1_fix}} | {{mistake_1_reason}} |
-| {{mistake_2_error}} | {{mistake_2_fix}} | {{mistake_2_reason}} |
-`
-
-const README_TEMPLATE = `# {{emoji}} {{title}}
-
-{{description}}
-
-## Installation
-
-\`\`\`bash
-# npx skills (recommended)
-npx skills add wu529778790/shenzjd-skills -s {{name}} -y
-
-# Manual (Claude Code)
-git clone https://github.com/wu529778790/shenzjd-skills.git
-cp -r shenzjd-skills/{{name}} ~/.claude/skills/
-
-# Manual (Cursor)
-# Copy SKILL.md content to .cursorrules or .cursor/rules/
-\`\`\`
-
-## Usage
-
-\`\`\`
-/{{name}}                    # {{usage_default}}
-/{{name}} --option value     # {{usage_option}}
-\`\`\`
-
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| \`--option\` | {{option_desc}} | {{option_default}} |
-
-## Prerequisites
-
-{{prerequisites}}
-`
+// Note: This script runs via Claude Code's Workflow runtime.
+// phase(), agent(), parallel(), log() are provided by the runtime.
+// Do NOT run with `node` directly.
 
 phase('Collect Info')
 
@@ -211,8 +129,6 @@ Write the actual file using the Write tool.`, { label: 'create:readme-md', phase
 ])
 
 phase('Register')
-
-const currentCount = 10  // Will be updated by agent
 
 await parallel([
   () => agent(`Update /Users/mac/github/shenzjd-skills/README.md:

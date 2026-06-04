@@ -156,22 +156,22 @@ command -v pip-audit >/dev/null 2>&1 || echo "⚠️ pip-audit 未安装，Pytho
 
 ## Quick Reference
 
-注意：以下参数是自然语言提示，AI 会尝试从输入中解析。如果不带参数直接调用，AI 会交互式询问。
+Note: Parameters below are natural language hints parsed by the AI. Without parameters, the AI will ask interactively.
 
 ```bash
-/token-burner                          # 扫描当前项目，自主执行所有任务
-/token-burner 只跑测试和文档            # 只执行测试和文档任务
-/token-burner 最多跑 10 个任务          # 限制任务数
-/token-burner 只扫描不执行              # dry-run 模式
-/token-burner 扫描 /path/to/repo       # 指定项目路径
+/token-burner                          # Scan and execute all tasks
+/token-burner 只跑测试和文档            # Only test and doc tasks
+/token-burner 最多跑 10 个任务          # Limit to 10 tasks
+/token-burner 只扫描不执行              # Scan only, don't execute
+/token-burner 扫描 /path/to/repo       # Target specific project
 ```
 
-| 提示 | 说明 | 默认值 |
-|------|------|--------|
-| 只跑 `类型` | 任务类型过滤（security/bug/test/docs/refactor/clean） | 全部 |
-| 最多跑 `N` 个任务 | 最大执行任务数 | 20 |
-| 只扫描不执行 | dry-run 模式 | false |
-| 扫描 `路径` | 指定项目路径 | 当前目录 |
+| Hint | Description | Default |
+|------|-------------|---------|
+| 只跑 `type` | Task type filter (security/bug/test/docs/refactor/clean) | All |
+| 最多跑 `N` 个任务 | Maximum tasks to execute | 20 |
+| 只扫描不执行 | Scan only, don't execute | false |
+| 扫描 `path` | Target project path | Current directory |
 
 ## Common Mistakes
 

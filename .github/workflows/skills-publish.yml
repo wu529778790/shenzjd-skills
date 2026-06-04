@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - '**/SKILL.md'
+      - '*/templates/**'
       - '.github/workflows/skills-publish.yml'
   workflow_dispatch:
 
@@ -173,7 +174,7 @@ jobs:
     name: Post-publish Check
     runs-on: ubuntu-latest
     needs: [validate, build-index, test-install]
-    if: always() && needs.validate.result == 'success' && needs.build-index.result == 'success' && needs.test-install.result == 'success'
+    if: needs.validate.result == 'success' && needs.build-index.result == 'success' && needs.test-install.result == 'success'
     steps:
       - uses: actions/checkout@v4
 

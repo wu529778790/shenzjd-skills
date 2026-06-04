@@ -19,7 +19,7 @@
 | # | 类型 | 优先级 | 文件 | 状态 | 说明 | 耗时 |
 |---|------|--------|------|------|------|------|
 {{#each tasks}}
-| {{@number}} | {{type_icon}} {{type}} | {{priority}} | `{{file}}` | {{status_icon}} {{status}} | {{description}} | {{duration}} |
+| {{@index}} | {{type_icon}} {{type}} | {{priority}} | `{{file}}` | {{status_icon}} {{status}} | {{description}} | {{duration}} |
 {{/each}}
 
 ## 失败任务分析
@@ -44,7 +44,7 @@
 | # | 类型 | 文件 | 跳过原因 |
 |---|------|------|---------|
 {{#each skipped_tasks}}
-| {{@number}} | {{type}} | `{{file}}` | {{reason}} |
+| {{@index}} | {{type}} | `{{file}}` | {{reason}} |
 {{/each}}
 {{else}}
 所有任务均已执行。
