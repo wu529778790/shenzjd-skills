@@ -41,7 +41,7 @@ jobs:
       - name: Search skills.sh for our skills
         run: |
           echo "🔎 Searching skills.sh..."
-          for skill in release-notes-generator docker-build-deploy github-profile-beautifier performance-profiler api-doc-generator db-migration-helper git-hooks-setup dependency-audit diagram-generator; do
+          for skill in release-notes-generator docker-build-deploy github-profile-beautifier performance-profiler api-doc-generator db-migration-helper git-hooks-setup dependency-audit diagram-generator token-burner; do
             result=$(curl -s "https://skills.sh/api/search?q=${skill}&limit=1" 2>/dev/null)
             count=$(echo "$result" | jq -r '.count // 0' 2>/dev/null || echo "0")
             if [ "$count" -gt 0 ]; then
