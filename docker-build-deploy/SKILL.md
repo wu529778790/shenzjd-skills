@@ -1,6 +1,6 @@
 ---
 name: docker-build-deploy
-description: Use when user wants to containerize a project, set up Docker CI/CD with GitHub Actions, push images to GHCR or Docker Hub, deploy containers to a remote server, or generate optimized Dockerfiles
+description: Generate Dockerfile and GitHub Actions CI/CD workflow for building, pushing to GHCR, and deploying containers via SSH. Multi-stage builds and caching.
 ---
 
 # Docker Build & Deploy
@@ -17,6 +17,11 @@ description: Use when user wants to containerize a project, set up Docker CI/CD 
 - User needs GitHub Actions to automatically build Docker images
 - User mentions Docker, GHCR, container deployment, or CI/CD
 - User inputs `/docker-build-deploy`
+- User wants to set up continuous deployment pipeline
+- User wants to push images to a container registry
+- User wants to automate deployment to a remote server via SSH
+- User wants to optimize existing Dockerfile with multi-stage builds
+- User wants to add health checks to container deployment
 
 **When NOT to Use:**
 - User only wants to write a Dockerfile
@@ -69,3 +74,8 @@ description: Use when user wants to containerize a project, set up Docker CI/CD 
 | 不设置 `packages: write` 权限 | 声明 `permissions: packages: write` | GHCR 推送需要 |
 | deploy 不检查容器是否存在 | 先 `docker stop` + `docker rm` | 避免端口冲突 |
 | 不清理旧镜像 | 部署后 `docker image prune -f` | 磁盘空间 |
+| Dockerfile 用 root 运行 | 添加 `USER node` 或非 root 用户 | 容器安全最佳实践 |
+| Secrets 硬编码在 workflow 中 | 使用 `${{ secrets.XXX }}` 引用 | 密钥泄露风险 |
+| 不设置 Docker BuildKit 缓存 | 配置 `cache-from` / `cache-to` using GitHub Actions cache | 每次全量构建太慢 |
+| 不处理构建失败的回滚 | 部署后验证健康检查 | 失败部署可能上线错误版本 |
+| 未指定 `--platform` | 多平台构建时声明 `linux/amd64,linux/arm64` | 目标架构不匹配导致运行失败 |

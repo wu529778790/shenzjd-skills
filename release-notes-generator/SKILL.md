@@ -1,6 +1,6 @@
 ---
 name: release-notes-generator
-description: Use when creating git tags, releases, or version bumps, or when user wants to generate changelogs, release notes, or version documentation from git history with conventional commits
+description: Generate release notes and changelogs from git history using conventional commits. Auto-detects breaking changes and creates annotated tags.
 ---
 
 # Release Notes Generator
@@ -17,6 +17,10 @@ description: Use when creating git tags, releases, or version bumps, or when use
 - User wants to summarize version changes
 - User mentions changelog, release notes, or version documentation
 - User inputs `/release-notes`
+- User wants to generate a CHANGELOG.md from commit history
+- User wants to prepare a release with categorized changes
+- User wants to auto-detect breaking changes before release
+- User wants to create an annotated git tag with release notes
 
 **When NOT to Use:**
 - User only wants to view git log
@@ -88,3 +92,7 @@ git diff ${PREV_TAG}..HEAD --stat
 | 忽略 breaking changes | 重点标注 💥 | 用户需要知道不兼容变更 |
 | 不分类，全部列在一起 | 按 feat/fix/docs 分组 | 可读性差 |
 | notes 太长 | 精简为关键变更 + diff 链接 | 用户不需要看每个细节 |
+| 没有前缀的 commit 直接忽略 | 根据文件变更推断类型 | 不是所有团队都严格使用 conventional commits |
+| 版本号跳过 semver 规则 | 遵循 major.minor.patch 语义 | 随意编号导致依赖管理混乱 |
+| 不检查 breaking changes 的 API 影响 | 标注受影响的接口和迁移方式 | 用户升级后才发现破坏性变更 |
+| Release Notes 不包含 diff 链接 | 添加 `${PREV_TAG}...${TAG}` 对比链接 | 方便用户查看具体代码变更 |

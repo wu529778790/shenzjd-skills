@@ -1,6 +1,6 @@
 ---
 name: token-burner
-description: Use when user wants to burn tokens productively before they expire, run autonomous code improvement sessions, auto-discover and execute tasks across a project, or maximize token usage with automated code review, testing, and documentation
+description: Autonomously scan and improve a project — code review, tests, docs, dependency audit, refactoring. Each task isolated in a worktree with verification.
 ---
 
 # Token Burner
@@ -18,6 +18,10 @@ description: Use when user wants to burn tokens productively before they expire,
 - User says "burn tokens" / "token burner" / "用掉 token"
 - User wants to auto-discover and fix issues across a project
 - User inputs `/token-burner`
+- User wants automated code review across the project
+- User wants to find and fix code smells automatically
+- User wants to improve test coverage without manual effort
+- User wants to do a full project health check and cleanup
 
 **When NOT to Use:**
 - User wants to work on a specific, well-defined task (use normal workflow)
@@ -185,3 +189,8 @@ Note: Parameters below are natural language hints parsed by the AI. Without para
 | 跳过 worktree 隔离 | 始终用 isolation: "worktree" | 避免任务间互相干扰 |
 | 不记录执行结果 | 写入 memory 文件 | 下次运行需要知道哪些做过 |
 | 对生产代码不做验证 | 改完必须跑测试 | 确保不破坏现有功能 |
+| 不检查工具可用性 | 执行前验证工具是否存在 | 缺失工具的任务应跳过而非报错 |
+| 在大项目上不限制任务数 | 设置 `--max-tasks` 限制 | 避免 token 耗尽后任务中断 |
+| 跳过风险评估 | 按 impact × (1 - risk) 排序 | 高风险任务应谨慎处理 |
+| 不区分 node_modules 等目录 | 跳过 vendor/node_modules/.git | 扫描第三方代码浪费 token |
+| 重构时不做 diff 检查 | 限制单任务变更 < 500 行 | 过大变更难以验证安全性 |

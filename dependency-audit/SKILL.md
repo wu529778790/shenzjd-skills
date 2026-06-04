@@ -1,6 +1,6 @@
 ---
 name: dependency-audit
-description: Use when user wants to audit dependencies for security vulnerabilities, CVE scanning, check for outdated packages, verify license compliance, or get upgrade recommendations for npm, pip, or go modules
+description: Audit dependencies for vulnerabilities, outdated packages, and license compliance. Scans npm/pip/go/cargo projects.
 ---
 
 # Dependency Audit
@@ -13,17 +13,18 @@ description: Use when user wants to audit dependencies for security vulnerabilit
 
 ## When to Use
 
-- User wants to check project dependency security
-- User mentions CVE, vulnerability, or security audit
-- User wants to know which dependencies are outdated
+- User wants to check dependency security
+- User mentions CVE, vulnerability, or audit
+- User wants to know outdated dependencies
+- User says "审计依赖" / "check dependencies"
 - User inputs `/dependency-audit`
 
 **When NOT to Use:**
-- User only wants to update dependency versions
-- User wants code-level security review (that's security-review)
-- User wants to analyze runtime dependencies (requires APM tools)
-- User wants to check for license compatibility in depth (consider FOSSA or Snyk)
-- User wants to scan Docker images for vulnerabilities (use Trivy or Grype)
+- User only wants to update versions
+- User wants code-level security review
+- User wants to analyze runtime dependencies
+- User wants deep license analysis
+- User wants to scan Docker images
 
 ## Core Pattern
 
@@ -169,3 +170,4 @@ fi
 | 不检查 transitive 依赖 | 分析完整依赖树 | 漏洞常出在间接依赖中 |
 | 忽略 license 合规 | 定期检查 license | GPL 传染性风险 |
 | audit 后不更新 lock 文件 | 重新生成 lock 文件 | 确保修复生效 |
+| 忽略已弃用的依赖 | 检查弃用警告 | 弃用包可能有安全风险 |

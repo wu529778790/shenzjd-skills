@@ -1,6 +1,6 @@
 ---
 name: performance-profiler
-description: Use when user wants to analyze project performance, find bottlenecks, check bundle size, detect slow queries, optimize load time, reduce bundle size, or get optimization recommendations for their codebase
+description: Analyze performance bottlenecks — bundle size, dependency bloat, unused code, slow patterns — and output prioritized optimization recommendations.
 ---
 
 # Performance Profiler
@@ -17,6 +17,10 @@ description: Use when user wants to analyze project performance, find bottleneck
 - User mentions bundle size, slow loading, or performance optimization
 - User wants to know which dependencies are slowing down the project
 - User inputs `/performance-profiler`
+- User wants to reduce bundle size for faster page loads
+- User wants to find and remove unused dependencies
+- User wants to check for barrel file impact on tree-shaking
+- User wants performance optimization recommendations
 
 **When NOT to Use:**
 - User wants runtime profiling (requires dedicated APM tools like New Relic, Datadog)
@@ -133,3 +137,8 @@ fi
 | 建议删除所有 devDependencies | devDependencies 不进生产 | 它们不影响线上性能 |
 | 忽略 lock 文件 | 分析 lock 文件中的实际依赖树 | package.json 声明 ≠ 实际安装 |
 | 不区分生产/开发依赖 | 重点分析 dependencies | devDependencies 不影响 bundle |
+| 忽略 barrel file 影响 | 检查 index.ts 重新导出模式 | barrel file 阻止 tree-shaking，大幅增加 bundle |
+| 不考虑代码分割 | 检查动态 import 使用情况 | 单 chunk 加载所有代码影响首屏 |
+| 建议删除所有重复依赖 | 分析实际使用再决定 | 有些是 peer dependency 必须保留 |
+| 只分析前端不分析后端 | 全栈项目前后端都分析 | Go/Python 也有性能问题 |
+| 跳过 lock 文件分析 | 解析 lock 文件获取完整依赖树 | 直接依赖少不代表间接依赖少 |

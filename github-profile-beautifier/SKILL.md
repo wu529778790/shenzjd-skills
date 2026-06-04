@@ -1,6 +1,6 @@
 ---
 name: github-profile-beautifier
-description: Use when user wants to create or improve their GitHub profile README, generate a new profile page, beautify their existing GitHub homepage, or add stats cards, project showcase, and tech stack badges
+description: Generate themed GitHub profile README with stats cards, project showcase, tech stack badges, and contribution graph. 5 themes and smart ranking.
 ---
 
 # GitHub Profile Beautifier
@@ -18,6 +18,10 @@ description: Use when user wants to create or improve their GitHub profile READM
 - User wants to beautify an existing README
 - User wants to showcase projects and tech stack
 - User inputs `/github-profile-beautifier [username]`
+- User wants to improve their GitHub profile for job applications
+- User wants to add stats cards and contribution graphs
+- User wants to highlight specific projects for recruiters
+- User wants a professional-looking profile with tech stack visualization
 
 **When NOT to Use:**
 - User only wants to make small edits to an existing README
@@ -111,3 +115,7 @@ fi
 | 展示所有仓库 | 智能推荐 Top 5 | 避免信息过载 |
 | 不检查 gh CLI 是否安装 | 先检查再执行 | 避免运行时错误 |
 | 不处理用户不存在的情况 | 先验证用户存在性 | 避免无效操作 |
+| 列出 fork 仓库作为主要项目 | 筛选非 fork 仓库 | fork 不代表个人能力 |
+| 忘记配置 snake 贡献图 | 提示用户 fork platane/snk | 深色主题会显示 404 图片 |
+| 语言分类前后端搞混 | professional 主题按功能分类 | 仅按语言分类无法体现架构能力 |
+| 不处理空 bio 字段 | 模板用 `{{#if}}` 跳过空值 | 空字段显示为奇怪的占位符 |

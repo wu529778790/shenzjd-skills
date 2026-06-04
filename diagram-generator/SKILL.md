@@ -1,6 +1,6 @@
 ---
 name: diagram-generator
-description: Use when user wants to create architecture diagrams, flowcharts, sequence diagrams, ER diagrams, or visualize system design, workflows, data pipelines, class hierarchies, org charts, mind maps, or timelines. Output is always a professional dark-themed SVG file.
+description: Generate dark-themed SVG diagrams from text descriptions — architecture, flowchart, sequence, ER, mind map, state machine, timeline, data flow.
 ---
 
 # Diagram Generator
@@ -18,6 +18,11 @@ description: Use when user wants to create architecture diagrams, flowcharts, se
 - User wants to visualize system design, data flow, or API call chains
 - User says "画个图" / "画架构图" / "draw diagram"
 - User inputs `/diagram-generator`
+- User wants to draw a mind map or brainstorming diagram
+- User wants to visualize a state machine or lifecycle
+- User wants to create a project timeline or milestone chart
+- User wants to diagram a data pipeline or ETL flow
+- User wants to document an event-driven architecture
 
 **When NOT to Use:**
 - User only wants to view code structure (use AST analysis)
@@ -265,3 +270,8 @@ SVG 是 XML 格式，以下字符必须转义：
 | 不加区域边界 | 用虚线框分组相关组件 | 读者无法理解组件的组织关系 |
 | 中文不加宽 | CJK 字符比拉丁字符宽 | 组件框宽度需要增加以容纳中文 |
 | viewBox 太小 | 预留 30px padding | 内容可能超出预期边界 |
+| 组件间距不一致 | 统一使用参考文件的间距规则 | 间距混乱影响专业感 |
+| 箭头标签位置随意 | 标签放在箭头中间偏上 | 遮挡箭头或脱离箭头导致混淆 |
+| 区域内组件未居中 | 计算 start_x = region_x + (region_w - total_w) / 2 | 未居中看起来不对称 |
+| 忘记 XML 转义 | `&` 必须转义为 `&amp;` 等 | SVG 是 XML，未转义会导致渲染失败 |
+| viewBox 不包含区域边界 | 区域边界也是元素，必须纳入计算 | 边界超出 viewBox 被裁切 |

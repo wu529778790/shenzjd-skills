@@ -1,6 +1,6 @@
 ---
 name: git-hooks-setup
-description: Use when user wants to set up git hooks, configure pre-commit checks, enforce commit message conventions, automate linting and formatting on commit, or standardize team development workflow with husky or lefthook
+description: Configure git hooks (pre-commit, commit-msg, pre-push) with husky or lefthook for linting, formatting, commit conventions, and pre-push validation.
 ---
 
 # Git Hooks Setup
@@ -17,6 +17,11 @@ description: Use when user wants to set up git hooks, configure pre-commit check
 - User mentions pre-commit or commit message conventions
 - User wants to automate lint/format checks
 - User inputs `/git-hooks-setup`
+- User wants to enforce pre-push checks (tests, lint)
+- User wants to prevent pushing broken code
+- User wants to standardize team commit message format
+- User wants to add secret scanning before commit
+- User wants to auto-format code on every commit
 
 **When NOT to Use:**
 - User only wants to view current git hooks configuration
@@ -185,3 +190,8 @@ git diff --cached --name-only | xargs grep -l "password\|secret\|token\|api_key"
 | commit message 校验太严格 | 先宽松后收紧 | 避免团队抵触 |
 | 不检查敏感信息 | 加入密钥扫描 | 防止泄露 |
 | .git/hooks 不提交 | 用 husky/lefthook 管理 | 团队需要共享配置 |
+| pre-push hook 跑太久 | 只跑快速检查，完整测试放 CI | push 被阻塞影响效率 |
+| hook 中使用相对路径 | 使用绝对路径或项目根目录 | 不同目录执行时路径解析失败 |
+| 跳过 husky install | 在 CI 中运行 `husky install` | CI 环境 hook 不生效 |
+| commitlint 规则与团队不一致 | 使用 `commitlint.config.js` 统一配置 | 口头约定容易被违反 |
+| 不配置 --no-verify 白名单 | 允许 `--no-verify` 但记录日志 | 紧急修复时不能被完全阻断 |

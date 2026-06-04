@@ -1,6 +1,6 @@
 ---
 name: db-migration-helper
-description: Use when user wants to create database migrations, compare model changes, generate SQL migration files, manage schema changes, or handle database versioning for MySQL, PostgreSQL, or SQLite
+description: Generate database migration SQL from model changes. Compares schema, detects diffs, outputs safe migrations.
 ---
 
 # DB Migration Helper
@@ -14,16 +14,17 @@ description: Use when user wants to create database migrations, compare model ch
 ## When to Use
 
 - User wants to create database migrations
-- User modified model/entity definitions and wants to sync to database
-- User mentions migration, schema change, or database updates
+- User modified model/entity definitions
+- User mentions migration, schema change, or sync
+- User says "生成迁移" / "create migration"
 - User inputs `/db-migration-helper`
 
 **When NOT to Use:**
-- User only wants to view current database structure
-- User wants data migration (not schema changes)
-- User uses ORM auto-migration (e.g., Prisma migrate, Alembic)
-- User wants to generate seed data (different tooling)
-- User wants to backup/restore database (use native DB tools)
+- User only wants to view database structure
+- User wants data migration (not schema)
+- User uses ORM auto-migration
+- User wants to generate seed data
+- User wants to backup/restore database
 
 ## Core Pattern
 
@@ -113,3 +114,4 @@ ALTER TABLE users DROP COLUMN avatar_url;
 | 改类型用 ALTER COLUMN | 创建新列 → 迁移数据 → 删旧列 | 直接改类型可能丢数据 |
 | 不加索引 | 为查询字段加索引 | 影响查询性能 |
 | 迁移文件没有名字 | 用描述性命名 | 方便团队协作和回溯 |
+| 不检查外键依赖 | 先检查表间关系 | 删除被引用的列会失败 |

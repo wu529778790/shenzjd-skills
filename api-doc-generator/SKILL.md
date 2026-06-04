@@ -1,6 +1,6 @@
 ---
 name: api-doc-generator
-description: Use when user wants to generate API documentation, create OpenAPI/Swagger specs, document REST or GraphQL endpoints, auto-generate docs from code, or produce interactive API reference pages
+description: Generate OpenAPI/Swagger API docs from code. Scans routes, extracts params/responses, outputs YAML/JSON specs.
 ---
 
 # API Doc Generator
@@ -13,17 +13,18 @@ description: Use when user wants to generate API documentation, create OpenAPI/S
 
 ## When to Use
 
-- User wants to generate API documentation for a project
+- User wants to generate API documentation
 - User mentions OpenAPI, Swagger, or API docs
 - User has REST/GraphQL endpoints that need documentation
+- User says "生成 API 文档" / "create API docs"
 - User inputs `/api-doc-generator`
 
 **When NOT to Use:**
 - User only wants to write API descriptions in README
-- User wants to test APIs (that's a different skill)
+- User wants to test APIs (use testing tools)
 - User's project has no HTTP endpoints
-- User wants to generate SDK/client code (different tooling)
-- User wants to mock APIs (consider tools like Mockoon, WireMock)
+- User wants to generate SDK/client code
+- User wants to mock APIs (use Mockoon, WireMock)
 
 ## Core Pattern
 
@@ -108,3 +109,4 @@ npx @redocly/cli preview-docs openapi.yaml
 | 硬编码请求体结构 | 从类型定义推断 | 保持文档与代码一致 |
 | 不处理嵌套路由 | 分析路由注册的完整路径 | `/api/users/:id` 的 `:id` 需要标注 |
 | 忽略错误响应 | 添加 4xx/5xx 响应 | 完整的 API 文档需要错误说明 |
+| 忽略认证要求 | 检查 auth middleware | 客户端需要知道哪些接口需要认证 |
