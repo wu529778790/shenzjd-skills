@@ -4,72 +4,72 @@
     {
       "name": "api-doc-generator",
       "type": "skill-md",
-      "description": "Use when user wants to generate API documentation, create OpenAPI/Swagger specs, document REST or GraphQL endpoints, auto-generate docs from code, or produce interactive API reference pages",
+      "description": "Generate OpenAPI/Swagger API docs from code. Scans routes, extracts params/responses, outputs YAML/JSON specs.",
       "url": "./api-doc-generator/SKILL.md",
-      "digest": "sha256:f089bd875e0e5d105feaf4fabcb3b82a5115c608dd40d62d82c92889c080c19f"
+      "digest": "sha256:129ec224ca7793ad1940d52a33c9f66749c28c7833abaaa426d49816bf9862b3"
     },
     {
       "name": "git-hooks-setup",
       "type": "skill-md",
-      "description": "Use when user wants to set up git hooks, configure pre-commit checks, enforce commit message conventions, automate linting and formatting on commit, or standardize team development workflow with husky or lefthook",
+      "description": "Configure git hooks (pre-commit, commit-msg, pre-push) with husky or lefthook for linting, formatting, commit conventions, and pre-push validation.",
       "url": "./git-hooks-setup/SKILL.md",
-      "digest": "sha256:d90f386a45e3c21e0738d724c91a04730ab46abda05d73ee8c4e3ef6bc6306f7"
+      "digest": "sha256:cf8f6a88f180b5d7bc977414f9d8a78efcad62301322478fc735812ca814db28"
     },
     {
       "name": "release-notes-generator",
       "type": "skill-md",
-      "description": "Use when creating git tags, releases, or version bumps, or when user wants to generate changelogs, release notes, or version documentation from git history with conventional commits",
+      "description": "Generate release notes and changelogs from git history using conventional commits. Auto-detects breaking changes and creates annotated tags.",
       "url": "./release-notes-generator/SKILL.md",
-      "digest": "sha256:62d62b6b275f14b18c81e3dd44410ae069d4877674e020a72cddd95832bd2f48"
+      "digest": "sha256:10512522c477cb16af1ee075d4f715913f44097c5bba09b3a45996488c5518de"
     },
     {
       "name": "performance-profiler",
       "type": "skill-md",
-      "description": "Use when user wants to analyze project performance, find bottlenecks, check bundle size, detect slow queries, optimize load time, reduce bundle size, or get optimization recommendations for their codebase",
+      "description": "Analyze performance bottlenecks — bundle size, dependency bloat, unused code, slow patterns — and output prioritized optimization recommendations.",
       "url": "./performance-profiler/SKILL.md",
-      "digest": "sha256:2ae31594a3de92aef86bcabc6bcf97e5c1f668c83764b01ecbaad46c03c8ea1e"
+      "digest": "sha256:1c1166a6dd60892a49f9b95a46d9fa3e149f872edb4dd25f2f19e0dc3c3890c1"
     },
     {
       "name": "token-burner",
       "type": "skill-md",
-      "description": "Use when user wants to burn tokens productively before they expire, run autonomous code improvement sessions, auto-discover and execute tasks across a project, or maximize token usage with automated code review, testing, and documentation",
+      "description": "Autonomously scan and improve a project — code review, tests, docs, dependency audit, refactoring. Each task isolated in a worktree with verification.",
       "url": "./token-burner/SKILL.md",
-      "digest": "sha256:24b5714fe2b4e4d601f98e41931e1293d6f8a12eff3505d64d60cf9e58e347d4"
+      "digest": "sha256:afc6fe3a94f6518daf10eb281d58ecc05192feaec24d865dcbbfab2f0f496498"
     },
     {
       "name": "diagram-generator",
       "type": "skill-md",
-      "description": "Use when user wants to create architecture diagrams, flowcharts, sequence diagrams, ER diagrams, or visualize system design, workflows, data pipelines, class hierarchies, org charts, mind maps, or timelines. Output is always a professional dark-themed SVG file.",
+      "description": "Generate dark-themed SVG diagrams from text descriptions — architecture, flowchart, sequence, ER, mind map, state machine, timeline, data flow.",
       "url": "./diagram-generator/SKILL.md",
-      "digest": "sha256:b46219b7ba3e43468c5f411ae9e44481eea931257774bcc1a4dacb36dd15b40d"
+      "digest": "sha256:ca9000c9e4b4de9aeafdda587847f4f43e1d343490c58bddbc051b481ef12d20"
     },
     {
       "name": "docker-build-deploy",
       "type": "skill-md",
-      "description": "Use when user wants to containerize a project, set up Docker CI/CD with GitHub Actions, push images to GHCR or Docker Hub, deploy containers to a remote server, or generate optimized Dockerfiles",
+      "description": "Generate Dockerfile and GitHub Actions CI/CD workflow for building, pushing to GHCR, and deploying containers via SSH. Multi-stage builds and caching.",
       "url": "./docker-build-deploy/SKILL.md",
-      "digest": "sha256:154f7e2087d18d5d326710229046a35e0e1007ef56b44b5919fe3c451211be38"
+      "digest": "sha256:1f7df1022fbe1163db62de5c1c5d1c28b2ff81f7f66d570bf22891c5d1f14bd9"
     },
     {
       "name": "db-migration-helper",
       "type": "skill-md",
-      "description": "Use when user wants to create database migrations, compare model changes, generate SQL migration files, manage schema changes, or handle database versioning for MySQL, PostgreSQL, or SQLite",
+      "description": "Generate database migration SQL from model changes. Compares schema, detects diffs, outputs safe migrations.",
       "url": "./db-migration-helper/SKILL.md",
-      "digest": "sha256:d41b761a194c3ecff40913dd2bcb26789999169a813f1dfef8ee2b90f3207d00"
+      "digest": "sha256:0155e2ebf29a426d8082f1f1578ed2f1ee4db9ac332d3ff408b0120ce5faac5b"
     },
     {
       "name": "github-profile-beautifier",
       "type": "skill-md",
-      "description": "Use when user wants to create or improve their GitHub profile README, generate a new profile page, beautify their existing GitHub homepage, or add stats cards, project showcase, and tech stack badges",
+      "description": "Generate themed GitHub profile README with stats cards, project showcase, tech stack badges, and contribution graph. 5 themes and smart ranking.",
       "url": "./github-profile-beautifier/SKILL.md",
-      "digest": "sha256:8bfd4734a71b844f6868727db2652412da6e70766d8451d4fad6db15e9704a7c"
+      "digest": "sha256:aecb633555dfa3a50b7325763083b3e2853ad6695a3d2c1642f1d792a5bfee4d"
     },
     {
       "name": "dependency-audit",
       "type": "skill-md",
-      "description": "Use when user wants to audit dependencies for security vulnerabilities, CVE scanning, check for outdated packages, verify license compliance, or get upgrade recommendations for npm, pip, or go modules",
+      "description": "Audit dependencies for vulnerabilities, outdated packages, and license compliance. Scans npm/pip/go/cargo projects.",
       "url": "./dependency-audit/SKILL.md",
-      "digest": "sha256:903e4abf56ddaf6a310ac4d6ecfbc7571606037ce0e6a2e00906f672c60af06b"
+      "digest": "sha256:f22a28d0c5ecb2f1af0ea38c7b0e36ceae3895943a4bae28de9c24c282a86fb0"
     }
   ]
 }
