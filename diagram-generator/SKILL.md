@@ -21,8 +21,10 @@ description: Use when user wants to create architecture diagrams, flowcharts, se
 
 **When NOT to Use:**
 - User only wants to view code structure (use AST analysis)
-- User wants UI prototypes/wireframes (different domain)
+- User wants UI prototypes/wireframes (use Figma, Sketch, or Adobe XD)
 - User wants to edit existing diagrams (provide the original file)
+- User wants to create interactive diagrams (consider D3.js or Mermaid)
+- User wants to generate diagrams from data (use charting libraries like Chart.js)
 
 ## Core Pattern
 

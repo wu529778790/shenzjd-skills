@@ -22,6 +22,8 @@ description: Use when user wants to generate API documentation, create OpenAPI/S
 - User only wants to write API descriptions in README
 - User wants to test APIs (that's a different skill)
 - User's project has no HTTP endpoints
+- User wants to generate SDK/client code (different tooling)
+- User wants to mock APIs (consider tools like Mockoon, WireMock)
 
 ## Core Pattern
 

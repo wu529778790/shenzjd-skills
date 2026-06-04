@@ -19,9 +19,11 @@ description: Use when user wants to analyze project performance, find bottleneck
 - User inputs `/performance-profiler`
 
 **When NOT to Use:**
-- User wants runtime profiling (requires dedicated APM tools)
-- User wants load testing
-- User only wants to view code coverage
+- User wants runtime profiling (requires dedicated APM tools like New Relic, Datadog)
+- User wants load testing (use k6, Locust, or Apache Bench)
+- User only wants to view code coverage (use coverage tools like Istanbul, coverage.py)
+- User wants to optimize database queries (use EXPLAIN plans, slow query logs)
+- User wants to check Core Web Vitals (use Lighthouse, PageSpeed Insights)
 
 ## Core Pattern
 
@@ -38,14 +40,45 @@ description: Use when user wants to analyze project performance, find bottleneck
 
 ```bash
 # Node.js
-npx cost-of-modules --no-install 2>/dev/null || echo "跳过"
-cat package.json | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'Dependencies: {len(d.get(\"dependencies\",{}))}, DevDependencies: {len(d.get(\"devDependencies\",{}))}')"
+if command -v node >/dev/null 2>&1; then
+  # 尝试 cost-of-modules，如果失败则使用替代方案
+  if npx cost-of-modules --no-install 2>/dev/null; then
+    echo "使用 cost-of-modules 分析完成"
+  else
+    echo "⚠️ cost-of-modules 不可用，使用替代方案"
+    cat package.json | python3 -c "
+import sys,json
+d=json.load(sys.stdin)
+deps=d.get('dependencies',{})
+dev_deps=d.get('devDependencies',{})
+print(f'Direct Dependencies: {len(deps)}')
+print(f'Dev Dependencies: {len(dev_deps)}')
+print(f'Total: {len(deps) + len(dev_deps)}')
+# 列出前 10 个依赖
+print('Top dependencies:')
+for i, (name, ver) in enumerate(list(deps.items())[:10]):
+    print(f'  {name}: {ver}')
+"
+  fi
+else
+  echo "⚠️ Node.js 未安装，跳过 Node.js 依赖分析"
+fi
 
 # Go
-cat go.mod | grep -c "require" || echo "0"
+if command -v go >/dev/null 2>&1; then
+  echo "Go dependencies:"
+  grep -c "require" go.mod 2>/dev/null || echo "0"
+else
+  echo "⚠️ go 未安装，跳过 Go 依赖分析"
+fi
 
 # Python
-wc -l requirements.txt 2>/dev/null || echo "0"
+if command -v python3 >/dev/null 2>&1; then
+  echo "Python dependencies:"
+  wc -l requirements.txt 2>/dev/null || echo "0"
+else
+  echo "⚠️ python3 未安装，跳过 Python 依赖分析"
+fi
 ```
 
 统计：

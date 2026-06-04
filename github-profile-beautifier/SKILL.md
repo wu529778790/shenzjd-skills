@@ -23,6 +23,8 @@ description: Use when user wants to create or improve their GitHub profile READM
 - User only wants to make small edits to an existing README
 - User already has a perfect README and just wants minor tweaks
 - User wants to create a personal page on a non-GitHub platform (e.g., personal website, blog)
+- User wants to generate a resume or CV (different tooling)
+- User wants to create a portfolio website (use GitHub Pages or Netlify)
 
 ## Core Pattern
 
@@ -34,14 +36,33 @@ description: Use when user wants to create or improve their GitHub profile READM
 
 ```bash
 # 检查 gh CLI
-command -v gh || { echo "请先安装 gh CLI: brew install gh"; exit 1; }
+if ! command -v gh >/dev/null 2>&1; then
+  echo "⚠️ gh CLI 未安装"
+  echo "安装方式: brew install gh"
+  echo "或使用 GitHub API 作为备选方案"
+  
+  # 备选方案：使用 GitHub API
+  if command -v curl >/dev/null 2>&1; then
+    echo "使用 GitHub API 获取用户信息..."
+    curl -s "https://api.github.com/users/$USERNAME" | python3 -c "
+import sys,json
+data=json.load(sys.stdin)
+print(f'Login: {data.get(\"login\",\"N/A\")}')
+print(f'Name: {data.get(\"name\",\"N/A\")}')
+print(f'Bio: {data.get(\"bio\",\"N/A\")}')
+"
+  else
+    echo "❌ 无法获取用户信息，请安装 gh CLI 或 curl"
+    exit 1
+  fi
+else
+  # 验证用户存在
+  gh api users/$USERNAME > /dev/null 2>&1 || { echo "用户不存在"; exit 1; }
 
-# 验证用户存在
-gh api users/$USERNAME > /dev/null 2>&1 || { echo "用户不存在"; exit 1; }
-
-# 获取用户信息和仓库
-gh api users/$USERNAME --jq '.login,.name,.bio'
-gh repo list $USERNAME --limit 50 --json name,description,primaryLanguage,url,updatedAt,stargazerCount,isFork
+  # 获取用户信息和仓库
+  gh api users/$USERNAME --jq '.login,.name,.bio'
+  gh repo list $USERNAME --limit 50 --json name,description,primaryLanguage,url,updatedAt,stargazerCount,isFork
+fi
 ```
 
 ### Step 2: 分析仓库

@@ -22,6 +22,8 @@ description: Use when user wants to audit dependencies for security vulnerabilit
 - User only wants to update dependency versions
 - User wants code-level security review (that's security-review)
 - User wants to analyze runtime dependencies (requires APM tools)
+- User wants to check for license compatibility in depth (consider FOSSA or Snyk)
+- User wants to scan Docker images for vulnerabilities (use Trivy or Grype)
 
 ## Core Pattern
 
@@ -39,35 +41,60 @@ description: Use when user wants to audit dependencies for security vulnerabilit
 ### Step 2: 漏洞扫描
 
 ```bash
+# 工具可用性检查
+check_tool() {
+  command -v "$1" >/dev/null 2>&1 || { echo "⚠️ $1 未安装，跳过 $2 审计"; return 1; }
+}
+
 # npm
-npm audit --json 2>/dev/null | python3 -c "
+if check_tool "npm" "npm"; then
+  npm audit --json 2>/dev/null | python3 -c "
 import sys,json
 data=json.load(sys.stdin)
 vulns=data.get('vulnerabilities',{})
 print(f'Total: {len(vulns)} vulnerabilities')
 for name,v in vulns.items():
     print(f'  {name}: {v.get(\"severity\",\"unknown\")} - {v.get(\"title\",\"\")}')
-"
+" || echo "npm audit 失败，尝试: npm audit fix"
+fi
 
 # Go
-go install golang.org/x/vuln/cmd/govulncheck@latest
-$(go env GOPATH)/bin/govulncheck ./... 2>/dev/null
+if check_tool "go" "Go"; then
+  go install golang.org/x/vuln/cmd/govulncheck@latest 2>/dev/null
+  $(go env GOPATH)/bin/govulncheck ./... 2>/dev/null || echo "govulncheck 失败，检查 Go 版本"
+fi
 
 # Python
-pip-audit 2>/dev/null || echo "pip-audit 未安装，运行: pip install pip-audit"
+if check_tool "pip-audit" "Python"; then
+  pip-audit 2>/dev/null || echo "pip-audit 执行失败，尝试: pip install pip-audit"
+else
+  echo "安装 pip-audit: pip install pip-audit"
+fi
 ```
 
 ### Step 3: 过时依赖检测
 
 ```bash
 # npm
-npx npm-check-updates --format table 2>/dev/null
+if command -v npx >/dev/null 2>&1; then
+  npx npm-check-updates --format table 2>/dev/null || echo "npm-check-updates 失败"
+else
+  echo "⚠️ npx 未安装，跳过 npm 过时检测"
+fi
 
 # Go
-go list -m -u all 2>/dev/null | grep "\[" 
+if command -v go >/dev/null 2>&1; then
+  go list -m -u all 2>/dev/null | grep "\[" || echo "无过时依赖"
+else
+  echo "⚠️ go 未安装，跳过 Go 过时检测"
+fi
 
 # Python
-pip list --outdated 2>/dev/null
+if command -v pip >/dev/null 2>&1; then
+  pip list --outdated 2>/dev/null || echo "pip list 失败"
+else
+  echo "⚠️ pip 未安装，跳过 Python 过时检测"
+fi
 ```
 
 统计：
@@ -79,7 +106,8 @@ pip list --outdated 2>/dev/null
 
 ```bash
 # npm
-npx license-checker --json 2>/dev/null | python3 -c "
+if command -v npx >/dev/null 2>&1; then
+  npx license-checker --json 2>/dev/null | python3 -c "
 import sys,json
 data=json.load(sys.stdin)
 licenses={}
@@ -88,10 +116,18 @@ for k,v in data.items():
     licenses[lic]=licenses.get(lic,0)+1
 for l,c in sorted(licenses.items(),key=lambda x:-x[1]):
     print(f'  {l}: {c}')
-"
+" || echo "license-checker 失败"
+else
+  echo "⚠️ npx 未安装，跳过 npm license 检查"
+fi
 
 # Go
-go-licenses csv ./... 2>/dev/null
+if command -v go-licenses >/dev/null 2>&1; then
+  go-licenses csv ./... 2>/dev/null || echo "go-licenses 失败"
+else
+  echo "⚠️ go-licenses 未安装，跳过 Go license 检查"
+  echo "安装: go install github.com/google/go-licenses@latest"
+fi
 ```
 
 检测：

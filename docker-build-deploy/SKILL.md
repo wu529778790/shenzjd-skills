@@ -20,8 +20,9 @@ description: Use when user wants to containerize a project, set up Docker CI/CD 
 
 **When NOT to Use:**
 - User only wants to write a Dockerfile
-- User deploys with Kubernetes (different workflow)
-- User doesn't use GitHub Actions
+- User deploys with Kubernetes (different workflow - consider `kubectl` or Helm)
+- User doesn't use GitHub Actions (consider GitLab CI, CircleCI, etc.)
+- User wants to deploy to AWS ECS/EKS, Google Cloud Run, or Azure Container Instances (different workflows)
 
 ## Core Pattern
 

@@ -23,6 +23,9 @@ description: Use when user wants to burn tokens productively before they expire,
 - User wants to work on a specific, well-defined task (use normal workflow)
 - User wants to chat or brainstorm (no token waste concern)
 - User's project has no code to improve
+- User wants to run automated tests only (use test runner directly)
+- User wants to generate documentation only (use doc generation tools)
+- User wants to refactor specific files (do it manually for better control)
 
 ## Core Pattern
 

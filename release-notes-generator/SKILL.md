@@ -21,6 +21,8 @@ description: Use when creating git tags, releases, or version bumps, or when use
 **When NOT to Use:**
 - User only wants to view git log
 - User wants to modify existing release notes
+- User wants to generate changelogs for multiple repositories (different tooling)
+- User wants to automate release notes in CI/CD (consider semantic-release or release-please)
 
 ## Core Pattern
 
@@ -45,7 +47,15 @@ git diff ${PREV_TAG}..HEAD --stat
 | 📝 Documentation | `docs:` | 文档 |
 | ♻️ Refactor | `refactor:` | 重构 |
 | 🔧 Chores | `chore:` | 构建/工具/配置 |
-| 💥 Breaking Changes | `BREAKING CHANGE` | 破坏性变更 |
+| ⚡ Performance | `perf:` | 性能优化 |
+| 🧪 Tests | `test:` | 测试 |
+| 🔒 Security | `security:` | 安全修复 |
+| 💥 Breaking Changes | `BREAKING CHANGE` 或 `!` 后缀 | 破坏性变更 |
+
+**Breaking Changes 检测规则：**
+1. commit 消息包含 `BREAKING CHANGE:` 或 `BREAKING CHANGES:`
+2. commit 类型后带 `!`（如 `feat!:`、`fix!:`）
+3. commit body 中包含破坏性变更说明
 
 读取 commit 消息中的 conventional commit 前缀，没有前缀的根据文件变更推断。
 

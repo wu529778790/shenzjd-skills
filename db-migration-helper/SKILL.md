@@ -22,6 +22,8 @@ description: Use when user wants to create database migrations, compare model ch
 - User only wants to view current database structure
 - User wants data migration (not schema changes)
 - User uses ORM auto-migration (e.g., Prisma migrate, Alembic)
+- User wants to generate seed data (different tooling)
+- User wants to backup/restore database (use native DB tools)
 
 ## Core Pattern
 
@@ -38,7 +40,10 @@ description: Use when user wants to create database migrations, compare model ch
 ### Step 2: 提取当前 Schema
 
 ```bash
-# Prisma
+# Prisma (v5+)
+npx prisma db pull 2>/dev/null
+
+# Prisma (v4 及更早)
 npx prisma introspect 2>/dev/null
 
 # 通用 — 从代码提取

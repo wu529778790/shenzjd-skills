@@ -22,6 +22,8 @@ description: Use when user wants to set up git hooks, configure pre-commit check
 - User only wants to view current git hooks configuration
 - User wants CI-based checks (no local hooks needed)
 - User's project already has a complete hooks setup
+- User wants to run hooks on specific files only (use lint-staged directly)
+- User wants to hook into Git events other than pre-commit/commit-msg/push
 
 ## Core Pattern
 
@@ -29,16 +31,42 @@ description: Use when user wants to set up git hooks, configure pre-commit check
 
 ```bash
 # 检测包管理器
-ls package-lock.json && echo "npm"
-ls yarn.lock && echo "yarn"
-ls pnpm-lock.yaml && echo "pnpm"
+if [ -f "package-lock.json" ]; then
+  echo "npm"
+  PACKAGE_MANAGER="npm"
+elif [ -f "yarn.lock" ]; then
+  echo "yarn"
+  PACKAGE_MANAGER="yarn"
+elif [ -f "pnpm-lock.yaml" ]; then
+  echo "pnpm"
+  PACKAGE_MANAGER="pnpm"
+else
+  echo "未检测到包管理器"
+  PACKAGE_MANAGER="unknown"
+fi
 
 # 检测是否已有 hooks
-ls .husky/ 2>/dev/null && echo "husky 已配置"
-cat .git/hooks/pre-commit 2>/dev/null && echo "原生 hooks 已配置"
+if [ -d ".husky" ]; then
+  echo "husky 已配置"
+elif [ -f ".git/hooks/pre-commit" ]; then
+  echo "原生 hooks 已配置"
+fi
 
 # 检测 lint 工具
-cat package.json | python3 -c "import sys,json; d=json.load(sys.stdin); print([k for k in d.get('devDependencies',{}) if 'eslint' in k or 'prettier' in k or 'lint' in k])"
+if [ -f "package.json" ]; then
+  echo "已安装的 lint 工具:"
+  cat package.json | python3 -c "
+import sys,json
+d=json.load(sys.stdin)
+dev_deps=d.get('devDependencies',{})
+lint_tools=[k for k in dev_deps if 'eslint' in k or 'prettier' in k or 'lint' in k]
+if lint_tools:
+    for tool in lint_tools:
+        print(f'  - {tool}')
+else:
+    print('  未检测到 lint 工具')
+"
+fi
 ```
 
 ### Step 2: 选择方案
@@ -54,24 +82,47 @@ cat package.json | python3 -c "import sys,json; d=json.load(sys.stdin); print([k
 **方案 A: Husky**
 
 ```bash
-npx husky init
+# 根据包管理器选择命令
+if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
+  pnpm dlx husky init
+elif [ "$PACKAGE_MANAGER" = "yarn" ]; then
+  yarn dlx husky init
+else
+  npx husky init
+fi
 ```
 
 生成 `.husky/pre-commit`：
 ```bash
-npx lint-staged
+# 根据包管理器选择命令
+if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
+  pnpm dlx lint-staged
+elif [ "$PACKAGE_MANAGER" = "yarn" ]; then
+  yarn dlx lint-staged
+else
+  npx lint-staged
+fi
 ```
 
 生成 `.husky/commit-msg`：
 ```bash
-npx --no -- commitlint --edit ${1}
+# 根据包管理器选择命令
+if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
+  pnpm dlx --no -- commitlint --edit ${1}
+elif [ "$PACKAGE_MANAGER" = "yarn" ]; then
+  yarn dlx --no -- commitlint --edit ${1}
+else
+  npx --no -- commitlint --edit ${1}
+fi
 ```
 
-生成 `.huskyrc` 或 `lint-staged` 配置：
+生成 `lint-staged` 配置（在 `package.json` 中）：
 ```json
 {
-  "*.{ts,tsx,js,jsx}": ["eslint --fix", "prettier --write"],
-  "*.{json,md,yml}": ["prettier --write"]
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": ["eslint --fix", "prettier --write"],
+    "*.{json,md,yml}": ["prettier --write"]
+  }
 }
 ```
 
