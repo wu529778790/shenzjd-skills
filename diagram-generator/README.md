@@ -1,6 +1,6 @@
-# Diagram Generator
+# 📊 Diagram Generator
 
-Generate architecture diagrams, flowcharts, and sequence diagrams from natural language descriptions. Supports Mermaid and Excalidraw formats.
+Generate professional dark-themed SVG diagrams from natural language descriptions. Supports architecture, flowchart, sequence, structural, mind map, timeline, and state machine diagrams.
 
 ## Installation
 
@@ -19,33 +19,37 @@ cp -r shenzjd-skills/diagram-generator ~/.claude/skills/
 ## Usage
 
 ```bash
-/diagram-generator                         # Interactive
-/diagram-generator --type flowchart        # Specify type
-/diagram-generator --format excalidraw     # Excalidraw format
-/diagram-generator --render                # Auto-render PNG
+/diagram-generator                         # Interactive — asks for diagram type
+/diagram-generator 架构图                   # Architecture diagram
+/diagram-generator 流程图                   # Flowchart
+/diagram-generator 时序图                   # Sequence diagram
+/diagram-generator 类图                     # Class diagram
 ```
 
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| `--type` | flowchart / sequence / er / state / class / gantt | Auto-detect |
-| `--format` | mermaid / excalidraw | mermaid |
-| `--output` | Output directory | `./` |
-| `--render` | Render to PNG | false |
+| Hint | Description | Default |
+|------|-------------|---------|
+| `类型` | Diagram type (architecture/flowchart/sequence/structural/mindmap/timeline/state) | Auto-detect |
+| `方向` | Layout direction (ltr/ttb) | Auto-select |
 
 ## Supported Diagram Types
 
-| Type | Use Case | Keywords |
-|------|----------|----------|
-| flowchart | Flowchart | process, steps, decision, condition |
-| sequence | Sequence diagram | call, request, response, interaction |
-| er | ER diagram | table, relationship, foreign key, database |
-| state | State diagram | state, lifecycle, transition |
-| class | Class diagram | class, inheritance, interface, implementation |
-| gantt | Gantt chart | schedule, plan, milestone |
+| Type | Use Case | Output |
+|------|----------|--------|
+| 🏗️ Architecture | System components & relationships | SVG |
+| 🔄 Flowchart | Decision logic, process steps | SVG |
+| 📨 Sequence | Time-ordered interactions | SVG |
+| 📐 Structural | Class/ER/org chart diagrams | SVG |
+| 🧠 Mind Map | Brainstorming, topic exploration | SVG |
+| ⏱️ Timeline | Chronological events | SVG |
+| ⚙️ State Machine | State transitions, lifecycle | SVG |
 
-## Output Formats
+## Design System
 
-| Format | Extension | Rendering |
-|--------|-----------|-----------|
-| Mermaid | `.mmd` | GitHub / Notion / Typora / VS Code |
-| Excalidraw | `.excalidraw` | excalidraw.com |
+- **Theme:** Dark (slate-900 background with grid)
+- **Colors:** 8 semantic colors (cyan, emerald, violet, amber, rose, orange, slate, blue)
+- **Font:** JetBrains Mono + Noto Sans SC (CJK support)
+- **Output:** Single self-contained SVG file
+
+## Prerequisites
+
+- None — SVG output is self-contained
