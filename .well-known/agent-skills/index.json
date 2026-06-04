@@ -6,14 +6,14 @@
       "type": "skill-md",
       "description": "Use when user wants to generate API documentation, create OpenAPI/Swagger specs, document REST or GraphQL endpoints, auto-generate docs from code, or produce interactive API reference pages",
       "url": "./api-doc-generator/SKILL.md",
-      "digest": "sha256:eecd05ed7bdfc2c700913d7680ad2d9802838d4e0deaf6ea025692f935152e6d"
+      "digest": "sha256:a0278ad53185e6f0ae27f210ea98a1818815213b34ef832b539da113a6af5a96"
     },
     {
       "name": "git-hooks-setup",
       "type": "skill-md",
       "description": "Use when user wants to set up git hooks, configure pre-commit checks, enforce commit message conventions, automate linting and formatting on commit, or standardize team development workflow with husky or lefthook",
       "url": "./git-hooks-setup/SKILL.md",
-      "digest": "sha256:b76bfc57266c220aa15e3a78652031e097d9e1817214ef5efc3f30586122b6d5"
+      "digest": "sha256:78772933332de31b1fc0d4eb473d0da6a6216608abf9b3773302cf31852d1b0c"
     },
     {
       "name": "release-notes-generator",
@@ -34,7 +34,7 @@
       "type": "skill-md",
       "description": "Use when user wants to create architecture diagrams, flowcharts, sequence diagrams, ER diagrams, or visualize system design, workflows, and data pipelines",
       "url": "./diagram-generator/SKILL.md",
-      "digest": "sha256:2cd63fb3bf7fda5d65bb6c8de237fccf02826a1bcd7dbb1876eec1137eb330ae"
+      "digest": "sha256:2bb4d50ac50afd6fc9667ac1d06e51b0d442d4e6a76901cc9c7c7c6b30c7673a"
     },
     {
       "name": "docker-build-deploy",
@@ -55,14 +55,14 @@
       "type": "skill-md",
       "description": "Use when user wants to create or improve their GitHub profile README, generate a new profile page, beautify their existing GitHub homepage, or add stats cards, project showcase, and tech stack badges",
       "url": "./github-profile-beautifier/SKILL.md",
-      "digest": "sha256:9495677fe30a3d6df8d8b36b0a8b7211dec388a917ebf9a9d526c91cd6e7d2f4"
+      "digest": "sha256:d51a1d75ebc7aaac2a13e1f8c5d962ed059e3cf535c3c9b36b702d5a2ebc8263"
     },
     {
       "name": "dependency-audit",
       "type": "skill-md",
       "description": "Use when user wants to audit dependencies for security vulnerabilities, CVE scanning, check for outdated packages, verify license compliance, or get upgrade recommendations for npm, pip, or go modules",
       "url": "./dependency-audit/SKILL.md",
-      "digest": "sha256:9c90026110fbb83cc5cc396ba73711ab7535fc823f7f11d362a0f5cbf30bcefb"
+      "digest": "sha256:dc7108c3a856462e0c56fbf33d7172852576f9d637ecfc5c26cf6d7e6e05c505"
     }
   ]
 }
