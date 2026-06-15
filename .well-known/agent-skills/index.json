@@ -2,53 +2,11 @@
   "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
   "skills": [
     {
-      "name": "release-notes-generator",
-      "type": "skill-md",
-      "description": "Use when generating release notes or a changelog from git history / conventional commits — categorizes changes, detects breaking changes, optionally creates a git tag and GitHub Release.",
-      "url": "./release-notes-generator/SKILL.md",
-      "digest": "sha256:9c00ad44aae9c3e36596a85a0343c012dc564c107bf31144dbda1f06bfef4886"
-    },
-    {
-      "name": "db-migration-helper",
-      "type": "skill-md",
-      "description": "Use when generating database migration SQL from model or schema changes — compares current vs desired schema, detects diffs, outputs reversible safe migrations.",
-      "url": "./db-migration-helper/SKILL.md",
-      "digest": "sha256:aff1933cfb7c9f89477f5f96c43b4526212d2cdcd15c3ed9ef6aebf1874cc3e4"
-    },
-    {
       "name": "dependency-audit",
       "type": "skill-md",
       "description": "Use when auditing project dependencies for security vulnerabilities, outdated packages, or license compliance across npm/yarn/pnpm, pip, go, and cargo.",
       "url": "./dependency-audit/SKILL.md",
       "digest": "sha256:4ce439d299fa04b4ccae9ea14abb8567039619bd00549ac34901c309e0cb072a"
-    },
-    {
-      "name": "docker-build-deploy",
-      "type": "skill-md",
-      "description": "Use when containerizing a Node.js app and setting up GitHub Actions CI/CD to build, push to GHCR, and deploy via SSH. Multi-stage build, non-root user, caching.",
-      "url": "./docker-build-deploy/SKILL.md",
-      "digest": "sha256:7b51e5a49fa68049ca55953d884db7529bdcc6b99b32d2b9870df0dc85ee70a2"
-    },
-    {
-      "name": "github-profile-beautifier",
-      "type": "skill-md",
-      "description": "Use when creating or improving a GitHub profile README — themed stats cards, project showcase, tech-stack badges, and typing banner. 5 themes, smart project ranking (snake contribution graph needs separate setup).",
-      "url": "./github-profile-beautifier/SKILL.md",
-      "digest": "sha256:74d98eca112c4d903e83544bbccb4638be13dece5a2c828d7451c28b3ca9fc59"
-    },
-    {
-      "name": "git-hooks-setup",
-      "type": "skill-md",
-      "description": "Use when setting up git hooks (pre-commit, commit-msg, pre-push) with husky or native hooks for linting, formatting, commit conventions, and secret scanning.",
-      "url": "./git-hooks-setup/SKILL.md",
-      "digest": "sha256:f5b89da7a6af4d996f494fe936aebf9b8bf1f1d442a155f616e18f6f765f0676"
-    },
-    {
-      "name": "performance-profiler",
-      "type": "skill-md",
-      "description": "Use when profiling a Node/Go/Python project for performance bottlenecks — bundle size, dependency bloat, large files, unused code — and outputting prioritized optimization recommendations.",
-      "url": "./performance-profiler/SKILL.md",
-      "digest": "sha256:955a56abd1c599816554d714b43872d51121cd6d06634db10b7d94258b3ffa73"
     },
     {
       "name": "api-doc-generator",
@@ -58,11 +16,53 @@
       "digest": "sha256:a45ca6766879c7574b0e381ba6140adab4f9b0924b4dfed55891415ada07a0cd"
     },
     {
+      "name": "release-notes-generator",
+      "type": "skill-md",
+      "description": "Use when generating release notes or a changelog from git history / conventional commits — categorizes changes, detects breaking changes, optionally creates a git tag and GitHub Release.",
+      "url": "./release-notes-generator/SKILL.md",
+      "digest": "sha256:9c00ad44aae9c3e36596a85a0343c012dc564c107bf31144dbda1f06bfef4886"
+    },
+    {
+      "name": "git-hooks-setup",
+      "type": "skill-md",
+      "description": "Use when setting up git hooks (pre-commit, commit-msg, pre-push) with husky or native hooks for linting, formatting, commit conventions, and secret scanning.",
+      "url": "./git-hooks-setup/SKILL.md",
+      "digest": "sha256:f5b89da7a6af4d996f494fe936aebf9b8bf1f1d442a155f616e18f6f765f0676"
+    },
+    {
+      "name": "github-profile-beautifier",
+      "type": "skill-md",
+      "description": "Use when creating or improving a GitHub profile README — themed stats cards, project showcase, tech-stack badges, and typing banner. 5 themes, smart project ranking (snake contribution graph needs separate setup).",
+      "url": "./github-profile-beautifier/SKILL.md",
+      "digest": "sha256:74d98eca112c4d903e83544bbccb4638be13dece5a2c828d7451c28b3ca9fc59"
+    },
+    {
+      "name": "performance-profiler",
+      "type": "skill-md",
+      "description": "Use when profiling a Node/Go/Python project for performance bottlenecks — bundle size, dependency bloat, large files, unused code — and outputting prioritized optimization recommendations.",
+      "url": "./performance-profiler/SKILL.md",
+      "digest": "sha256:955a56abd1c599816554d714b43872d51121cd6d06634db10b7d94258b3ffa73"
+    },
+    {
       "name": "token-burner",
       "type": "skill-md",
       "description": "Use when autonomously burning tokens on productive project improvements — code review, tests, docs, dependency audit, refactoring. Each task isolated in a git worktree with verification before merge.",
       "url": "./token-burner/SKILL.md",
       "digest": "sha256:23fc08cd54fa919a657f25c43c47726ee342a3216b4bba875f4c0212133669c9"
+    },
+    {
+      "name": "db-migration-helper",
+      "type": "skill-md",
+      "description": "Use when generating database migration SQL from model or schema changes — compares current vs desired schema, detects diffs, outputs reversible safe migrations.",
+      "url": "./db-migration-helper/SKILL.md",
+      "digest": "sha256:aff1933cfb7c9f89477f5f96c43b4526212d2cdcd15c3ed9ef6aebf1874cc3e4"
+    },
+    {
+      "name": "docker-build-deploy",
+      "type": "skill-md",
+      "description": "Use when containerizing a Node.js app and setting up GitHub Actions CI/CD to build, push to GHCR, and deploy via SSH. Multi-stage build, non-root user, caching.",
+      "url": "./docker-build-deploy/SKILL.md",
+      "digest": "sha256:7b51e5a49fa68049ca55953d884db7529bdcc6b99b32d2b9870df0dc85ee70a2"
     }
   ]
 }
