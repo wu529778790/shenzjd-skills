@@ -1,6 +1,6 @@
 ---
 name: docker-build-deploy
-description: Generate Dockerfile and GitHub Actions CI/CD workflow for building, pushing to GHCR, and deploying containers via SSH. Multi-stage builds and caching.
+description: Use when containerizing a Node.js app and setting up GitHub Actions CI/CD to build, push to GHCR, and deploy via SSH. Multi-stage build, non-root user, caching.
 ---
 
 # Docker Build & Deploy
@@ -33,17 +33,17 @@ description: Generate Dockerfile and GitHub Actions CI/CD workflow for building,
 
 ### Step 1: 收集信息
 
-交互式询问：`port`（默认 3000）、`env_file`（服务器 env 路径，可选）、项目类型。
+交互式询问：`port`（容器内端口，默认 3000）、`host_port`（对外暴露端口，默认同 port）、`env_file`（服务器 env 路径，可选）。
 
-智能检测：有 `package.json` → Node.js，有 `go.mod` → Go，有 `requirements.txt` → Python。已有 Dockerfile 则跳过生成。
+智能检测：有 `package.json` → Node.js（当前唯一支持的项目类型）。已有 Dockerfile 则跳过生成。
 
 ### Step 2: 生成 Dockerfile（如需要）
 
-根据项目类型生成优化的 Dockerfile：多阶段构建、非 root 用户、健康检查。模板见 `templates/Dockerfile.nodejs`。
+生成优化的 Node.js Dockerfile：多阶段构建、非 root 用户、健康检查。模板见 `templates/Dockerfile.nodejs`。
 
 ### Step 3: 生成 Workflow
 
-从 `templates/docker-deploy.yml` 生成工作流，替换 `{{PORT}}` 和 `{{ENV_FILE}}` 变量。
+从 `templates/docker-deploy.yml` 生成工作流，替换 `{{PORT}}`（容器端口）、`{{HOST_PORT}}`（对外端口）和 `{{ENV_FILE}}` 变量。
 
 **build-and-push job：** 登录 GHCR → Buildx 构建 → 推送（tag: latest + sha）→ GHA 缓存
 
@@ -63,7 +63,8 @@ description: Generate Dockerfile and GitHub Actions CI/CD workflow for building,
 
 | 参数 | 说明 | 默认值 |
 |------|------|--------|
-| `--port` | 容器对外端口 | 3000 |
+| `--port` | 容器内应用端口 | 3000 |
+| `--host-port` | 服务器对外暴露端口 | 同 `--port` |
 | `--env-file` | 服务器 env 文件路径 | 空 |
 
 ## Common Mistakes

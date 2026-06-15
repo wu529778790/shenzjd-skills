@@ -1,6 +1,6 @@
 ---
 name: token-burner
-description: Autonomously scan and improve a project — code review, tests, docs, dependency audit, refactoring. Each task isolated in a worktree with verification.
+description: Use when autonomously burning tokens on productive project improvements — code review, tests, docs, dependency audit, refactoring. Each task isolated in a git worktree with verification before merge.
 ---
 
 # Token Burner
@@ -105,8 +105,9 @@ command -v pip-audit >/dev/null 2>&1 || echo "⚠️ pip-audit 未安装，Pytho
   max_retries = 3
   while retries < max_retries:
     1. Agent(task.prompt, {
+         subagent_type: "general-purpose",
          isolation: "worktree",
-         label: "token-burner:" + task.type
+         description: "token-burner:" + task.type
        })
     2. 在 worktree 中跑测试验证
     3. 如果测试通过 → 合并到主分支，break
@@ -134,24 +135,7 @@ command -v pip-audit >/dev/null 2>&1 || echo "⚠️ pip-audit 未安装，Pytho
 
 ### Step 4: 记录和报告
 
-每个任务完成后记录到 memory：
-
-```markdown
-## Token Burner 执行记录
-
-### 最近一次运行
-- 时间：YYYY-MM-DD HH:MM
-- 项目：project-name
-- 执行任务数：N
-- 成功：N / 失败：N / 跳过：N
-
-### 任务详情
-| # | 类型 | 文件 | 状态 | 说明 |
-|---|------|------|------|------|
-| 1 | 🧪 测试 | src/utils.ts | ✅ 成功 | 生成 5 个测试用例 |
-| 2 | 📝 文档 | README.md | ✅ 成功 | 补充 API 文档 |
-| 3 | ♻️ 重构 | src/helper.ts | ❌ 失败 | 测试未通过，已回滚 |
-```
+每个任务完成后记录到 memory（任务类型、文件、状态、说明），执行结构见 `templates/execution-report.md`。
 
 ### Step 5: 收尾
 

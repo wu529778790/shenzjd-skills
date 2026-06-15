@@ -1,6 +1,6 @@
 ---
 name: dependency-audit
-description: Audit dependencies for vulnerabilities, outdated packages, and license compliance. Scans npm/pip/go/cargo projects.
+description: Use when auditing project dependencies for security vulnerabilities, outdated packages, or license compliance across npm/yarn/pnpm, pip, go, and cargo.
 ---
 
 # Dependency Audit
@@ -55,7 +55,9 @@ data=json.load(sys.stdin)
 vulns=data.get('vulnerabilities',{})
 print(f'Total: {len(vulns)} vulnerabilities')
 for name,v in vulns.items():
-    print(f'  {name}: {v.get(\"severity\",\"unknown\")} - {v.get(\"title\",\"\")}')
+    via=v.get('via',[])
+    title=next((x.get('title','') for x in via if isinstance(x,dict) and x.get('title')),'')
+    print(f'  {name}: {v.get(\"severity\",\"unknown\")} - {title}')
 " || echo "npm audit 失败，尝试: npm audit fix"
 fi
 
@@ -67,7 +69,7 @@ fi
 
 # Python
 if check_tool "pip-audit" "Python"; then
-  pip-audit 2>/dev/null || echo "pip-audit 执行失败，尝试: pip install pip-audit"
+  pip-audit 2>/dev/null; rc=$?; if [ $rc -gt 1 ]; then echo "pip-audit 执行失败 (exit $rc)，尝试: pip install pip-audit"; fi
 else
   echo "安装 pip-audit: pip install pip-audit"
 fi
@@ -124,7 +126,7 @@ fi
 
 # Go
 if command -v go-licenses >/dev/null 2>&1; then
-  go-licenses csv ./... 2>/dev/null || echo "go-licenses 失败"
+  go-licenses csv . 2>/dev/null || echo "go-licenses 失败"
 else
   echo "⚠️ go-licenses 未安装，跳过 Go license 检查"
   echo "安装: go install github.com/google/go-licenses@latest"

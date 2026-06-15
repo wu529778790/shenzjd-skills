@@ -1,6 +1,6 @@
 ---
 name: db-migration-helper
-description: Generate database migration SQL from model changes. Compares schema, detects diffs, outputs safe migrations.
+description: Use when generating database migration SQL from model or schema changes — compares current vs desired schema, detects diffs, outputs reversible safe migrations.
 ---
 
 # DB Migration Helper

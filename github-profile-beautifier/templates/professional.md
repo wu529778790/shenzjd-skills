@@ -6,7 +6,7 @@
 
 ## {{bio}}
 
-[![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines={{typing_lines}}&font=Fira+Code&size=18&color=2E86AB&vCenter=true&width=400&height=40)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com/?lines={{typing_lines}}&font=Fira+Code&size=18&color=2E86AB&vCenter=true&width=400&height=40)](https://github.com/DenverCoder1/readme-typing-svg)
 
 </div>
 

@@ -30,6 +30,27 @@
 {{/each}}
 {{/if}}
 
+{{#if perf}}
+### ⚡ Performance
+{{#each perf}}
+- {{message}}
+{{/each}}
+{{/if}}
+
+{{#if tests}}
+### 🧪 Tests
+{{#each tests}}
+- {{message}}
+{{/each}}
+{{/if}}
+
+{{#if security}}
+### 🔒 Security
+{{#each security}}
+- {{message}}
+{{/each}}
+{{/if}}
+
 {{#if breaking}}
 ### 💥 Breaking Changes
 {{#each breaking}}

@@ -1,6 +1,6 @@
 ---
 name: performance-profiler
-description: Analyze performance bottlenecks — bundle size, dependency bloat, unused code, slow patterns — and output prioritized optimization recommendations.
+description: Use when profiling a Node/Go/Python project for performance bottlenecks — bundle size, dependency bloat, large files, unused code — and outputting prioritized optimization recommendations.
 ---
 
 # Performance Profiler
@@ -9,7 +9,7 @@ description: Analyze performance bottlenecks — bundle size, dependency bloat, 
 
 ## Overview
 
-扫描项目代码和配置，检测性能问题：bundle 体积、依赖膨胀、大文件、N+1 查询模式、未优化的资源。输出按影响程度排序的可执行优化建议报告。
+扫描项目代码和配置，检测性能问题：bundle 体积、依赖膨胀、大文件、未优化的资源。输出按影响程度排序的可执行优化建议报告。
 
 ## When to Use
 
@@ -38,7 +38,6 @@ description: Analyze performance bottlenecks — bundle size, dependency bloat, 
 | `package.json` | Node.js / 前端 | bundle size、依赖数量、tree-shaking |
 | `go.mod` | Go | 二进制大小、依赖数量 |
 | `requirements.txt` / `pyproject.toml` | Python | 依赖数量、重复依赖 |
-| `Cargo.toml` | Rust | 编译时间、依赖数量 |
 
 ### Step 2: 分析依赖
 
@@ -46,7 +45,7 @@ description: Analyze performance bottlenecks — bundle size, dependency bloat, 
 # Node.js
 if command -v node >/dev/null 2>&1; then
   # 尝试 cost-of-modules，如果失败则使用替代方案
-  if npx cost-of-modules --no-install 2>/dev/null; then
+  if npx --yes cost-of-modules 2>/dev/null; then
     echo "使用 cost-of-modules 分析完成"
   else
     echo "⚠️ cost-of-modules 不可用，使用替代方案"
@@ -71,7 +70,7 @@ fi
 # Go
 if command -v go >/dev/null 2>&1; then
   echo "Go dependencies:"
-  grep -c "require" go.mod 2>/dev/null || echo "0"
+  go list -m all 2>/dev/null | tail -n +2 | wc -l || echo "0"
 else
   echo "⚠️ go 未安装，跳过 Go 依赖分析"
 fi
@@ -79,14 +78,18 @@ fi
 # Python
 if command -v python3 >/dev/null 2>&1; then
   echo "Python dependencies:"
-  wc -l requirements.txt 2>/dev/null || echo "0"
+  grep -cvE '^\s*(#|$)' requirements.txt 2>/dev/null || echo "0"
 else
   echo "⚠️ python3 未安装，跳过 Python 依赖分析"
 fi
 ```
 
-统计：
-- 直接依赖数量
+统计（对应 `templates/report.md` 的变量）：
+- `dep_count`：直接依赖数量（Node `len(dependencies)` / Go `go list -m all` 计数 / Python requirements 行数）
+- `total_dep_count`：含间接依赖的总数（解析 `package-lock.json` / `go list -m all` / `pip list`）
+- `outdated_count`：过时依赖数量（`npm outdated --json` / `go list -m -u all` / `pip list --outdated`）
+- `health_score`：综合评分（依赖规模、过时比例、冗余情况，0-100）
+- `deps[].size`：包大小（来自 cost-of-modules 或 bundlephobia；无则留空）
 - 重复依赖（不同包引入同一依赖的不同版本）
 - 可能的冗余依赖
 
@@ -119,15 +122,8 @@ fi
 ## Quick Reference
 
 ```bash
-/performance-profiler              # 分析当前项目
-/performance-profiler --fix        # 分析并自动修复可修复的问题
-/performance-profiler --json       # 输出 JSON 格式报告
+/performance-profiler              # 分析当前项目，输出优化建议报告
 ```
-
-| 参数 | 说明 | 默认值 |
-|------|------|--------|
-| `--fix` | 自动修复可安全修复的问题 | false |
-| `--json` | 输出 JSON 格式 | false |
 
 ## Common Mistakes
 

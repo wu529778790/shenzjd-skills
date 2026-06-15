@@ -1,6 +1,6 @@
 ---
 name: github-profile-beautifier
-description: Generate themed GitHub profile README with stats cards, project showcase, tech stack badges, and contribution graph. 5 themes and smart ranking.
+description: Use when creating or improving a GitHub profile README — themed stats cards, project showcase, tech-stack badges, and typing banner. 5 themes, smart project ranking (snake contribution graph needs separate setup).
 ---
 
 # GitHub Profile Beautifier
@@ -46,7 +46,7 @@ if ! command -v gh >/dev/null 2>&1; then
   echo "或使用 GitHub API 作为备选方案"
   
   # 备选方案：使用 GitHub API
-  if command -v curl >/dev/null 2>&1; then
+  if command -v curl >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1; then
     echo "使用 GitHub API 获取用户信息..."
     curl -s "https://api.github.com/users/$USERNAME" | python3 -c "
 import sys,json
@@ -56,16 +56,19 @@ print(f'Name: {data.get(\"name\",\"N/A\")}')
 print(f'Bio: {data.get(\"bio\",\"N/A\")}')
 "
   else
-    echo "❌ 无法获取用户信息，请安装 gh CLI 或 curl"
+    echo "❌ 无法获取用户信息，请安装 gh CLI，或 curl + python3"
     exit 1
   fi
 else
   # 验证用户存在
   gh api users/$USERNAME > /dev/null 2>&1 || { echo "用户不存在"; exit 1; }
 
-  # 获取用户信息和仓库
-  gh api users/$USERNAME --jq '.login,.name,.bio'
-  gh repo list $USERNAME --limit 50 --json name,description,primaryLanguage,url,updatedAt,stargazerCount,isFork
+  # 捕获用户信息和仓库到变量（供 Step 3 模板填充）
+  USER_JSON=$(gh api users/$USERNAME)
+  LOGIN=$(echo "$USER_JSON" | jq -r '.login // ""')
+  NAME=$(echo "$USER_JSON" | jq -r '.name // ""')
+  BIO=$(echo "$USER_JSON" | jq -r '.bio // ""')
+  REPOS_JSON=$(gh repo list $USERNAME --limit 50 --json name,description,primaryLanguage,url,updatedAt,stargazerCount,isFork)
 fi
 ```
 

@@ -1,6 +1,6 @@
 ---
 name: git-hooks-setup
-description: Configure git hooks (pre-commit, commit-msg, pre-push) with husky or lefthook for linting, formatting, commit conventions, and pre-push validation.
+description: Use when setting up git hooks (pre-commit, commit-msg, pre-push) with husky or native hooks for linting, formatting, commit conventions, and secret scanning.
 ---
 
 # Git Hooks Setup
@@ -9,7 +9,7 @@ description: Configure git hooks (pre-commit, commit-msg, pre-push) with husky o
 
 ## Overview
 
-自动生成 pre-commit / commit-msg / push hook 配置，包含代码格式化、commit message 校验、敏感信息检查。支持 husky、lefthook、原生 git hooks 三种方案。
+自动生成 pre-commit / commit-msg / pre-push hook 配置，包含代码格式化、commit message 校验、敏感信息检查。支持 husky 和原生 git hooks 两种方案。
 
 ## When to Use
 
@@ -53,7 +53,7 @@ fi
 # 检测是否已有 hooks
 if [ -d ".husky" ]; then
   echo "husky 已配置"
-elif [ -f ".git/hooks/pre-commit" ]; then
+elif [ -f ".git/hooks/pre-commit" ] && ! grep -q "husky" .git/hooks/pre-commit 2>/dev/null; then
   echo "原生 hooks 已配置"
 fi
 
@@ -79,7 +79,6 @@ fi
 | 方案 | 适用场景 | 优点 |
 |------|---------|------|
 | husky | Node.js 项目 | 团队协作友好，配置即代码 |
-| lefthook | 任何项目 | 更快，Go 编写 |
 | 原生 git hooks | 非 Node.js 项目 | 无依赖 |
 
 ### Step 3: 生成配置
@@ -87,13 +86,13 @@ fi
 **方案 A: Husky**
 
 ```bash
-# 根据包管理器选择命令
+# 安装 husky 并初始化
 if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
-  pnpm dlx husky init
+  pnpm add -D husky && pnpm exec husky init
 elif [ "$PACKAGE_MANAGER" = "yarn" ]; then
-  yarn dlx husky init
+  yarn add -D husky && yarn husky init
 else
-  npx husky init
+  npm install -D husky && npx husky init
 fi
 ```
 
@@ -111,11 +110,11 @@ fi
 
 生成 `.husky/commit-msg`：
 ```bash
-# 根据包管理器选择命令
+# 根据包管理器选择命令（--no 仅 npx 有效，防止 npx 联网安装）
 if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
-  pnpm dlx --no -- commitlint --edit ${1}
+  pnpm exec commitlint --edit ${1}
 elif [ "$PACKAGE_MANAGER" = "yarn" ]; then
-  yarn dlx --no -- commitlint --edit ${1}
+  yarn commitlint --edit ${1}
 else
   npx --no -- commitlint --edit ${1}
 fi
@@ -131,40 +130,69 @@ fi
 }
 ```
 
+生成 `.husky/pre-push`（可选，push 前跑测试）：
+```bash
+# 根据包管理器选择命令
+if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
+  pnpm test
+elif [ "$PACKAGE_MANAGER" = "yarn" ]; then
+  yarn test
+else
+  npm test
+fi
+```
+
 **方案 B: 原生 git hooks**
 
 ```bash
 cat > .git/hooks/pre-commit << 'EOF'
 #!/bin/sh
-# 自动 lint + format
-npm run lint -- --fix
-npm run format
+# 自动 lint + format（按项目实际替换命令；示例为 Node 项目）
+if [ -f "package.json" ] && [ -x "$(command -v npm)" ]; then
+  npm run lint -- --fix 2>/dev/null || true
+  npm run format 2>/dev/null || true
+fi
 git add -u
 EOF
 chmod +x .git/hooks/pre-commit
+
+# pre-push hook（可选，push 前跑测试；按项目实际替换）
+cat > .git/hooks/pre-push << 'EOF'
+#!/bin/sh
+if [ -f "package.json" ] && [ -x "$(command -v npm)" ]; then
+  npm test || exit 1
+fi
+EOF
+chmod +x .git/hooks/pre-push
 ```
 
 ### Step 4: 配置 Commit Message 规范
 
-使用 `templates/commitlint.config.js`：
+将 `templates/commitlint.config.js` 复制到项目根目录（`commitlint.config.js`）。该配置基于 `@commitlint/config-conventional`，校验 commit message 格式：
 
 ```
 type(scope): subject
 
-# type: feat|fix|docs|style|refactor|test|chore|perf|ci|build
+# type: feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert
 # scope: 可选，影响范围
-# subject: 简短描述，不超过 50 字符
+# subject: 简短描述（header-max-length 限制 100 字符）
+```
+
+同步安装 commitlint 依赖：
+
+```bash
+npm install -D @commitlint/cli @commitlint/config-conventional
 ```
 
 ### Step 5: 添加敏感信息检查
 
 生成 pre-commit hook 中加入：
 ```bash
-# 检查是否有密钥泄露
-git diff --cached --name-only | xargs grep -l "password\|secret\|token\|api_key" 2>/dev/null && {
-  echo "⚠️ 检测到可能的敏感信息，请检查后重新提交"
+# 检查是否有密钥泄露（仅扫描新增/修改的文本文件，跳过二进制和删除文件）
+if git diff --cached --diff-filter=ACM --name-only -z | xargs -0 grep -IlE "password|secret|token|api_key" 2>/dev/null | grep -q .; then
+  echo "警告: 检测到可能的敏感信息，请检查后重新提交"
   exit 1
-}
+fi
 ```
 
 ## Quick Reference
@@ -192,6 +220,6 @@ git diff --cached --name-only | xargs grep -l "password\|secret\|token\|api_key"
 | .git/hooks 不提交 | 用 husky/lefthook 管理 | 团队需要共享配置 |
 | pre-push hook 跑太久 | 只跑快速检查，完整测试放 CI | push 被阻塞影响效率 |
 | hook 中使用相对路径 | 使用绝对路径或项目根目录 | 不同目录执行时路径解析失败 |
-| 跳过 husky install | 在 CI 中运行 `husky install` | CI 环境 hook 不生效 |
+| 跳过 prepare 脚本 | 确保 package.json 的 `prepare` 运行 `husky`（v9+） | CI 环境 hook 不生效 |
 | commitlint 规则与团队不一致 | 使用 `commitlint.config.js` 统一配置 | 口头约定容易被违反 |
 | 不配置 --no-verify 白名单 | 允许 `--no-verify` 但记录日志 | 紧急修复时不能被完全阻断 |

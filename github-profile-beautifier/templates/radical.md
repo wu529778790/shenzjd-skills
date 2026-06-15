@@ -6,7 +6,7 @@
 
 ## 👋 {{bio}}
 
-[![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines={{typing_lines}}&font=Fira+Code&size=20&color=F7587A&vCenter=true&width=500&height=50)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com/?lines={{typing_lines}}&font=Fira+Code&size=20&color=F7587A&vCenter=true&width=500&height=50)](https://github.com/DenverCoder1/readme-typing-svg)
 
 ### 🔥 GitHub 账号状态
 
