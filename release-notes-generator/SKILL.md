@@ -1,6 +1,6 @@
 ---
 name: release-notes-generator
-description: Generate release notes and changelogs from git history using conventional commits. Auto-detects breaking changes and creates annotated tags.
+description: Use when generating release notes or a changelog from git history / conventional commits — categorizes changes, detects breaking changes, optionally creates a git tag and GitHub Release.
 ---
 
 # Release Notes Generator
@@ -69,7 +69,15 @@ git diff ${PREV_TAG}..HEAD --stat
 
 ### Step 5: 创建 Tag/Release（可选）
 
-询问用户是否创建 annotated tag 和 GitHub Release（`gh release create`）。
+询问用户是否创建 annotated tag 和 GitHub Release。用本 skill 生成的 notes 作为 release body：
+
+```bash
+# 创建 annotated tag
+git tag -a "$TAG" -m "$TAG"
+
+# 创建 GitHub Release，使用生成的 release notes
+gh release create "$TAG" --title "$TAG" --notes-file release-notes.md
+```
 
 ## Quick Reference
 

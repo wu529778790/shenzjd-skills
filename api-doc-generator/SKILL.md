@@ -1,6 +1,6 @@
 ---
 name: api-doc-generator
-description: Generate OpenAPI/Swagger API docs from code. Scans routes, extracts params/responses, outputs YAML/JSON specs.
+description: Use when generating OpenAPI/Swagger API docs from existing code — scans routes/annotations, extracts params and responses, outputs a YAML/JSON spec.
 ---
 
 # API Doc Generator
@@ -54,7 +54,7 @@ grep -rE "app\.(get|post|put|delete|patch)" --include="*.ts" --include="*.js" --
 
 ### Step 3: 生成 OpenAPI YAML
 
-使用 `templates/openapi.yaml` 作为基础结构，填充提取的信息：
+使用 `templates/openapi.yaml`（Handlebars 模板，含 `{{variable}}` 与 `{{#each}}` 占位符）作为基础。将提取的接口信息注入对应变量，渲染后输出 `openapi.yaml`。渲染结果大致如下：
 
 ```yaml
 openapi: 3.0.3
@@ -99,7 +99,6 @@ npx @redocly/cli preview-docs openapi.yaml
 |------|------|--------|
 | `--format` | 输出格式 yaml / json | yaml |
 | `--preview` | 生成交互式 HTML 文档 | false |
-| `--output` | 输出路径 | `./docs/openapi.yaml` |
 
 ## Common Mistakes
 

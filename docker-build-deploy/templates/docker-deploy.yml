@@ -32,6 +32,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          platforms: linux/amd64
           push: true
           tags: |
             ${{ env.IMAGE_NAME }}:latest
@@ -42,6 +43,8 @@ jobs:
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Deploy to server
@@ -73,7 +76,7 @@ jobs:
               --name "$CONTAINER" \
               --restart unless-stopped \
               $ENV_FLAGS \
-              -p {{PORT}}:{{PORT}} \
+              -p {{HOST_PORT}}:{{PORT}} \
               "$IMAGE"
 
             # 清理旧镜像

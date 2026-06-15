@@ -29,9 +29,12 @@ test -f pom.xml -o -f build.gradle && echo "java"
 ```bash
 # Node.js（需要 jq 和 package-lock.json）
 if command -v jq >/dev/null 2>&1 && test -f package-lock.json; then
-  audit_result=$(npm audit --json 2>/dev/null)
-  if [ $? -ne 0 ] && [ -n "$audit_result" ]; then
-    echo "$audit_result" | jq '.vulnerabilities | length' 2>/dev/null || echo "audit parse failed"
+  # npm audit 发现漏洞时退出码非 0，故不依赖退出码，直接解析 JSON
+  vuln_count=$(npm audit --json 2>/dev/null | jq '.metadata.vulnerabilities.total // (.vulnerabilities | length) // 0' 2>/dev/null)
+  if [ -n "$vuln_count" ] && [ "$vuln_count" != "null" ]; then
+    echo "npm vulnerabilities: $vuln_count"
+  else
+    echo "audit parse failed"
   fi
 elif ! test -f package-lock.json; then
   echo "⚠️ 缺少 package-lock.json，跳过 npm audit"
