@@ -2,11 +2,25 @@
   "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
   "skills": [
     {
+      "name": "dependency-audit",
+      "type": "skill-md",
+      "description": "Audit dependencies for vulnerabilities, outdated packages, and license compliance. Scans npm/pip/go/cargo projects.",
+      "url": "./dependency-audit/SKILL.md",
+      "digest": "sha256:f22a28d0c5ecb2f1af0ea38c7b0e36ceae3895943a4bae28de9c24c282a86fb0"
+    },
+    {
       "name": "api-doc-generator",
       "type": "skill-md",
       "description": "Generate OpenAPI/Swagger API docs from code. Scans routes, extracts params/responses, outputs YAML/JSON specs.",
       "url": "./api-doc-generator/SKILL.md",
       "digest": "sha256:129ec224ca7793ad1940d52a33c9f66749c28c7833abaaa426d49816bf9862b3"
+    },
+    {
+      "name": "release-notes-generator",
+      "type": "skill-md",
+      "description": "Generate release notes and changelogs from git history using conventional commits. Auto-detects breaking changes and creates annotated tags.",
+      "url": "./release-notes-generator/SKILL.md",
+      "digest": "sha256:10512522c477cb16af1ee075d4f715913f44097c5bba09b3a45996488c5518de"
     },
     {
       "name": "git-hooks-setup",
@@ -16,11 +30,11 @@
       "digest": "sha256:cf8f6a88f180b5d7bc977414f9d8a78efcad62301322478fc735812ca814db28"
     },
     {
-      "name": "release-notes-generator",
+      "name": "github-profile-beautifier",
       "type": "skill-md",
-      "description": "Generate release notes and changelogs from git history using conventional commits. Auto-detects breaking changes and creates annotated tags.",
-      "url": "./release-notes-generator/SKILL.md",
-      "digest": "sha256:10512522c477cb16af1ee075d4f715913f44097c5bba09b3a45996488c5518de"
+      "description": "Generate themed GitHub profile README with stats cards, project showcase, tech stack badges, and contribution graph. 5 themes and smart ranking.",
+      "url": "./github-profile-beautifier/SKILL.md",
+      "digest": "sha256:aecb633555dfa3a50b7325763083b3e2853ad6695a3d2c1642f1d792a5bfee4d"
     },
     {
       "name": "performance-profiler",
@@ -37,13 +51,6 @@
       "digest": "sha256:afc6fe3a94f6518daf10eb281d58ecc05192feaec24d865dcbbfab2f0f496498"
     },
     {
-      "name": "docker-build-deploy",
-      "type": "skill-md",
-      "description": "Generate Dockerfile and GitHub Actions CI/CD workflow for building, pushing to GHCR, and deploying containers via SSH. Multi-stage builds and caching.",
-      "url": "./docker-build-deploy/SKILL.md",
-      "digest": "sha256:1f7df1022fbe1163db62de5c1c5d1c28b2ff81f7f66d570bf22891c5d1f14bd9"
-    },
-    {
       "name": "db-migration-helper",
       "type": "skill-md",
       "description": "Generate database migration SQL from model changes. Compares schema, detects diffs, outputs safe migrations.",
@@ -51,18 +58,11 @@
       "digest": "sha256:0155e2ebf29a426d8082f1f1578ed2f1ee4db9ac332d3ff408b0120ce5faac5b"
     },
     {
-      "name": "github-profile-beautifier",
+      "name": "docker-build-deploy",
       "type": "skill-md",
-      "description": "Generate themed GitHub profile README with stats cards, project showcase, tech stack badges, and contribution graph. 5 themes and smart ranking.",
-      "url": "./github-profile-beautifier/SKILL.md",
-      "digest": "sha256:aecb633555dfa3a50b7325763083b3e2853ad6695a3d2c1642f1d792a5bfee4d"
-    },
-    {
-      "name": "dependency-audit",
-      "type": "skill-md",
-      "description": "Audit dependencies for vulnerabilities, outdated packages, and license compliance. Scans npm/pip/go/cargo projects.",
-      "url": "./dependency-audit/SKILL.md",
-      "digest": "sha256:f22a28d0c5ecb2f1af0ea38c7b0e36ceae3895943a4bae28de9c24c282a86fb0"
+      "description": "Generate Dockerfile and GitHub Actions CI/CD workflow for building, pushing to GHCR, and deploying containers via SSH. Multi-stage builds and caching.",
+      "url": "./docker-build-deploy/SKILL.md",
+      "digest": "sha256:1f7df1022fbe1163db62de5c1c5d1c28b2ff81f7f66d570bf22891c5d1f14bd9"
     }
   ]
 }
