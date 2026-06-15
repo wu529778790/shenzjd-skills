@@ -97,7 +97,6 @@ test-new-skill:
 | api-doc-generator | ✅ | ✅ | ✅ |
 | db-migration-helper | ✅ | ⏳ | ⏳ |
 | dependency-audit | ✅ | ✅ | ✅ |
-| diagram-generator | ✅ | ⏳ | ⏳ |
 | docker-build-deploy | ✅ | ✅ | ✅ |
 | git-hooks-setup | ✅ | ✅ | ✅ |
 | github-profile-beautifier | ✅ | ⏳ | ⏳ |

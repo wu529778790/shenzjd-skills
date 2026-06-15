@@ -37,13 +37,6 @@
       "digest": "sha256:afc6fe3a94f6518daf10eb281d58ecc05192feaec24d865dcbbfab2f0f496498"
     },
     {
-      "name": "diagram-generator",
-      "type": "skill-md",
-      "description": "Generate dark-themed SVG diagrams from text descriptions — architecture, flowchart, sequence, ER, mind map, state machine, timeline, data flow.",
-      "url": "./diagram-generator/SKILL.md",
-      "digest": "sha256:44d5c446c2b8b7f5cfb436b4273f770f8857f7aab95c54788a9bd5415a312e0e"
-    },
-    {
       "name": "docker-build-deploy",
       "type": "skill-md",
       "description": "Generate Dockerfile and GitHub Actions CI/CD workflow for building, pushing to GHCR, and deploying containers via SSH. Multi-stage builds and caching.",

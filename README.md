@@ -1,6 +1,6 @@
 # 🛠️ AI Coding Skills
 
-> 10 production-ready AI coding skill modules. One-line install, covering the full DevOps pipeline.
+> 9 production-ready AI coding skill modules. One-line install, covering the full DevOps pipeline.
 
 English | [中文](README.zh.md)
 
@@ -30,7 +30,6 @@ Supports Claude Code, Cursor, Copilot, Windsurf, Gemini CLI, Cline, Aider, and *
 | 🗄️ **db-migration-helper** | Model changes → safe migration SQL | `/db-migration-helper` |
 | 🪝 **git-hooks-setup** | One-click husky/lefthook + commitlint setup | `/git-hooks-setup` |
 | 🔒 **dependency-audit** | CVE vulnerabilities + outdated deps + license compliance | `/dependency-audit` |
-| 📊 **diagram-generator** | Auto-generate architecture/flow/sequence diagrams | `/diagram-generator` |
 | 🔥 **token-burner** | Autonomous token usage — scan, prioritize, execute tasks | `/token-burner` |
 
 ## 🎯 Coverage
@@ -55,7 +54,6 @@ npx skills add wu529778790/shenzjd-skills -s api-doc-generator -y
 npx skills add wu529778790/shenzjd-skills -s db-migration-helper -y
 npx skills add wu529778790/shenzjd-skills -s git-hooks-setup -y
 npx skills add wu529778790/shenzjd-skills -s dependency-audit -y
-npx skills add wu529778790/shenzjd-skills -s diagram-generator -y
 npx skills add wu529778790/shenzjd-skills -s docker-build-deploy -y
 npx skills add wu529778790/shenzjd-skills -s release-notes-generator -y
 npx skills add wu529778790/shenzjd-skills -s github-profile-beautifier -y

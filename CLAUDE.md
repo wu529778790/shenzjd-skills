@@ -4,54 +4,64 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A collection of AI coding assistant skills — prompt/rule documents that work across Claude Code, Cursor, Copilot, Windsurf, and other AI programming tools. Each skill is a `SKILL.md` file containing execution flow, parameters, and edge case handling that any AI tool can follow.
+A collection of AI coding assistant skills — prompt/rule documents that work across Claude Code, Cursor, Copilot, Windsurf, and other AI programming tools. Each skill is a `SKILL.md` file containing execution flow, parameters, and edge case handling that any AI tool can follow. Ten skills cover the DevOps pipeline — see `README.md` for the full list and install commands.
 
 Uses a **mixed language strategy**: AI-facing sections (frontmatter `description`, `When to Use`) are in **English** for better tool matching. Human-facing sections (`Core Pattern`, `Common Mistakes`) are in **Chinese (Mandarin)** for the target audience. README files are in **English** for global GitHub visibility.
 
-## Skill Structure
+## Commands
 
+There is no build step — this repo is documentation. The tooling is a shell-based validation and test suite.
+
+```bash
+# Full suite: structure validation + all per-skill unit tests (run before pushing)
+./tests/run-all-tests.sh
+
+# Structure validation only (frontmatter, required sections, command syntax, template refs)
+./tests/validate-skills.sh
+
+# A single skill's unit test
+./tests/skills/<skill-name>.test.sh
 ```
-<skill-name>/
-  SKILL.md              # Entry point: YAML frontmatter + execution flow
-  templates/            # Skill-specific templates and configs (optional)
-    themes.json         # Theme definitions
-    *.md                # Handlebars-style Markdown templates
-```
 
-**SKILL.md** contains:
-- YAML frontmatter with `description` (used by tools like Claude Code to match user requests to skills)
-- Step-by-step execution flow with embedded pseudocode
-- Edge case handling (missing CLI tools, network errors, etc.)
+`run-all-tests.sh` writes a throwaway `tests/TEST-REPORT-*.md` report — delete with `rm tests/TEST-REPORT-*.md`. Per-skill unit tests use the fixture projects under `tests/fixtures/` (`nodejs-express`, `go-api`, `python-fastapi`); the `nodejs-express` fixture needs a one-time `npm install` inside it before tests that scan Node projects.
 
-**Templates** use `{{variable}}` and `{{#each items}}` syntax. Variables are injected at runtime from data gathered by the skill's execution flow (e.g., GitHub API responses).
+## Architecture
 
-## Current Skills
+### Skill document convention
 
-| Skill | Trigger | Description |
-|-------|---------|-------------|
-| `github-profile-beautifier` | User wants to create/improve GitHub profile README | Generates themed profile READMEs using GitHub API data |
-| `api-doc-generator` | User wants to generate API documentation | Auto-generates OpenAPI/Swagger specs from code |
-| `db-migration-helper` | User wants to create database migrations | Analyzes model changes, generates safe migration SQL |
-| `dependency-audit` | User wants to audit project dependencies | Scans for vulnerabilities across npm/pip/go/cargo |
-| `diagram-generator` | User wants to generate diagrams | Creates Mermaid/Excalidraw diagrams from descriptions |
-| `docker-build-deploy` | User wants to containerize and deploy | Generates Docker CI/CD with GitHub Actions workflows |
-| `git-hooks-setup` | User wants to set up git hooks | Configures husky/lefthook with commitlint |
-| `performance-profiler` | User wants to profile app performance | Analyzes bottlenecks and generates optimization reports |
-| `release-notes-generator` | User wants to generate release notes | Creates changelogs from git history and PR data |
-| `token-burner` | User wants to burn tokens productively | Auto-discovers and executes code improvement tasks autonomously |
+Each `<skill-name>/SKILL.md` is YAML frontmatter + Markdown. The validator (`tests/validate-skills.sh`) enforces, and CI rejects on violation:
+
+- Frontmatter must have `name` (matching `^[a-z0-9-]{1,64}$` — lowercase alphanumeric + hyphens, no leading/trailing/consecutive hyphens) and `description` (≥20 chars; aim for 50+).
+- Required `##` sections: **Overview**, **When to Use**, **Core Pattern**, **Quick Reference**, **Common Mistakes**.
+- Every file in `templates/` must be referenced by filename from the SKILL.md.
+- Cross-skill references (`<name>/SKILL.md`) must resolve to an existing file.
+
+`description` is the field AI tools match user requests against — it's the most important line to get right when editing or adding a skill. `templates/` use `{{variable}}` and `{{#each items}}` Handlebars-style syntax, injected at runtime from data the skill's execution flow gathers (e.g. GitHub API responses).
+
+### Publishing & discovery pipeline (auto-generated — do not hand-edit)
+
+`.well-known/agent-skills/index.json` is the skills.sh / agent-skills discovery index. **It is regenerated by CI from SKILL.md frontmatter** — never edit it by hand. The `skills-publish.yml` workflow rewrites it on every push that touches a `SKILL.md` or `*/templates/**` and commits as "📦 Update skills discovery index" (a recurring automated commit — expect it in `git log`, do not revert it).
+
+Three GitHub Actions workflows:
+- **`skills-test.yml`** — on `SKILL.md`/`tests/` changes: runs structure validation + the full unit test suite. Must pass before merge.
+- **`skills-publish.yml`** — on `SKILL.md`/`templates/` changes: validates frontmatter, regenerates the discovery index, tests `npx skills add` install end-to-end.
+- **`daily-discovery.yml`** — every 2h, re-registers the repo on skills.sh so skills stay indexed.
+
+Users install via `npx skills add wu529778790/shenzjd-skills [-s <skill>] -y`.
+
+### Adding a new skill
+
+1. Create `<skill-name>/SKILL.md` with frontmatter (`name` + an English `description` of 50+ chars) and the five required sections above.
+2. Add any templates to `<skill-name>/templates/` and reference each by filename in the SKILL.md.
+3. Add `tests/skills/<skill-name>.test.sh` (mirror an existing one) and add a row to the coverage table in `tests/README.md`.
+4. Register the skill in both `README.md` and `README.zh.md`. The discovery index updates automatically on push — do not edit it.
+5. Run `./tests/run-all-tests.sh` locally before pushing.
 
 ## Runtime Dependencies
 
 - **`gh` CLI** — required for GitHub API access (authentication, repo listing). Skills check for this at runtime.
 - **External services** — templates reference third-party image/stats services (shields.io, github-readme-stats, etc.) that the end user's README will use.
 
-## Adding a New Skill
-
-1. Create `<skill-name>/SKILL.md` with YAML frontmatter (`description` field is critical for skill matching)
-2. Document the execution flow as numbered steps with embedded pseudocode
-3. Add any templates to `<skill-name>/templates/`
-4. Register in the README.md skills table
-
 ## Claude Code Configuration
 
-`.claude/settings.local.json` pre-authorizes: `WebFetch(domain:www.skills.sh)`, `WebSearch`, `Bash(gh auth *)`, `Bash(gh repo *)`, `Bash(git remote *)`. If a new skill needs additional permissions, add them here.
+`.claude/settings.local.json` pre-authorizes: `WebFetch(domain:www.skills.sh)`, `WebSearch`, `Bash(gh auth *)`, `Bash(gh repo *)`, `Bash(git remote *)`, plus the test scripts and common `git`/`gh` operations. If a new skill needs additional permissions, add them here.
