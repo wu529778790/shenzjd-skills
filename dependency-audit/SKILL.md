@@ -42,101 +42,44 @@ description: Use when auditing project dependencies for security vulnerabilities
 ### Step 2: 漏洞扫描
 
 ```bash
-# 工具可用性检查
+# 工具可用性检查（所有步骤共用）
 check_tool() {
   command -v "$1" >/dev/null 2>&1 || { echo "⚠️ $1 未安装，跳过 $2 审计"; return 1; }
 }
-
-# npm
-if check_tool "npm" "npm"; then
-  npm audit --json 2>/dev/null | python3 -c "
-import sys,json
-data=json.load(sys.stdin)
-vulns=data.get('vulnerabilities',{})
-print(f'Total: {len(vulns)} vulnerabilities')
-for name,v in vulns.items():
-    via=v.get('via',[])
-    title=next((x.get('title','') for x in via if isinstance(x,dict) and x.get('title')),'')
-    print(f'  {name}: {v.get(\"severity\",\"unknown\")} - {title}')
-" || echo "npm audit 失败，尝试: npm audit fix"
-fi
-
-# Go
-if check_tool "go" "Go"; then
-  go install golang.org/x/vuln/cmd/govulncheck@latest 2>/dev/null
-  $(go env GOPATH)/bin/govulncheck ./... 2>/dev/null || echo "govulncheck 失败，检查 Go 版本"
-fi
-
-# Python
-if check_tool "pip-audit" "Python"; then
-  pip-audit 2>/dev/null; rc=$?; if [ $rc -gt 1 ]; then echo "pip-audit 执行失败 (exit $rc)，尝试: pip install pip-audit"; fi
-else
-  echo "安装 pip-audit: pip install pip-audit"
-fi
 ```
+
+核心命令（按包管理器分别执行，缺失工具自动跳过）：
+
+| 包管理器 | 审计命令 |
+|---------|---------|
+| npm | `npm audit --json` → 解析 vulnerabilities 数量 + 严重程度 |
+| Go | `govulncheck ./...` → 安装 golang.org/x/vuln/cmd/govulncheck@latest |
+| Python | `pip-audit` → 安装: `pip install pip-audit` |
+
+输出：漏洞总数 + 按严重程度（critical/high/medium/low）分类的 CVE 列表。
 
 ### Step 3: 过时依赖检测
 
-```bash
-# npm
-if command -v npx >/dev/null 2>&1; then
-  npx npm-check-updates --format table 2>/dev/null || echo "npm-check-updates 失败"
-else
-  echo "⚠️ npx 未安装，跳过 npm 过时检测"
-fi
+核心命令（按包管理器分别执行，缺失工具自动跳过）：
 
-# Go
-if command -v go >/dev/null 2>&1; then
-  go list -m -u all 2>/dev/null | grep "\[" || echo "无过时依赖"
-else
-  echo "⚠️ go 未安装，跳过 Go 过时检测"
-fi
+| 包管理器 | 检测命令 |
+|---------|---------|
+| npm | `npx npm-check-updates --format table` |
+| Go | `go list -m -u all \| grep "\["` |
+| Python | `pip list --outdated` |
 
-# Python
-if command -v pip >/dev/null 2>&1; then
-  pip list --outdated 2>/dev/null || echo "pip list 失败"
-else
-  echo "⚠️ pip 未安装，跳过 Python 过时检测"
-fi
-```
-
-统计：
-- 过时依赖数量
-- major / minor / patch 升级分布
-- 是否有安全相关的更新
+统计：过时依赖数量、major/minor/patch 升级分布、是否有安全相关更新。
 
 ### Step 4: License 合规检查
 
-```bash
-# npm
-if command -v npx >/dev/null 2>&1; then
-  npx license-checker --json 2>/dev/null | python3 -c "
-import sys,json
-data=json.load(sys.stdin)
-licenses={}
-for k,v in data.items():
-    lic=v.get('licenses','UNKNOWN')
-    licenses[lic]=licenses.get(lic,0)+1
-for l,c in sorted(licenses.items(),key=lambda x:-x[1]):
-    print(f'  {l}: {c}')
-" || echo "license-checker 失败"
-else
-  echo "⚠️ npx 未安装，跳过 npm license 检查"
-fi
+核心命令（按包管理器分别执行）：
 
-# Go
-if command -v go-licenses >/dev/null 2>&1; then
-  go-licenses csv . 2>/dev/null || echo "go-licenses 失败"
-else
-  echo "⚠️ go-licenses 未安装，跳过 Go license 检查"
-  echo "安装: go install github.com/google/go-licenses@latest"
-fi
-```
+| 包管理器 | 检测命令 |
+|---------|---------|
+| npm | `npx license-checker --json` → 按许可证类型统计数量 |
+| Go | `go-licenses csv ./...` → 安装: `go install github.com/google/go-licenses@latest` |
 
-检测：
-- 是否有 GPL/AGPL 等 copyleft 许可证
-- 是否有未知/自定义许可证
-- 许可证兼容性
+检测重点：GPL/AGPL 等 copyleft 许可证、未知/自定义许可证、许可证兼容性。
 
 ### Step 5: 生成报告
 

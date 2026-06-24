@@ -94,6 +94,8 @@ fi
 
 读取对应主题模板，填充变量，输出完整 README.md。
 
+可用主题模板：`templates/radical.md`（炫彩）、`templates/tokyonight.md`（蓝紫）、`templates/dracula.md`（暗紫）、`templates/minimalist.md`（极简）、`templates/professional.md`（商务）。所有主题共享 `templates/themes.json` 颜色配置和 `templates/README.md` 模板文档。
+
 **Snake 贡献图：** 深色主题包含蛇形贡献图，需用户先 fork [platane/snk](https://github.com/platane/snk) 并配置 GitHub Actions，否则显示 404。
 
 ## Quick Reference

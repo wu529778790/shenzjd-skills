@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A collection of AI coding assistant skills — prompt/rule documents that work across Claude Code, Cursor, Copilot, Windsurf, and other AI programming tools. Each skill is a `SKILL.md` file containing execution flow, parameters, and edge case handling that any AI tool can follow. Ten skills cover the DevOps pipeline — see `README.md` for the full list and install commands.
+A collection of AI coding assistant skills — prompt/rule documents that work across Claude Code, Cursor, Copilot, Windsurf, and other AI programming tools. Each skill is a `SKILL.md` file containing execution flow, parameters, and edge case handling that any AI tool can follow. Nine skills cover the DevOps pipeline — see `README.md` for the full list and install commands.
 
 Uses a **mixed language strategy**: AI-facing sections (frontmatter `description`, `When to Use`) are in **English** for better tool matching. Human-facing sections (`Core Pattern`, `Common Mistakes`) are in **Chinese (Mandarin)** for the target audience. README files are in **English** for global GitHub visibility.
 

@@ -95,14 +95,14 @@ test-new-skill:
 | Skill | 结构验证 | 集成测试 | 测试用例 |
 |-------|----------|----------|----------|
 | api-doc-generator | ✅ | ✅ | ✅ |
-| db-migration-helper | ✅ | ⏳ | ⏳ |
+| db-migration-helper | ✅ | ✅ | ✅ |
 | dependency-audit | ✅ | ✅ | ✅ |
 | docker-build-deploy | ✅ | ✅ | ✅ |
 | git-hooks-setup | ✅ | ✅ | ✅ |
-| github-profile-beautifier | ✅ | ⏳ | ⏳ |
+| github-profile-beautifier | ✅ | ✅ | ✅ |
 | performance-profiler | ✅ | ✅ | ✅ |
 | release-notes-generator | ✅ | ✅ | ✅ |
-| token-burner | ✅ | ⏳ | ⏳ |
+| token-burner | ✅ | ✅ | ✅ |
 
 **图例：** ✅ 已实现 | ⏳ 待实现
 

@@ -41,13 +41,17 @@ jobs:
       - name: Search skills.sh for our skills
         run: |
           echo "🔎 Searching skills.sh..."
-          for skill in release-notes-generator docker-build-deploy github-profile-beautifier performance-profiler api-doc-generator db-migration-helper git-hooks-setup dependency-audit token-burner; do
-            result=$(curl -s "https://skills.sh/api/search?q=${skill}&limit=1" 2>/dev/null)
+          # 动态读取所有 skill 目录名，无需手动维护列表
+          for skill in */; do
+            skill_name="${skill%/}"
+            # 跳过非 skill 目录
+            [ -f "$skill_name/SKILL.md" ] || continue
+            result=$(curl -s "https://skills.sh/api/search?q=${skill_name}&limit=1" 2>/dev/null)
             count=$(echo "$result" | jq -r '.count // 0 | tonumber' 2>/dev/null || echo "0")
             if [ "$count" -gt 0 ]; then
               installs=$(echo "$result" | jq -r '.skills[0].installs // "?"' 2>/dev/null || echo "?")
-              echo "  ✅ $skill — found, installs: $installs"
+              echo "  ✅ $skill_name — found, installs: $installs"
             else
-              echo "  ⏳ $skill — not yet indexed"
+              echo "  ⏳ $skill_name — not yet indexed"
             fi
           done

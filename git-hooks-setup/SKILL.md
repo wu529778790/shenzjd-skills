@@ -35,43 +35,16 @@ description: Use when setting up git hooks (pre-commit, commit-msg, pre-push) wi
 ### Step 1: 检测项目环境
 
 ```bash
-# 检测包管理器
-if [ -f "package-lock.json" ]; then
-  echo "npm"
-  PACKAGE_MANAGER="npm"
-elif [ -f "yarn.lock" ]; then
-  echo "yarn"
-  PACKAGE_MANAGER="yarn"
-elif [ -f "pnpm-lock.yaml" ]; then
-  echo "pnpm"
-  PACKAGE_MANAGER="pnpm"
-else
-  echo "未检测到包管理器"
-  PACKAGE_MANAGER="unknown"
-fi
+# 检测包管理器（按 lock 文件判断）
+if [ -f "package-lock.json" ]; then PACKAGE_MANAGER="npm"
+elif [ -f "yarn.lock" ]; then PACKAGE_MANAGER="yarn"
+elif [ -f "pnpm-lock.yaml" ]; then PACKAGE_MANAGER="pnpm"
 
-# 检测是否已有 hooks
-if [ -d ".husky" ]; then
-  echo "husky 已配置"
-elif [ -f ".git/hooks/pre-commit" ] && ! grep -q "husky" .git/hooks/pre-commit 2>/dev/null; then
-  echo "原生 hooks 已配置"
-fi
+# 检测已有 hooks 配置
+test -d ".husky" && echo "husky 已配置"
+test -f ".git/hooks/pre-commit" && echo "原生 hooks 已配置"
 
-# 检测 lint 工具
-if [ -f "package.json" ]; then
-  echo "已安装的 lint 工具:"
-  cat package.json | python3 -c "
-import sys,json
-d=json.load(sys.stdin)
-dev_deps=d.get('devDependencies',{})
-lint_tools=[k for k in dev_deps if 'eslint' in k or 'prettier' in k or 'lint' in k]
-if lint_tools:
-    for tool in lint_tools:
-        print(f'  - {tool}')
-else:
-    print('  未检测到 lint 工具')
-"
-fi
+# 从 package.json 检测已安装的 lint 工具（eslint/prettier/lint 相关）
 ```
 
 ### Step 2: 选择方案
@@ -86,41 +59,13 @@ fi
 **方案 A: Husky**
 
 ```bash
-# 安装 husky 并初始化
-if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
-  pnpm add -D husky && pnpm exec husky init
-elif [ "$PACKAGE_MANAGER" = "yarn" ]; then
-  yarn add -D husky && yarn husky init
-else
-  npm install -D husky && npx husky init
-fi
+# 根据 $PACKAGE_MANAGER 选择: pnpm dlx / yarn dlx / npx
+husky init    # 初始化 husky
 ```
 
-生成 `.husky/pre-commit`：
-```bash
-# 根据包管理器选择命令
-if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
-  pnpm dlx lint-staged
-elif [ "$PACKAGE_MANAGER" = "yarn" ]; then
-  yarn dlx lint-staged
-else
-  npx lint-staged
-fi
-```
+生成 `.husky/pre-commit`（执行 `lint-staged`）和 `.husky/commit-msg`（执行 `commitlint`），注意 commitlint 需加 `--no` 前缀避免交互式安装。
 
-生成 `.husky/commit-msg`：
-```bash
-# 根据包管理器选择命令（--no 仅 npx 有效，防止 npx 联网安装）
-if [ "$PACKAGE_MANAGER" = "pnpm" ]; then
-  pnpm exec commitlint --edit ${1}
-elif [ "$PACKAGE_MANAGER" = "yarn" ]; then
-  yarn commitlint --edit ${1}
-else
-  npx --no -- commitlint --edit ${1}
-fi
-```
-
-生成 `lint-staged` 配置（在 `package.json` 中）：
+生成 `lint-staged` 配置（写入 `package.json`）：
 ```json
 {
   "lint-staged": {
