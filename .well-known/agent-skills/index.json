@@ -6,7 +6,7 @@
       "type": "skill-md",
       "description": "Use when auditing project dependencies for security vulnerabilities, outdated packages, or license compliance across npm/yarn/pnpm, pip, go, and cargo.",
       "url": "./dependency-audit/SKILL.md",
-      "digest": "sha256:4ce439d299fa04b4ccae9ea14abb8567039619bd00549ac34901c309e0cb072a"
+      "digest": "sha256:735e5d1f772656789540d10bf87dc5af824f5ac271f4d75f86d14bdad8e8006b"
     },
     {
       "name": "api-doc-generator",
@@ -27,14 +27,14 @@
       "type": "skill-md",
       "description": "Use when setting up git hooks (pre-commit, commit-msg, pre-push) with husky or native hooks for linting, formatting, commit conventions, and secret scanning.",
       "url": "./git-hooks-setup/SKILL.md",
-      "digest": "sha256:f5b89da7a6af4d996f494fe936aebf9b8bf1f1d442a155f616e18f6f765f0676"
+      "digest": "sha256:34fd0799db8422c68ea41ebf6c4f6ee9a6a89b902f3adabe9062acecde9c2819"
     },
     {
       "name": "github-profile-beautifier",
       "type": "skill-md",
       "description": "Use when creating or improving a GitHub profile README — themed stats cards, project showcase, tech-stack badges, and typing banner. 5 themes, smart project ranking (snake contribution graph needs separate setup).",
       "url": "./github-profile-beautifier/SKILL.md",
-      "digest": "sha256:74d98eca112c4d903e83544bbccb4638be13dece5a2c828d7451c28b3ca9fc59"
+      "digest": "sha256:4d14365b4c605f42b7b2f632978126e4ebdcc2fbd7c92c50e89cdfb545b67268"
     },
     {
       "name": "performance-profiler",
