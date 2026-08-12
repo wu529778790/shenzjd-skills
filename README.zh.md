@@ -1,6 +1,6 @@
 # 🛠️ AI Coding Skills
 
-> 9 个生产级 AI 编程技能模块，一行命令安装，覆盖 DevOps 全链路。
+> 10 个生产级 AI 编程技能模块，一行命令安装，覆盖 DevOps 全链路。
 
 [![skills.sh](https://img.shields.io/badge/skills.sh-查找我-blue)](https://skills.sh/wu529778790/shenzjd-skills)
 
@@ -31,6 +31,7 @@ npx skills add wu529778790/shenzjd-skills -s token-burner -y
 | 🪝 **git-hooks-setup** | 一键配置 husky/lefthook + commitlint | `/git-hooks-setup` |
 | 🔒 **dependency-audit** | CVE 漏洞 + 过时依赖 + License 合规 | `/dependency-audit` |
 | 🔥 **token-burner** | 自主消耗 token — 扫描、排序、执行任务 | `/token-burner` |
+| 🖼️ **imgx-figure-bed** | 上传图片到 GitHub 图床，生成 CDN/Markdown 链接 | `/imgx-figure-bed upload.png` |
 
 ## 🎯 覆盖场景
 
@@ -44,6 +45,8 @@ npx skills add wu529778790/shenzjd-skills -s token-burner -y
 依赖 → 安全审计 → License 合规
   ↓
 发布 → Release Notes → 版本管理
+  ↓
+素材 → GitHub 图床 → CDN 链接
 ```
 
 ## 📂 单独安装某个 Skill
@@ -58,6 +61,7 @@ npx skills add wu529778790/shenzjd-skills -s docker-build-deploy -y
 npx skills add wu529778790/shenzjd-skills -s release-notes-generator -y
 npx skills add wu529778790/shenzjd-skills -s github-profile-beautifier -y
 npx skills add wu529778790/shenzjd-skills -s token-burner -y
+npx skills add wu529778790/shenzjd-skills -s imgx-figure-bed -y
 ```
 
 ## 📄 License
