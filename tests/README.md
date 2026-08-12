@@ -26,7 +26,6 @@
 - **validate-structure**: 结构验证
 - **test-dependency-audit**: 依赖审计测试
 - **test-git-hooks-setup**: Git Hooks 配置测试
-- **test-release-notes-generator**: Release Notes 生成测试
 - **test-docker-build-deploy**: Docker 构建部署测试
 
 ### 3. 测试用例 (`fixtures/`)
@@ -96,9 +95,6 @@ test-new-skill:
 | dependency-audit | ✅ | ✅ | ✅ |
 | docker-build-deploy | ✅ | ✅ | ✅ |
 | git-hooks-setup | ✅ | ✅ | ✅ |
-| github-profile-beautifier | ✅ | ✅ | ✅ |
-| release-notes-generator | ✅ | ✅ | ✅ |
-| token-burner | ✅ | ✅ | ✅ |
 
 **图例：** ✅ 已实现 | ⏳ 待实现
 

@@ -2,13 +2,6 @@
   "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
   "skills": [
     {
-      "name": "token-burner",
-      "type": "skill-md",
-      "description": "Use when autonomously burning tokens on productive project improvements — code review, tests, docs, dependency audit, refactoring. Each task isolated in a git worktree with verification before merge.",
-      "url": "./token-burner/SKILL.md",
-      "digest": "sha256:23fc08cd54fa919a657f25c43c47726ee342a3216b4bba875f4c0212133669c9"
-    },
-    {
       "name": "db-migration-helper",
       "type": "skill-md",
       "description": "Use when generating database migration SQL from model or schema changes — compares current vs desired schema, detects diffs, outputs reversible safe migrations.",
@@ -21,20 +14,6 @@
       "description": "Use when setting up git hooks (pre-commit, commit-msg, pre-push) with husky or native hooks for linting, formatting, commit conventions, and secret scanning.",
       "url": "./git-hooks-setup/SKILL.md",
       "digest": "sha256:34fd0799db8422c68ea41ebf6c4f6ee9a6a89b902f3adabe9062acecde9c2819"
-    },
-    {
-      "name": "github-profile-beautifier",
-      "type": "skill-md",
-      "description": "Use when creating or improving a GitHub profile README — themed stats cards, project showcase, tech-stack badges, and typing banner. 5 themes, smart project ranking (snake contribution graph needs separate setup).",
-      "url": "./github-profile-beautifier/SKILL.md",
-      "digest": "sha256:4d14365b4c605f42b7b2f632978126e4ebdcc2fbd7c92c50e89cdfb545b67268"
-    },
-    {
-      "name": "release-notes-generator",
-      "type": "skill-md",
-      "description": "Use when generating release notes or a changelog from git history / conventional commits — categorizes changes, detects breaking changes, optionally creates a git tag and GitHub Release.",
-      "url": "./release-notes-generator/SKILL.md",
-      "digest": "sha256:9c00ad44aae9c3e36596a85a0343c012dc564c107bf31144dbda1f06bfef4886"
     },
     {
       "name": "dependency-audit",

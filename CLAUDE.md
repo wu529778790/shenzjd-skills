@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A collection of AI coding assistant skills — prompt/rule documents that work across Claude Code, Cursor, Copilot, Windsurf, and other AI programming tools. Each skill is a `SKILL.md` file containing execution flow, parameters, and edge case handling that any AI tool can follow. Eight skills cover the DevOps pipeline — see `README.md` for the full list and install commands.
+A collection of AI coding assistant skills — prompt/rule documents that work across Claude Code, Cursor, Copilot, Windsurf, and other AI programming tools. Each skill is a `SKILL.md` file containing execution flow, parameters, and edge case handling that any AI tool can follow. Five skills cover the DevOps pipeline — see `README.md` for the full list and install commands.
 
 Uses a **mixed language strategy**: AI-facing sections (frontmatter `description`, `When to Use`) are in **English** for better tool matching. Human-facing sections (`Core Pattern`, `Common Mistakes`) are in **Chinese (Mandarin)** for the target audience. README files are in **English** for global GitHub visibility.
 
@@ -60,7 +60,7 @@ Users install via `npx skills add wu529778790/shenzjd-skills [-s <skill>] -y`.
 ## Runtime Dependencies
 
 - **`gh` CLI** — required for GitHub API access (authentication, repo listing). Skills check for this at runtime.
-- **External services** — templates reference third-party image/stats services (shields.io, github-readme-stats, etc.) that the end user's README will use.
+- **External services** — templates reference third-party services (e.g. CDN hosts like jsDelivr for the figure bed) that the end user will use.
 
 ## Claude Code Configuration
 
