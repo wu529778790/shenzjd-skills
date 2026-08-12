@@ -24,9 +24,7 @@
 在 CI/CD 中自动运行：
 
 - **validate-structure**: 结构验证
-- **test-api-doc-generator**: API 文档生成测试
 - **test-dependency-audit**: 依赖审计测试
-- **test-performance-profiler**: 性能分析测试
 - **test-git-hooks-setup**: Git Hooks 配置测试
 - **test-release-notes-generator**: Release Notes 生成测试
 - **test-docker-build-deploy**: Docker 构建部署测试
@@ -94,13 +92,11 @@ test-new-skill:
 
 | Skill | 结构验证 | 集成测试 | 测试用例 |
 |-------|----------|----------|----------|
-| api-doc-generator | ✅ | ✅ | ✅ |
 | db-migration-helper | ✅ | ✅ | ✅ |
 | dependency-audit | ✅ | ✅ | ✅ |
 | docker-build-deploy | ✅ | ✅ | ✅ |
 | git-hooks-setup | ✅ | ✅ | ✅ |
 | github-profile-beautifier | ✅ | ✅ | ✅ |
-| performance-profiler | ✅ | ✅ | ✅ |
 | release-notes-generator | ✅ | ✅ | ✅ |
 | token-burner | ✅ | ✅ | ✅ |
 
