@@ -1,4 +1,4 @@
-# imgx-figure-bed
+# github-figure-bed
 
 通用 GitHub 图床上传 skill：把本地图片上传到任意 GitHub 仓库，生成 CDN 链接（Markdown / 纯 URL），支持删除与列表管理。
 
@@ -48,10 +48,10 @@
 
 ```bash
 # 方式一: 从 shenzjd-skills 一键安装
-npx skills add wu529778790/shenzjd-skills -s imgx-figure-bed -y
+npx skills add wu529778790/shenzjd-skills -s github-figure-bed -y
 
 # 方式二: 直接复制本目录到技能目录
-cp -r imgx-figure-bed ~/.workbuddy/skills/
+cp -r github-figure-bed ~/.workbuddy/skills/
 ```
 
 安装后，直接说「上传 xxx.png 到图床」「图床里有哪些图」即可触发。

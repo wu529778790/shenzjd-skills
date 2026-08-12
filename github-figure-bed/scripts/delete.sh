@@ -1,5 +1,5 @@
 #!/bin/bash
-# imgx-figure-bed: 通用 GitHub 图床删除脚本
+# github-figure-bed: 通用 GitHub 图床删除脚本
 #
 # 配置优先级 (高→低): 命令行参数 > 环境变量 IMGX_* > 脚本内 DEFAULT_* 默认区
 #   环境变量: IMGX_OWNER / IMGX_REPO / IMGX_BRANCH / IMGX_DIR
@@ -78,14 +78,14 @@ for NAME in "${FILES[@]}"; do
   FULL_PATH="${PATH_PREFIX}/${NAME}"
 
   # 获取 sha
-  SHA=$(gh api "repos/${OWNER}/${REPO}/contents/${FULL_PATH}?ref=${BRANCH}" --jq .sha 2>/tmp/imgx_gh_err.txt) \
-    || { echo "{\"file\":\"$NAME\",\"path\":\"$FULL_PATH\",\"deleted\":false,\"error\":\"文件不存在或无法访问: $(cat /tmp/imgx_gh_err.txt)\"}" >&2; continue; }
+  SHA=$(gh api "repos/${OWNER}/${REPO}/contents/${FULL_PATH}?ref=${BRANCH}" --jq .sha 2>/tmp/gfb_gh_err.txt) \
+    || { echo "{\"file\":\"$NAME\",\"path\":\"$FULL_PATH\",\"deleted\":false,\"error\":\"文件不存在或无法访问: $(cat /tmp/gfb_gh_err.txt)\"}" >&2; continue; }
 
   gh api --method DELETE "repos/${OWNER}/${REPO}/contents/${FULL_PATH}" \
-    -f message="[skip ci] delete via imgx-figure-bed" \
+    -f message="[skip ci] delete via github-figure-bed" \
     -f sha="$SHA" \
-    -f branch="$BRANCH" >/dev/null 2>/tmp/imgx_gh_err.txt \
-    || { echo "{\"file\":\"$NAME\",\"path\":\"$FULL_PATH\",\"deleted\":false,\"error\":\"$(cat /tmp/imgx_gh_err.txt)\"}" >&2; continue; }
+    -f branch="$BRANCH" >/dev/null 2>/tmp/gfb_gh_err.txt \
+    || { echo "{\"file\":\"$NAME\",\"path\":\"$FULL_PATH\",\"deleted\":false,\"error\":\"$(cat /tmp/gfb_gh_err.txt)\"}" >&2; continue; }
 
   [[ "$SILENT" -eq 0 ]] && echo "✓ 已删除 ${FULL_PATH}" >&2
 

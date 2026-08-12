@@ -1,9 +1,9 @@
 ---
-name: imgx-figure-bed
-description: Upload images to any GitHub repo as a figure bed and get CDN links (jsdelivr/jsdmirror/raw). Use when the user wants to upload local images to GitHub, generate CDN/markdown image links, delete hosted images, or list images in a GitHub-hosted image repository. Keywords: figure bed, image host, CDN link, jsdelivr, jsdmirror, upload image to GitHub, 图床, 上传图片, CDN 链接.
+name: github-figure-bed
+description: Upload images to any GitHub repo as a figure bed and get CDN links (jsdelivr/jsdmirror/raw). Use when the user wants to upload local images to GitHub, generate CDN/markdown image links, delete hosted images, or list images in a GitHub-hosted image repository. Keywords: github figure bed, image host, CDN link, jsdelivr, jsdmirror, upload image to GitHub, 图床, 上传图片, CDN 链接.
 ---
 
-# ImgX Figure Bed
+# GitHub Figure Bed
 
 把本地图片上传到任意 GitHub 仓库（图床），生成可直接粘贴的 CDN 链接
 （Markdown / 纯 URL），并支持删除、列表管理。不依赖前端，任何环境（含整理素材时）都能用。

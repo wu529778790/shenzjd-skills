@@ -1,5 +1,5 @@
 #!/bin/bash
-# imgx-figure-bed: 通用 GitHub 图床上传脚本
+# github-figure-bed: 通用 GitHub 图床上传脚本
 # 依赖: gh CLI (已登录, 需 repo 权限), base64, jq
 #
 # 配置优先级 (高→低): 命令行参数 > 环境变量 IMGX_* > 脚本内 DEFAULT_* 默认区
@@ -153,14 +153,14 @@ for LOCAL_FILE in "${FILES[@]}"; do
 
   # 用文件流拼 JSON payload (base64 字符集无需转义)
   {
-    printf '{"message":"[skip ci] upload via imgx-figure-bed","content":"'
+    printf '{"message":"[skip ci] upload via github-figure-bed","content":"'
     cat "$TMP_B64"
     printf '","branch":"%s"}' "$BRANCH"
   } > "$TMP_JSON"
 
   RESP=$(gh api --method PUT "repos/${OWNER}/${REPO}/contents/${REMOTE_PATH}" \
-    --input "$TMP_JSON" --jq '{sha: .content.sha, html_url: .content.html_url}' 2>/tmp/imgx_gh_err.txt) \
-    || { echo "上传失败 ${LOCAL_FILE}: $(cat /tmp/imgx_gh_err.txt)" >&2; continue; }
+    --input "$TMP_JSON" --jq '{sha: .content.sha, html_url: .content.html_url}' 2>/tmp/gfb_gh_err.txt) \
+    || { echo "上传失败 ${LOCAL_FILE}: $(cat /tmp/gfb_gh_err.txt)" >&2; continue; }
 
   HTML_URL=$(echo "$RESP" | jq -r .html_url)
   CDN_URL="${CDN_BASE}/${REMOTE_PATH}"

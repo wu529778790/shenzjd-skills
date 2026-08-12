@@ -31,7 +31,7 @@ Supports Claude Code, Cursor, Copilot, Windsurf, Gemini CLI, Cline, Aider, and *
 | 🪝 **git-hooks-setup** | One-click husky/lefthook + commitlint setup | `/git-hooks-setup` |
 | 🔒 **dependency-audit** | CVE vulnerabilities + outdated deps + license compliance | `/dependency-audit` |
 | 🔥 **token-burner** | Autonomous token usage — scan, prioritize, execute tasks | `/token-burner` |
-| 🖼️ **imgx-figure-bed** | Upload images to any GitHub repo, get CDN/Markdown links | `/imgx-figure-bed upload.png` |
+| 🖼️ **github-figure-bed** | Upload images to any GitHub repo, get CDN/Markdown links | `/github-figure-bed upload.png` |
 
 ## 🎯 Coverage
 
@@ -61,5 +61,5 @@ npx skills add wu529778790/shenzjd-skills -s docker-build-deploy -y
 npx skills add wu529778790/shenzjd-skills -s release-notes-generator -y
 npx skills add wu529778790/shenzjd-skills -s github-profile-beautifier -y
 npx skills add wu529778790/shenzjd-skills -s token-burner -y
-npx skills add wu529778790/shenzjd-skills -s imgx-figure-bed -y
+npx skills add wu529778790/shenzjd-skills -s github-figure-bed -y
 ```

@@ -1,5 +1,5 @@
 #!/bin/bash
-# imgx-figure-bed: 通用 GitHub 图床列表脚本
+# github-figure-bed: 通用 GitHub 图床列表脚本
 #
 # 配置优先级 (高→低): 命令行参数 > 环境变量 IMGX_* > 脚本内 DEFAULT_* 默认区
 #   环境变量: IMGX_OWNER / IMGX_REPO / IMGX_BRANCH / IMGX_DIR
