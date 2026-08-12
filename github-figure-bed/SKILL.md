@@ -15,8 +15,8 @@ description: Upload images to any GitHub repo as a figure bed and get CDN links 
 并返回 CDN 加速链接。支持多 CDN、多文件、子目录、重名保护。
 
 **零配置体验**：首次使用运行 `scripts/setup.sh` 一键初始化 —— 自动引导登录、
-检测/创建仓库、探测分支、生成配置文件。之后用户只需对 AI 说「上传 xxx.png 到图床」，
-无需手动配置任何东西。
+检测/创建仓库、**读取仓库配置并与 img.shenzjd.com 项目网页端联动**、探测分支、
+生成本地缓存。之后用户只需对 AI 说「上传 xxx.png 到图床」，无需手动配置任何东西。
 
 ## When to Use
 
@@ -49,17 +49,24 @@ scripts/setup.sh
 2. **自动获取 Owner**：取当前登录的 GitHub 用户名，无需手填
 3. **仓库就绪**：检测默认仓库 `img.shenzjd.com`；不存在则自动创建（public），
    并写入宣传/使用说明 README
-4. **分支探测**：自动找出图片目录实际所在分支（规避 default_branch 与图片分支不一致的坑）
-5. **配置落盘**：写入 `~/.config/github-figure-bed/config.env`，
+4. **配置联动（核心）**：读取仓库的 `.imgx-config/config.json`（与 img.shenzjd.com
+   项目网页端**共用同一份配置**），自动继承 branch/directory/cdn；
+   仓库没有配置时，初始化一份项目格式配置写回仓库（网页端即可直接使用）
+5. **分支探测**：自动找出图片目录实际所在分支（规避 default_branch 与图片分支不一致的坑）
+6. **配置落盘**：写入本地缓存 `~/.config/github-figure-bed/config.env`，
    三个操作脚本自动读取，之后**零参数直接使用**
-6. **自测**：上传一张 1x1 测试图并删除，验证全链路
+7. **自测**：上传一张 1x1 测试图并删除，验证全链路
 
 可选参数：`--repo <仓库名>` 换仓库名；`--cdn <cdn>` 换默认 CDN；
 `--no-test` 跳过自测；`--force-readme` 强制重写宣传 README。
 
 ### Step 1: 确定目标仓库与配置
 
-优先级（高→低）：**命令行参数 > 环境变量 `IMGX_*` > 配置文件 `~/.config/github-figure-bed/config.env`（setup.sh 生成） > 脚本内 `DEFAULT_*` 默认区**。
+优先级（高→低）：**命令行参数 > 环境变量 `IMGX_*` > 本地缓存 `~/.config/github-figure-bed/config.env`（setup.sh 从远程同步） > 脚本内 `DEFAULT_*` 默认区**。
+
+**配置联动**：远程配置源为仓库 `.imgx-config/config.json`（与 img.shenzjd.com
+项目网页端共用），setup.sh 自动读取并同步到本地缓存；项目网页端修改配置后，
+重跑 `setup.sh` 即可刷新本地。
 
 - 仓库：setup.sh 已自动配置（默认 `img.shenzjd.com`）；上传到其他仓库时再传 `--owner/--repo`
 - 分支：不指定时自动检测仓库 `default_branch`（一般就是 `main`，零配置）
@@ -131,6 +138,8 @@ scripts/list.sh [关键词] [--owner O] [--repo R] [--branch B] [--dir 子目录
 - **忘记指定仓库**：`owner/repo` 由 setup.sh 自动写入配置文件，无需手填；
   未 setup 时需传参或设 `IMGX_OWNER`/`IMGX_REPO`，脚本无法凭空推断目标仓库。
 - **从未运行 setup 就上传**：会因 owner/repo 为空而报错，先跑 `setup.sh`。
+- **网页端改配置后本地未同步**：远程配置（`.imgx-config/config.json`）变化后，
+  重跑 `setup.sh` 刷新本地缓存。
 - **大图失败**：脚本已用临时文件拼 JSON payload 规避命令行长度限制，若仍失败检查
   GitHub 仓库 100MB 单文件限制与网络。
 - **上传后立即访问 404**：CDN 有缓存，通常数秒~数分钟生效，稍后重试。
