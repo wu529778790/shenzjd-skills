@@ -1,6 +1,23 @@
 # github-figure-bed
 
-通用 GitHub 图床上传 skill：把本地图片上传到任意 GitHub 仓库，生成 CDN 链接（Markdown / 纯 URL），支持删除与列表管理。
+通用 GitHub 图床上传 skill：把本地图片上传到任意 GitHub 仓库，生成 CDN 链接（Markdown / 纯 URL），支持删除与列表管理。**登录即用、零手动配置**。
+
+## 🚀 一键初始化（首次使用）
+
+```bash
+./scripts/setup.sh
+```
+
+自动完成：登录引导（未登录时打开浏览器授权，只需一次）→ 获取你的 GitHub 用户名 →
+检测/创建图床仓库（默认 `img.shenzjd.com`，不存在自动创建并写入宣传 README）→
+探测正确分支 → 写入配置文件 `~/.config/github-figure-bed/config.env` →
+上传 1x1 测试图验证全链路。
+
+之后上传**不需要任何参数**：
+
+```bash
+./scripts/upload.sh photo.png
+```
 
 ## 快速开始
 
@@ -21,18 +38,18 @@
 
 ## 配置
 
-优先级（高→低）：命令行参数 > 环境变量 `IMGX_*` > 脚本内 `DEFAULT_*` 默认区。
+优先级（高→低）：命令行参数 > 环境变量 `IMGX_*` > 配置文件 `~/.config/github-figure-bed/config.env`（setup.sh 生成）> 脚本内 `DEFAULT_*` 默认区。
 
 | 环境变量 | 作用 | 默认 |
 |----------|------|------|
-| `IMGX_OWNER` | GitHub 用户名 | 无（必填） |
-| `IMGX_REPO` | 图床仓库名 | 无（必填） |
-| `IMGX_BRANCH` | 分支 | 自动检测 `default_branch` |
+| `IMGX_OWNER` | GitHub 用户名 | setup.sh 自动获取 |
+| `IMGX_REPO` | 图床仓库名 | `img.shenzjd.com`（setup 自动创建） |
+| `IMGX_BRANCH` | 分支 | 自动检测/探测 |
 | `IMGX_CDN` | CDN | `jsdelivr` |
 | `IMGX_DIR` | 基础目录 | `blog` |
 
-常用做法：在 shell profile 里 `export IMGX_OWNER=alice IMGX_REPO=my-figure-bed`，
-日常使用即可免传 `--owner/--repo`。个人固定配置也可直接改脚本顶部 `DEFAULT_*` 区。
+绝大多数情况跑一次 `setup.sh` 就全部配置好了；也可在 shell profile 里
+`export IMGX_OWNER=alice IMGX_REPO=my-figure-bed`，或直接改脚本顶部 `DEFAULT_*` 区。
 
 ## CDN 支持
 

@@ -20,6 +20,19 @@ DEFAULT_BRANCH=""
 DEFAULT_DIR="blog"
 # ============================================================
 
+# 读取配置文件 (setup.sh 生成; 优先级: 命令行参数 > 环境变量 > 配置文件 > 默认区)
+CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/github-figure-bed/config.env"
+if [[ -f "$CONFIG_FILE" ]]; then
+  while IFS='=' read -r _KEY _VAL; do
+    case "$_KEY" in
+      IMGX_OWNER)  [[ -n "$_VAL" ]] && DEFAULT_OWNER="$_VAL" ;;
+      IMGX_REPO)   [[ -n "$_VAL" ]] && DEFAULT_REPO="$_VAL" ;;
+      IMGX_BRANCH) [[ -n "$_VAL" ]] && DEFAULT_BRANCH="$_VAL" ;;
+      IMGX_DIR)    [[ -n "$_VAL" ]] && DEFAULT_DIR="$_VAL" ;;
+    esac
+  done < "$CONFIG_FILE"
+fi
+
 [[ -n "${IMGX_OWNER:-}" ]] && DEFAULT_OWNER="$IMGX_OWNER"
 [[ -n "${IMGX_REPO:-}" ]] && DEFAULT_REPO="$IMGX_REPO"
 [[ -n "${IMGX_BRANCH:-}" ]] && DEFAULT_BRANCH="$IMGX_BRANCH"

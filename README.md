@@ -31,7 +31,7 @@ Supports Claude Code, Cursor, Copilot, Windsurf, Gemini CLI, Cline, Aider, and *
 | 🪝 **git-hooks-setup** | One-click husky/lefthook + commitlint setup | `/git-hooks-setup` |
 | 🔒 **dependency-audit** | CVE vulnerabilities + outdated deps + license compliance | `/dependency-audit` |
 | 🔥 **token-burner** | Autonomous token usage — scan, prioritize, execute tasks | `/token-burner` |
-| 🖼️ **github-figure-bed** | Upload images to any GitHub repo, get CDN/Markdown links | `/github-figure-bed upload.png` |
+| 🖼️ **github-figure-bed** | One-time setup → zero-config GitHub figure bed: upload images, get CDN/Markdown links | `/github-figure-bed setup` |
 
 ## 🎯 Coverage
 

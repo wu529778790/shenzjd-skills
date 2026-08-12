@@ -31,7 +31,7 @@ npx skills add wu529778790/shenzjd-skills -s token-burner -y
 | 🪝 **git-hooks-setup** | 一键配置 husky/lefthook + commitlint | `/git-hooks-setup` |
 | 🔒 **dependency-audit** | CVE 漏洞 + 过时依赖 + License 合规 | `/dependency-audit` |
 | 🔥 **token-burner** | 自主消耗 token — 扫描、排序、执行任务 | `/token-burner` |
-| 🖼️ **github-figure-bed** | 上传图片到 GitHub 图床，生成 CDN/Markdown 链接 | `/github-figure-bed upload.png` |
+| 🖼️ **github-figure-bed** | 一键初始化 GitHub 图床，登录即用、上传秒得 CDN 链接 | `/github-figure-bed setup` |
 
 ## 🎯 覆盖场景
 

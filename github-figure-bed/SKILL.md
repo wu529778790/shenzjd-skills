@@ -1,6 +1,6 @@
 ---
 name: github-figure-bed
-description: Upload images to any GitHub repo as a figure bed and get CDN links (jsdelivr/jsdmirror/raw). Use when the user wants to upload local images to GitHub, generate CDN/markdown image links, delete hosted images, or list images in a GitHub-hosted image repository. Keywords: github figure bed, image host, CDN link, jsdelivr, jsdmirror, upload image to GitHub, 图床, 上传图片, CDN 链接.
+description: Upload images to any GitHub repo as a figure bed and get CDN links (jsdelivr/jsdmirror/raw). One-time setup.sh initializes everything — guides gh login, auto-detects the owner, creates the default repo (img.shenzjd.com) if missing, and writes a config file so the user can upload with zero manual configuration. Use when the user wants to upload local images to GitHub, generate CDN/markdown image links, delete hosted images, list images in a GitHub-hosted image repository, or set up a figure bed for the first time. Keywords: github figure bed, image host, CDN link, jsdelivr, jsdmirror, upload image to GitHub, setup figure bed, 图床, 上传图片, CDN 链接, 初始化图床.
 ---
 
 # GitHub Figure Bed
@@ -13,6 +13,10 @@ description: Upload images to any GitHub repo as a figure bed and get CDN links 
 图床 = 任意 GitHub 仓库 + 一个图片目录（默认 `blog/`）。本 skill 通过
 `gh api` 调用 GitHub Contents API（与网页版图床同一接口），把图片上传到目标仓库，
 并返回 CDN 加速链接。支持多 CDN、多文件、子目录、重名保护。
+
+**零配置体验**：首次使用运行 `scripts/setup.sh` 一键初始化 —— 自动引导登录、
+检测/创建仓库、探测分支、生成配置文件。之后用户只需对 AI 说「上传 xxx.png 到图床」，
+无需手动配置任何东西。
 
 ## When to Use
 
@@ -30,16 +34,40 @@ description: Upload images to any GitHub repo as a figure bed and get CDN links 
 
 ## Core Pattern
 
+### Step 0: 首次使用 — 一键初始化 (setup.sh)
+
+新用户首次使用（或不确定配置是否就绪时），先运行：
+
+```bash
+scripts/setup.sh
+```
+
+它会自动完成，**全程不需要用户手动配置**：
+
+1. **登录引导**：检测到未登录时运行 `gh auth login`，把输出的授权链接和
+   one-time code 展示给用户，引导在浏览器完成授权（只需一次）
+2. **自动获取 Owner**：取当前登录的 GitHub 用户名，无需手填
+3. **仓库就绪**：检测默认仓库 `img.shenzjd.com`；不存在则自动创建（public），
+   并写入宣传/使用说明 README
+4. **分支探测**：自动找出图片目录实际所在分支（规避 default_branch 与图片分支不一致的坑）
+5. **配置落盘**：写入 `~/.config/github-figure-bed/config.env`，
+   三个操作脚本自动读取，之后**零参数直接使用**
+6. **自测**：上传一张 1x1 测试图并删除，验证全链路
+
+可选参数：`--repo <仓库名>` 换仓库名；`--cdn <cdn>` 换默认 CDN；
+`--no-test` 跳过自测；`--force-readme` 强制重写宣传 README。
+
 ### Step 1: 确定目标仓库与配置
 
-优先级（高→低）：**命令行参数 > 环境变量 `IMGX_*` > 脚本内 `DEFAULT_*` 默认区**。
+优先级（高→低）：**命令行参数 > 环境变量 `IMGX_*` > 配置文件 `~/.config/github-figure-bed/config.env`（setup.sh 生成） > 脚本内 `DEFAULT_*` 默认区**。
 
-- 必须知道 `owner/repo`（目标图床仓库）
+- 仓库：setup.sh 已自动配置（默认 `img.shenzjd.com`）；上传到其他仓库时再传 `--owner/--repo`
 - 分支：不指定时自动检测仓库 `default_branch`（一般就是 `main`，零配置）
 - CDN：默认 `jsdelivr`；大陆用户推荐 `jsdmirror`；本地调试可用 `raw`
 - 基础目录：默认 `blog/`，可用 `--dir` 或环境变量 `IMGX_DIR` 改
 
-若用户没给仓库，先问清楚目标仓库（或让用户设置 `IMGX_OWNER` / `IMGX_REPO`）。
+若用户没给仓库且未运行过 setup，先跑 `scripts/setup.sh`（或让用户设置
+`IMGX_OWNER` / `IMGX_REPO`）。
 
 ### Step 2: 上传图片
 
@@ -86,7 +114,8 @@ scripts/list.sh [关键词] [--owner O] [--repo R] [--branch B] [--dir 子目录
 
 | 操作 | 命令 | 说明 |
 |------|------|------|
-| 上传 | `upload.sh img.png --owner alice --repo bed` | 返回 CDN + Markdown 链接 |
+| 首次初始化 | `setup.sh` | 登录引导 + 自动配置 + 仓库就绪（零手动配置） |
+| 上传 | `upload.sh img.png` | 返回 CDN + Markdown 链接（setup 后无需参数） |
 | 上传(多) | `upload.sh a.png b.png c.png --dir 2026/08` | 批量 + 子目录 |
 | 删除 | `delete.sh a.png` | 按文件名删除 |
 | 列表 | `list.sh` / `list.sh 关键词 --full` | 列出/搜索图床文件 |
@@ -99,8 +128,9 @@ scripts/list.sh [关键词] [--owner O] [--repo R] [--branch B] [--dir 子目录
   非默认分支（如 `master`），必须 `--branch master` 显式指定。
 - **给 jsdmirror/jsdelivr 链接加 `?format=webp`**：这两个 CDN 无动态转换，加参数必 404。
 - **覆盖已有文件**：默认重名会自动换名保护；确认要更新同一链接内容才用 `--force`。
-- **忘记指定仓库**：`owner/repo` 必须提供（参数或 `IMGX_OWNER`/`IMGX_REPO`），
-  脚本无法凭空推断目标仓库。
+- **忘记指定仓库**：`owner/repo` 由 setup.sh 自动写入配置文件，无需手填；
+  未 setup 时需传参或设 `IMGX_OWNER`/`IMGX_REPO`，脚本无法凭空推断目标仓库。
+- **从未运行 setup 就上传**：会因 owner/repo 为空而报错，先跑 `setup.sh`。
 - **大图失败**：脚本已用临时文件拼 JSON payload 规避命令行长度限制，若仍失败检查
   GitHub 仓库 100MB 单文件限制与网络。
 - **上传后立即访问 404**：CDN 有缓存，通常数秒~数分钟生效，稍后重试。
@@ -109,4 +139,4 @@ scripts/list.sh [关键词] [--owner O] [--repo R] [--branch B] [--dir 子目录
 ## References
 
 - `references/cdn-links.md`：CDN 链接格式、全部踩坑清单、仓库 API 参考
-- 脚本内部：`scripts/upload.sh` / `scripts/delete.sh` / `scripts/list.sh`
+- 脚本内部：`scripts/setup.sh`（一键初始化）/ `scripts/upload.sh` / `scripts/delete.sh` / `scripts/list.sh`
