@@ -151,8 +151,8 @@ test_workflow_template() {
     echo "      ⚠️  SSH deployment not configured"
   fi
 
-  # 检查 Secrets 引用
-  required_secrets=("DEPLOY_HOST" "DEPLOY_USER" "DEPLOY_PASSWORD")
+  # 检查 Secrets 引用（SSH key 部署）
+  required_secrets=("DEPLOY_HOST" "DEPLOY_USER" "DEPLOY_SSH_KEY")
   for secret in "${required_secrets[@]}"; do
     if grep -q "$secret" "$template_file"; then
       echo "      ✅ Secret: $secret"

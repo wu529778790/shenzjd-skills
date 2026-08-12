@@ -34,6 +34,15 @@ description: Use when generating release notes or a changelog from git history /
 
 获取最新 tag（`git describe --tags --abbrev=0`），用户指定版本号或根据变更类型建议：有 breaking changes → major，有新功能 → minor，只有 bugfix → patch。
 
+**边界处理：** 仓库尚无 tag 时 `git describe --tags --abbrev=0` 会失败（退出码非 0）。此时以当前分支首个提交为起点，并从 `1.0.0` 开始建议版本号：
+
+```bash
+if ! PREV_TAG=$(git describe --tags --abbrev=0 2>/dev/null); then
+  echo "⚠️ 仓库还没有 tag，将从首个提交生成 Release Notes，建议版本号从 1.0.0 开始"
+  PREV_TAG=$(git rev-list --max-parents=0 HEAD)  # 首个提交
+fi
+```
+
 ### Step 2: 对比变更
 
 ```bash

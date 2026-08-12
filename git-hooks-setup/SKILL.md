@@ -97,7 +97,8 @@ if [ -f "package.json" ] && [ -x "$(command -v npm)" ]; then
   npm run lint -- --fix 2>/dev/null || true
   npm run format 2>/dev/null || true
 fi
-git add -u
+# 注意：不要执行 git add -u —— 那会把用户未暂存的改动也一并提交。
+# 若需把 lint 修复的结果纳入提交，请使用 lint-staged（只处理暂存文件）。
 EOF
 chmod +x .git/hooks/pre-commit
 
@@ -131,11 +132,24 @@ npm install -D @commitlint/cli @commitlint/config-conventional
 
 ### Step 5: 添加敏感信息检查
 
-生成 pre-commit hook 中加入：
+> ⚠️ 不要用 `grep "password|secret|token"` 这种关键字扫描 —— 业务代码里出现 "token"/"secret" 字样是常态，会大面积误报导致提交被频繁拦截。
+
+推荐使用 **gitleaks**（专门做密钥扫描，内置熵检测 + 允许列表，误报率低）：
+
 ```bash
-# 检查是否有密钥泄露（仅扫描新增/修改的文本文件，跳过二进制和删除文件）
-if git diff --cached --diff-filter=ACM --name-only -z | xargs -0 grep -IlE "password|secret|token|api_key" 2>/dev/null | grep -q .; then
-  echo "警告: 检测到可能的敏感信息，请检查后重新提交"
+# 生成 gitleaks pre-commit hook
+npx gitleaks git-config 2>/dev/null || brew install gitleaks && gitleaks git-config
+# 或手动在 .git/hooks/pre-commit 中加入：
+# gitleaks protect --staged --verbose 2>&1
+# 若 gitleaks 不可用，宁可跳过也不要退化成关键字 grep
+```
+
+如果确实无法安装 gitleaks，退而求其次也要避免整词误报 —— 只匹配**高置信度模式**（如私钥块、AWS 密钥格式），不要匹配 `token`/`secret`/`password` 这类业务常用词：
+
+```bash
+# 低误报替代方案：只扫私钥和云厂商密钥格式（示例）
+if git diff --cached --diff-filter=ACM --name-only -z | xargs -0 grep -IlE "BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{36}" 2>/dev/null | grep -q .; then
+  echo "警告: 检测到可能的密钥泄露，请检查后重新提交"
   exit 1
 fi
 ```

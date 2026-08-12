@@ -50,9 +50,11 @@ check_tool() {
 
 核心命令（按包管理器分别执行，缺失工具自动跳过）：
 
+> ⚠️ `npm audit` 在发现漏洞时退出码非 0 —— 不要用 `if npm audit ...; then` 判断成功，直接解析 `--json` 输出：
+
 | 包管理器 | 审计命令 |
 |---------|---------|
-| npm | `npm audit --json` → 解析 vulnerabilities 数量 + 严重程度 |
+| npm | `npm audit --json \| jq '.metadata.vulnerabilities.total'` → 解析 vulnerabilities 数量 + 严重程度（勿依赖退出码） |
 | Go | `govulncheck ./...` → 安装 golang.org/x/vuln/cmd/govulncheck@latest |
 | Python | `pip-audit` → 安装: `pip install pip-audit` |
 

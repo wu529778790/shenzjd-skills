@@ -32,6 +32,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          # 多平台构建时在此声明: linux/amd64,linux/arm64
           platforms: linux/amd64
           push: true
           tags: |
@@ -52,7 +53,7 @@ jobs:
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
-          password: ${{ secrets.DEPLOY_PASSWORD }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
             IMAGE="ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]'):latest"
             CONTAINER="${{ github.event.repository.name }}"

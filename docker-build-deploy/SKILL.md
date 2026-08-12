@@ -51,7 +51,9 @@ description: Use when containerizing a Node.js app and setting up GitHub Actions
 
 ### Step 4: 提示配置 Secrets
 
-告知用户需在 GitHub Settings → Secrets 配置：`DEPLOY_HOST`、`DEPLOY_USER`、`DEPLOY_PASSWORD`。
+告知用户需在 GitHub Settings → Secrets 配置：`DEPLOY_HOST`、`DEPLOY_USER`、`DEPLOY_SSH_KEY`（服务器私钥）。
+
+> 安全性：使用 SSH key 而非密码（密码登录有爆破风险，且明文存于 CI）。若服务器只支持密码，可改用 `password: ${{ secrets.DEPLOY_PASSWORD }}`，但不推荐。
 
 ## Quick Reference
 
@@ -79,4 +81,5 @@ description: Use when containerizing a Node.js app and setting up GitHub Actions
 | Secrets 硬编码在 workflow 中 | 使用 `${{ secrets.XXX }}` 引用 | 密钥泄露风险 |
 | 不设置 Docker BuildKit 缓存 | 配置 `cache-from` / `cache-to` using GitHub Actions cache | 每次全量构建太慢 |
 | 不处理构建失败的回滚 | 部署后验证健康检查 | 失败部署可能上线错误版本 |
-| 未指定 `--platform` | 多平台构建时声明 `linux/amd64,linux/arm64` | 目标架构不匹配导致运行失败 |
+| 用密码 SSH 部署 | 使用 SSH key（`DEPLOY_SSH_KEY`） | 密码爆破风险高 |
+| 平台声明与服务器架构不符 | 按服务器架构声明 `linux/amd64` 或 `linux/arm64`；多平台构建时写 `linux/amd64,linux/arm64` | 目标架构不匹配导致运行失败 |

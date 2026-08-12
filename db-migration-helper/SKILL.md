@@ -41,10 +41,10 @@ description: Use when generating database migration SQL from model or schema cha
 ### Step 2: 提取当前 Schema
 
 ```bash
-# Prisma (v5+)
+# Prisma (v4+，`introspect` 已从 v4 移除)
 npx prisma db pull 2>/dev/null
 
-# Prisma (v4 及更早)
+# Prisma (v3 及更早)
 npx prisma introspect 2>/dev/null
 
 # 通用 — 从代码提取
@@ -111,7 +111,7 @@ ALTER TABLE users DROP COLUMN avatar_url;
 |------|----------|------|
 | 不生成 down 回滚 | 始终生成回滚 SQL | 出问题需要回退 |
 | 删除列不备份 | 先备份数据再删列 | 数据丢失不可恢复 |
-| 改类型用 ALTER COLUMN | 创建新列 → 迁移数据 → 删旧列 | 直接改类型可能丢数据 |
+| 改类型用 ALTER COLUMN | PostgreSQL 可直接 `ALTER COLUMN ... TYPE ... USING`；MySQL 用 新建列 → 迁移数据 → 删旧列 | MySQL 直接改类型可能丢数据，PG 的 USING 是原子转换 |
 | 不加索引 | 为查询字段加索引 | 影响查询性能 |
 | 迁移文件没有名字 | 用描述性命名 | 方便团队协作和回溯 |
 | 不检查外键依赖 | 先检查表间关系 | 删除被引用的列会失败 |
