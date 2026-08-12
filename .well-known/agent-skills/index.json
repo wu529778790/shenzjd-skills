@@ -6,21 +6,21 @@
       "type": "skill-md",
       "description": "Use when generating database migration SQL from model or schema changes — compares current vs desired schema, detects diffs, outputs reversible safe migrations.",
       "url": "./db-migration-helper/SKILL.md",
-      "digest": "sha256:aff1933cfb7c9f89477f5f96c43b4526212d2cdcd15c3ed9ef6aebf1874cc3e4"
+      "digest": "sha256:44c91253228c806cf1e4c1a3a6111cb3469b2a5045b61728e8fe44bb927be4fc"
     },
     {
       "name": "git-hooks-setup",
       "type": "skill-md",
       "description": "Use when setting up git hooks (pre-commit, commit-msg, pre-push) with husky or native hooks for linting, formatting, commit conventions, and secret scanning.",
       "url": "./git-hooks-setup/SKILL.md",
-      "digest": "sha256:34fd0799db8422c68ea41ebf6c4f6ee9a6a89b902f3adabe9062acecde9c2819"
+      "digest": "sha256:62468233e18f953a498ef54d41d0dfac1acf2fd859b4682a5b829921b51b451b"
     },
     {
       "name": "dependency-audit",
       "type": "skill-md",
       "description": "Use when auditing project dependencies for security vulnerabilities, outdated packages, or license compliance across npm/yarn/pnpm, pip, go, and cargo.",
       "url": "./dependency-audit/SKILL.md",
-      "digest": "sha256:735e5d1f772656789540d10bf87dc5af824f5ac271f4d75f86d14bdad8e8006b"
+      "digest": "sha256:b94c2edfd31bcd3745f449368b70dc7c4f8f1bd6efdbb26dcdd38c3edf01bb9f"
     },
     {
       "name": "github-figure-bed",
@@ -34,7 +34,7 @@
       "type": "skill-md",
       "description": "Use when containerizing a Node.js app and setting up GitHub Actions CI/CD to build, push to GHCR, and deploy via SSH. Multi-stage build, non-root user, caching.",
       "url": "./docker-build-deploy/SKILL.md",
-      "digest": "sha256:7b51e5a49fa68049ca55953d884db7529bdcc6b99b32d2b9870df0dc85ee70a2"
+      "digest": "sha256:37cd828a301ad8a760b40a15a6732bd8cd02c40f026171bb010d452b2aa32be1"
     }
   ]
 }
