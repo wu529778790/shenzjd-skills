@@ -1,6 +1,6 @@
 ---
 name: github-figure-bed
-description: Upload images to any GitHub repo as a figure bed and get CDN links (jsdelivr/jsdmirror/raw). One-time setup.sh initializes everything — guides gh login, auto-detects the owner, creates the default repo (img.shenzjd.com) if missing, and writes a config file so the user can upload with zero manual configuration. Use when the user wants to upload local images to GitHub, generate CDN/markdown image links, delete hosted images, list images in a GitHub-hosted image repository, or set up a figure bed for the first time. Keywords: github figure bed, image host, CDN link, jsdelivr, jsdmirror, upload image to GitHub, setup figure bed, 图床, 上传图片, CDN 链接, 初始化图床.
+description: Upload images to any GitHub repo as a figure bed and get CDN/markdown links (jsdelivr/jsdmirror/raw). One-time setup.sh guides gh login, auto-detects the owner, creates the default repo (img.shenzjd.com) if missing, and syncs config with the img.shenzjd.com web app via the repo's .imgx-config/config.json — upload with zero manual configuration. Use for uploading images to GitHub, generating CDN links, deleting/listing hosted images, or setting up a figure bed. Keywords: github figure bed, image host, CDN link, jsdelivr, jsdmirror, upload image to GitHub, 图床, 上传图片, CDN 链接, 初始化图床.
 ---
 
 # GitHub Figure Bed

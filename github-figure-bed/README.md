@@ -59,6 +59,8 @@
 ## 要求
 
 - `gh` CLI 已安装并登录（`gh auth login`），token 需 `repo` 权限
+- `jq`（JSON 处理）
+- `python3`（仅 setup.sh 用，base64 编解码配置；无则自动降级 base64 命令）
 - 目标仓库存在且有写权限
 
 ## 安装为 WorkBuddy/Claude 技能

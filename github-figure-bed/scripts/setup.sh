@@ -103,21 +103,28 @@ else
 fi
 
 # ---- 5. 读取远程配置 (与项目网页端共用 .imgx-config/config.json) ----
+# 遍历 default_branch/master/main, 收集所有能解析的配置,
+# 按 lastSyncAt 选最新的一份 (避免读到旧分支上的过期配置)
 DEFAULT_BRANCH=$(gh api "repos/${OWNER}/${REPO}" --jq .default_branch 2>/dev/null || echo "main")
 echo "   默认分支: ${DEFAULT_BRANCH}"
 
 REPO_CFG=""
+BEST_TS=""
+BEST_CB=""
 for cb in "$DEFAULT_BRANCH" master main; do
   B64=$(gh api "repos/${OWNER}/${REPO}/contents/${REMOTE_CONFIG_PATH}?ref=$cb" --jq .content 2>/dev/null || true)
-  if [[ -n "$B64" ]] && [[ "$B64" != "null" ]]; then
-    REPO_CFG=$(echo "$B64" | b64decode_py 2>/dev/null || true)
-    if echo "$REPO_CFG" | jq -e . >/dev/null 2>&1; then
-      echo "✓ 读取到仓库配置 (分支 ${cb}): ${REMOTE_CONFIG_PATH}"
-      break
-    fi
-    REPO_CFG=""
+  [[ -n "$B64" ]] && [[ "$B64" != "null" ]] || continue
+  C=$(echo "$B64" | b64decode_py 2>/dev/null || true)
+  echo "$C" | jq -e . >/dev/null 2>&1 || continue
+  TS=$(echo "$C" | jq -r '.lastSyncAt // empty' 2>/dev/null || true)
+  if [[ -z "$BEST_TS" ]] || [[ "$TS" > "$BEST_TS" ]]; then
+    BEST_TS="$TS"; BEST_CFG="$C"; BEST_CB="$cb"
   fi
 done
+REPO_CFG="${BEST_CFG:-}"
+if [[ -n "$REPO_CFG" ]]; then
+  echo "✓ 读取到仓库配置 (分支 ${BEST_CB}${BEST_TS:+, 同步于 ${BEST_TS}}): ${REMOTE_CONFIG_PATH}"
+fi
 
 CFG_BRANCH=$(echo "$REPO_CFG" | jq -r '.branch // empty' 2>/dev/null || true)
 CFG_DIR=$(echo "$REPO_CFG" | jq -r '.directory // empty' 2>/dev/null || true)
@@ -142,14 +149,25 @@ echo "✓ 分支: ${BRANCH}"
 # ---- 7. 宣传 README (仅新建仓库时, 或 --force-readme) ----
 if [[ "$CREATED" -eq 1 || "$FORCE_README" -eq 1 ]]; then
   echo "✍️  写入宣传 README ..."
-  README_MD=$(cat <<'EOF'
+
+  # CDN 域名跟随实际配置 (README 链接示例用真实域名)
+  case "$CDN" in
+    jsdelivr)        CDN_DOMAIN="cdn.jsdelivr.net" ;;
+    jsdmirror)       CDN_DOMAIN="cdn.jsdmirror.com" ;;
+    jsd-onmicrosoft) CDN_DOMAIN="jsd.onmicrosoft.cn" ;;
+    statically)      CDN_DOMAIN="cdn.statically.io" ;;
+    raw)             CDN_DOMAIN="raw.githubusercontent.com" ;;
+    *)               CDN_DOMAIN="cdn.jsdelivr.net" ;;
+  esac
+
+  README_MD=$(cat <<EOF
 # 🖼️ GitHub Figure Bed
 
 > 由 **github-figure-bed** AI 技能自动创建的图床仓库 — 上传图片，秒得 CDN 加速链接。
 
 ## 这是什么
 
-把 GitHub 当图床：图片存放在本仓库的 `blog/` 目录，通过全球 CDN（jsdelivr / jsdmirror）加速访问。
+把 GitHub 当图床：图片存放在本仓库的 \`blog/\` 目录，通过全球 CDN（jsdelivr / jsdmirror）加速访问。
 不需要自己搭建服务器，容量=仓库容量，速度=CDN 速度，零成本。
 
 ## 怎么用（交给 AI 就行）
@@ -164,25 +182,25 @@ if [[ "$CREATED" -eq 1 || "$FORCE_README" -eq 1 ]]; then
 
 底层由开源技能 [github-figure-bed](https://github.com/wu529778790/shenzjd-skills) 驱动：
 
-```bash
+\`\`\`bash
 npx skills add wu529778790/shenzjd-skills -s github-figure-bed -y
-```
+\`\`\`
 
-首次使用运行 `setup.sh` 一键初始化（自动登录引导 + 配置），之后零配置直接上传。
+首次使用运行 \`setup.sh\` 一键初始化（自动登录引导 + 配置），之后零配置直接上传。
 
 ## 链接格式
 
-```
-https://cdn.jsdelivr.net/gh/<owner>/<repo>@<branch>/blog/<文件名>
-```
+\`\`\`
+https://${CDN_DOMAIN}/gh/<owner>/<repo>@<branch>/blog/<文件名>
+\`\`\`
 
 Markdown 引用：
 
-```markdown
-![文件名](https://cdn.jsdelivr.net/gh/<owner>/<repo>@<branch>/blog/<文件名>)
-```
+\`\`\`markdown
+![文件名](https://${CDN_DOMAIN}/gh/<owner>/<repo>@<branch>/blog/<文件名>)
+\`\`\`
 
-> 提示: 大陆用户可将 CDN 换成 jsdmirror（`IMGX_CDN=jsdmirror`）。
+> 提示: 大陆用户可将 CDN 换成 jsdmirror（\`IMGX_CDN=jsdmirror\`）。
 EOF
 )
   TMP_JSON=$(mktemp)

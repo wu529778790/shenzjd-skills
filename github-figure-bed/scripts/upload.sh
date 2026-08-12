@@ -127,7 +127,8 @@ file_exists() {
   gh api "repos/${OWNER}/${REPO}/contents/${path}?ref=${BRANCH}" >/dev/null 2>&1
 }
 
-timestamp() { date +%Y%m%d-%H%M%S; }
+# 时间戳 + 随机数, 避免同秒批量传同名文件互相覆盖
+timestamp() { date +%Y%m%d-%H%M%S_$RANDOM; }
 
 RESULTS="["
 FIRST=1
@@ -172,26 +173,28 @@ for LOCAL_FILE in "${FILES[@]}"; do
     printf '","branch":"%s"}' "$BRANCH"
   } > "$TMP_JSON"
 
-  RESP=$(gh api --method PUT "repos/${OWNER}/${REPO}/contents/${REMOTE_PATH}" \
-    --input "$TMP_JSON" --jq '{sha: .content.sha, html_url: .content.html_url}' 2>/tmp/gfb_gh_err.txt) \
-    || { echo "上传失败 ${LOCAL_FILE}: $(cat /tmp/gfb_gh_err.txt)" >&2; continue; }
+  if RESP=$(gh api --method PUT "repos/${OWNER}/${REPO}/contents/${REMOTE_PATH}" \
+    --input "$TMP_JSON" --jq '{sha: .content.sha, html_url: .content.html_url}' 2>/tmp/gfb_gh_err.txt); then
+    HTML_URL=$(echo "$RESP" | jq -r .html_url)
+    CDN_URL="${CDN_BASE}/${REMOTE_PATH}"
+    MD="![${BASENAME}](${CDN_URL})"
 
-  HTML_URL=$(echo "$RESP" | jq -r .html_url)
-  CDN_URL="${CDN_BASE}/${REMOTE_PATH}"
-  MD="![${BASENAME}](${CDN_URL})"
+    [[ "$SILENT" -eq 0 ]] && echo "✓ ${BASENAME} -> ${CDN_URL}" >&2
 
-  [[ "$SILENT" -eq 0 ]] && echo "✓ ${BASENAME} -> ${CDN_URL}" >&2
+    if [[ "$FIRST" -eq 1 ]]; then FIRST=0; else RESULTS+=","; fi
+    RESULTS+=$(jq -nc \
+      --arg file "$LOCAL_FILE" \
+      --arg path "$REMOTE_PATH" \
+      --arg cdn_url "$CDN_URL" \
+      --arg markdown "$MD" \
+      --arg html_url "$HTML_URL" \
+      --arg action "$ACTION" \
+      '{file:$file, path:$path, cdn_url:$cdn_url, markdown:$markdown, html_url:$html_url, action:$action}')
+  else
+    echo "上传失败 ${LOCAL_FILE}: $(cat /tmp/gfb_gh_err.txt)" >&2
+  fi
 
-  if [[ "$FIRST" -eq 1 ]]; then FIRST=0; else RESULTS+=","; fi
-  RESULTS+=$(jq -nc \
-    --arg file "$LOCAL_FILE" \
-    --arg path "$REMOTE_PATH" \
-    --arg cdn_url "$CDN_URL" \
-    --arg markdown "$MD" \
-    --arg html_url "$HTML_URL" \
-    --arg action "$ACTION" \
-    '{file:$file, path:$path, cdn_url:$cdn_url, markdown:$markdown, html_url:$html_url, action:$action}')
-
+  # 每次迭代结束都清理临时文件 (成功与失败路径一致)
   rm -f "$TMP_B64" "$TMP_JSON"
   trap - EXIT
 done
