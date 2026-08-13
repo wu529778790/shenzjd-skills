@@ -6,7 +6,7 @@
       "type": "skill-md",
       "description": "Use when generating database migration SQL from model or schema changes — compares current vs desired schema, detects diffs, outputs reversible safe migrations.",
       "url": "./db-migration-helper/SKILL.md",
-      "digest": "sha256:44c91253228c806cf1e4c1a3a6111cb3469b2a5045b61728e8fe44bb927be4fc"
+      "digest": "sha256:a708a2b315057019f45e238159c0e70144d37973808f86e290896972a9977085"
     },
     {
       "name": "git-hooks-setup",
