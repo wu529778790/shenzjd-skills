@@ -4,7 +4,7 @@ export const meta = {
   phases: [
     { title: 'Collect Info', detail: 'Gather skill name, description, emoji from user' },
     { title: 'Create Files', detail: 'Create SKILL.md, README.md, templates/' },
-    { title: 'Register', detail: 'Update README, CLAUDE.md, daily-discovery.yml' },
+    { title: 'Register', detail: 'Update README.md, README.zh.md, tests coverage' },
     { title: 'Verify', detail: 'Check consistency across all files' },
     { title: 'Commit', detail: 'Stage, commit, and push' },
   ],
@@ -13,6 +13,7 @@ export const meta = {
 // Note: This script runs via Claude Code's Workflow runtime.
 // phase(), agent(), parallel(), log() are provided by the runtime.
 // Do NOT run with `node` directly.
+// 路径约定: workflow 在仓库根目录运行, 一律使用相对路径(不要硬编码绝对路径)。
 
 phase('Collect Info')
 
@@ -31,7 +32,7 @@ log(`Creating skill: ${emoji} ${name}`)
 phase('Create Files')
 
 await parallel([
-  () => agent(`Create the file /Users/mac/github/shenzjd-skills/${name}/SKILL.md with this content:
+  () => agent(`Create the file ${name}/SKILL.md with this content:
 
 ---
 name: ${name}
@@ -86,7 +87,7 @@ description: ${description}
 
 Write the actual file using the Write tool. Follow the mixed language convention: English for frontmatter and When to Use, Chinese for Core Pattern and Common Mistakes.`, { label: 'create:skill-md', phase: 'Create Files' }),
 
-  () => agent(`Create the file /Users/mac/github/shenzjd-skills/${name}/README.md with this content:
+  () => agent(`Create the file ${name}/README.md with this content:
 
 # ${emoji} ${title}
 
@@ -124,46 +125,60 @@ cp -r shenzjd-skills/${name} ~/.claude/skills/
 Write the actual file using the Write tool.`, { label: 'create:readme-md', phase: 'Create Files' }),
 
   ...(needTemplates.trim().toLowerCase() === 'yes' ? [
-    () => agent(`Create the directory /Users/mac/github/shenzjd-skills/${name}/templates/ and add a placeholder README.md explaining what templates are available. Use Bash mkdir -p and Write tools.`, { label: 'create:templates', phase: 'Create Files' })
+    () => agent(`Create the directory ${name}/templates/ and add a placeholder README.md explaining what templates are available. Use Bash mkdir -p and Write tools.`, { label: 'create:templates', phase: 'Create Files' })
   ] : [])
 ])
 
 phase('Register')
 
 await parallel([
-  () => agent(`Update /Users/mac/github/shenzjd-skills/README.md:
+  () => agent(`Update README.md for the new skill ${name}:
 
-1. Change the count on line 3 from "10" to "11" (or increment whatever the current number is)
-2. Add a new row to the Skills Overview table (around line 28):
+1. Read README.md first. Find the line starting with "> " that contains a skill count (e.g. "> 5 production-ready AI coding skill modules"). Increment the number by 1 (e.g. 5 → 6). The count must equal the number of rows in the Skills Overview table.
+2. Add a new row to the "Skills Overview" table (alphabetical order by skill name is fine, otherwise append at the end):
    | ${emoji} **${name}** | <English description> | \`/${name}\` |
 3. Add a new install command to the "Install Individual Skills" code block:
    npx skills add wu529778790/shenzjd-skills -s ${name} -y
 
-Use the Edit tool for each change. Read the file first to find exact line numbers.`, { label: 'register:readme', phase: 'Register' }),
+Use the Edit tool for each change. Do not edit .well-known/agent-skills/index.json (CI regenerates it).`, { label: 'register:readme', phase: 'Register' }),
 
-  () => agent(`Update /Users/mac/github/shenzjd-skills/CLAUDE.md:
+  () => agent(`Update README.zh.md for the new skill ${name}:
 
-Add a new row to the "Current Skills" table (around line 41):
-| \`${name}\` | <English trigger condition> | <English description> |
+1. Read README.zh.md first. Find the line starting with "> " that contains a skill count (e.g. "> 5 个生产级 AI 编程技能模块"). Increment the number by 1 (e.g. 5 → 6). The count must equal the number of rows in the 技能一览 table.
+2. Add a new row to the "技能一览" table (alphabetical order by skill name is fine, otherwise append at the end):
+   | ${emoji} **${name}** | <中文说明> | \`/${name}\` |
+3. Add a new install command to the "单独安装某个 Skill" code block:
+   npx skills add wu529778790/shenzjd-skills -s ${name} -y
 
-Use the Edit tool. Read the file first to find the exact location.`, { label: 'register:claude-md', phase: 'Register' }),
+Use the Edit tool for each change. Do not edit .well-known/agent-skills/index.json (CI regenerates it).`, { label: 'register:readme-zh', phase: 'Register' }),
 
-  () => agent(`Update /Users/mac/github/shenzjd-skills/.github/workflows/daily-discovery.yml:
+  () => agent(`Update tests/README.md for the new skill ${name}:
 
-Find the hardcoded skill list on line 44 (the \`for skill in ...\` line) and append "${name}" to the end of the list.
+1. Read tests/README.md first. Add a row to the "测试覆盖" coverage table:
+   | ${name} | ✅ | ✅ | ✅ |
+2. If a unit test file tests/skills/${name}.test.sh was NOT created yet, create one by mirroring an existing test (e.g. tests/skills/git-hooks-setup.test.sh): check the skill's SKILL.md sections and any templates/scripts files exist, report PASS/FAIL. Make it a static check that does not require network access.
 
-Use the Edit tool. Read the file first to find the exact line.`, { label: 'register:daily-discovery', phase: 'Register' })
+Use the Edit and Write tools.`, { label: 'register:tests', phase: 'Register' }),
+
+  () => agent(`Update CLAUDE.md for the new skill ${name} (only if a count or list needs updating):
+
+1. Read CLAUDE.md first. If it contains a hardcoded skill count (e.g. "Five skills cover the DevOps pipeline"), increment/adjust it to match reality.
+2. If the "Adding a new skill" section exists, no change is needed there — it already describes the generic flow.
+
+Note: daily-discovery.yml uses a dynamic \`for skill in */\` loop — no hardcoded skill list to update. Do NOT modify it. Use the Edit tool if a count needs updating; otherwise report "no change needed".`, { label: 'register:claude-md', phase: 'Register' })
 ])
 
 phase('Verify')
 
 const verifyResult = await agent(`Verify all files are consistent after adding the ${name} skill:
 
-1. Read /Users/mac/github/shenzjd-skills/${name}/SKILL.md - check frontmatter has name and description
-2. Read /Users/mac/github/shenzjd-skills/${name}/README.md - check installation command includes ${name}
-3. Read /Users/mac/github/shenzjd-skills/README.md - check count is updated, skill is in table, install command exists
-4. Read /Users/mac/github/shenzjd-skills/CLAUDE.md - check skill is in the table
-5. Read /Users/mac/github/shenzjd-skills/.github/workflows/daily-discovery.yml - check ${name} is in the list
+1. Read ${name}/SKILL.md - check frontmatter has name and description, and has the 5 required sections: Overview, When to Use, Core Pattern, Quick Reference, Common Mistakes
+2. Read ${name}/README.md - check installation command includes ${name}
+3. Read README.md - check count matches table rows, skill is in table, install command exists
+4. Read README.zh.md - check count matches table rows, skill is in table
+5. Read tests/README.md - check ${name} is in the coverage table
+6. Check tests/skills/${name}.test.sh exists and is executable (chmod +x if not)
+7. Run ./tests/validate-skills.sh and confirm it passes (warnings about missing sections are failures for a new skill)
 
 Report any inconsistencies. If all good, say "ALL OK".`, { label: 'verify:consistency', phase: 'Verify' })
 
@@ -175,9 +190,9 @@ const commitResult = await agent(`Stage and commit all changes for the new ${nam
 
 1. Run: git add -A
 2. Run: git commit -m "🆕 新增 ${name} skill: ${description}"
-3. Run: git push
+3. Report the result. Do NOT push — the user will review first.
 
-Report the result of each command.`, { label: 'commit:push', phase: 'Commit' })
+Report the result of each command.`, { label: 'commit', phase: 'Commit' })
 
-log(`Done! New skill ${emoji} ${name} has been published.`)
+log(`Done! New skill ${emoji} ${name} has been created.`)
 log(`Commit: ${commitResult}`)
