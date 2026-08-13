@@ -95,6 +95,7 @@ test-new-skill:
 | dependency-audit | ✅ | ✅ | ✅ |
 | docker-build-deploy | ✅ | ✅ | ✅ |
 | git-hooks-setup | ✅ | ✅ | ✅ |
+| github-figure-bed | ✅ | ✅ | ✅ |
 
 **图例：** ✅ 已实现 | ⏳ 待实现
 

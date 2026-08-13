@@ -98,8 +98,8 @@ for skill_file in $SKILL_FILES; do
     template_count=$(find "$skill_dir/templates" -type f | wc -l | tr -d ' ')
     echo "  📁 模板目录: $template_count 个文件"
 
-    # 检查模板文件是否被引用
-    for template in $(find "$skill_dir/templates" -type f -name "*.md" -o -name "*.yaml" -o -name "*.json"); do
+    # 检查模板文件是否被引用（覆盖所有扩展名：.md/.sql/.js/.nodejs/.yml 等）
+    for template in $(find "$skill_dir/templates" -type f); do
       template_name=$(basename "$template")
       if grep -q "$template_name" "$skill_file"; then
         success "    模板已引用: $template_name"
