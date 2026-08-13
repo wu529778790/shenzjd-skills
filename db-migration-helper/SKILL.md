@@ -41,11 +41,8 @@ description: Use when generating database migration SQL from model or schema cha
 ### Step 2: 提取当前 Schema
 
 ```bash
-# Prisma (v4+，`introspect` 已从 v4 移除)
+# Prisma (v2.18+，旧命令 introspect 已更名为 db pull，统一用 db pull)
 npx prisma db pull 2>/dev/null
-
-# Prisma (v3 及更早)
-npx prisma introspect 2>/dev/null
 
 # 通用 — 从代码提取
 grep -r "CREATE TABLE\|@Entity\|@Table\|model " --include="*.ts" --include="*.py" --include="*.go" -l
