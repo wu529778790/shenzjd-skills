@@ -2,11 +2,25 @@
   "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
   "skills": [
     {
-      "name": "db-migration-helper",
+      "name": "dependency-audit",
       "type": "skill-md",
-      "description": "Use when generating database migration SQL from model or schema changes — compares current vs desired schema, detects diffs, outputs reversible safe migrations.",
-      "url": "./db-migration-helper/SKILL.md",
-      "digest": "sha256:a708a2b315057019f45e238159c0e70144d37973808f86e290896972a9977085"
+      "description": "Use when auditing project dependencies for security vulnerabilities, outdated packages, or license compliance across npm/yarn/pnpm, pip, go, and cargo.",
+      "url": "./dependency-audit/SKILL.md",
+      "digest": "sha256:b94c2edfd31bcd3745f449368b70dc7c4f8f1bd6efdbb26dcdd38c3edf01bb9f"
+    },
+    {
+      "name": "docker-build-deploy",
+      "type": "skill-md",
+      "description": "Use when containerizing a Node.js app and setting up GitHub Actions CI/CD to build, push to GHCR, and deploy via SSH. Multi-stage build, non-root user, caching.",
+      "url": "./docker-build-deploy/SKILL.md",
+      "digest": "sha256:37cd828a301ad8a760b40a15a6732bd8cd02c40f026171bb010d452b2aa32be1"
+    },
+    {
+      "name": "github-figure-bed",
+      "type": "skill-md",
+      "description": "Upload images to any GitHub repo as a figure bed and get CDN/markdown links (jsdelivr/jsdmirror/raw). One-time setup.sh guides gh login, auto-detects the owner, creates the default repo (img.shenzjd.com) if missing, and syncs config with the img.shenzjd.com web app via the repos .imgx-config/config.json — upload with zero manual configuration. Use for uploading images to GitHub, generating CDN links, deleting/listing hosted images, or setting up a figure bed. Keywords: github figure bed, image host, CDN link, jsdelivr, jsdmirror, upload image to GitHub, 图床, 上传图片, CDN 链接, 初始化图床.",
+      "url": "./github-figure-bed/SKILL.md",
+      "digest": "sha256:6afbe2c66f0d69bd398750fd5e1f44918bfbccd5aa87cf9fb31e275f428246f1"
     },
     {
       "name": "git-hooks-setup",
@@ -16,25 +30,11 @@
       "digest": "sha256:62468233e18f953a498ef54d41d0dfac1acf2fd859b4682a5b829921b51b451b"
     },
     {
-      "name": "dependency-audit",
+      "name": "db-migration-helper",
       "type": "skill-md",
-      "description": "Use when auditing project dependencies for security vulnerabilities, outdated packages, or license compliance across npm/yarn/pnpm, pip, go, and cargo.",
-      "url": "./dependency-audit/SKILL.md",
-      "digest": "sha256:b94c2edfd31bcd3745f449368b70dc7c4f8f1bd6efdbb26dcdd38c3edf01bb9f"
-    },
-    {
-      "name": "github-figure-bed",
-      "type": "skill-md",
-      "description": "Upload images to any GitHub repo as a figure bed and get CDN/markdown links (jsdelivr/jsdmirror/raw). One-time setup.sh guides gh login, auto-detects the owner, creates the default repo (img.shenzjd.com) if missing, and syncs config with the img.shenzjd.com web app via the repos .imgx-config/config.json — upload with zero manual configuration. Use for uploading images to GitHub, generating CDN links, deleting/listing hosted images, or setting up a figure bed. Keywords: github figure bed, image host, CDN link, jsdelivr, jsdmirror, upload image to GitHub, 图床, 上传图片, CDN 链接, 初始化图床.",
-      "url": "./github-figure-bed/SKILL.md",
-      "digest": "sha256:bf20569f8c15d738facef03cde92676c616277a83fc3eb76ee395782bc7de8c0"
-    },
-    {
-      "name": "docker-build-deploy",
-      "type": "skill-md",
-      "description": "Use when containerizing a Node.js app and setting up GitHub Actions CI/CD to build, push to GHCR, and deploy via SSH. Multi-stage build, non-root user, caching.",
-      "url": "./docker-build-deploy/SKILL.md",
-      "digest": "sha256:37cd828a301ad8a760b40a15a6732bd8cd02c40f026171bb010d452b2aa32be1"
+      "description": "Use when generating database migration SQL from model or schema changes — compares current vs desired schema, detects diffs, outputs reversible safe migrations.",
+      "url": "./db-migration-helper/SKILL.md",
+      "digest": "sha256:a708a2b315057019f45e238159c0e70144d37973808f86e290896972a9977085"
     }
   ]
 }
