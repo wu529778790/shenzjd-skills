@@ -62,19 +62,25 @@ else
   exit 1
 fi
 
-# 4. 测试配置联动逻辑(setup.sh 与项目配置共用 .imgx-config/config.json)
+# 4. 测试配置联动逻辑(setup.sh 与项目配置共用 .img.shenzjd.com/config.json, 兼容旧 .imgx-config 路径)
 echo ""
 echo "📋 Test 4: 配置联动"
-if grep -q "REMOTE_CONFIG_PATH=" "$SKILL_DIR/scripts/setup.sh"; then
-  echo "  ✅ setup.sh 定义远程配置路径"
+if grep -q "CONFIG_PATH_NEW=" "$SKILL_DIR/scripts/setup.sh"; then
+  echo "  ✅ setup.sh 定义远程配置路径 (CONFIG_PATH_NEW)"
 else
-  echo "  ❌ setup.sh 缺少 REMOTE_CONFIG_PATH"
+  echo "  ❌ setup.sh 缺少 CONFIG_PATH_NEW"
+  exit 1
+fi
+if grep -q "\.img\.shenzjd\.com/config\.json" "$SKILL_DIR/scripts/setup.sh"; then
+  echo "  ✅ 与项目网页端共用 .img.shenzjd.com/config.json"
+else
+  echo "  ❌ setup.sh 未引用 .img.shenzjd.com/config.json"
   exit 1
 fi
 if grep -q "\.imgx-config/config\.json" "$SKILL_DIR/scripts/setup.sh"; then
-  echo "  ✅ 与项目网页端共用 .imgx-config/config.json"
+  echo "  ✅ 兼容旧配置路径 .imgx-config/config.json"
 else
-  echo "  ❌ setup.sh 未引用 .imgx-config/config.json"
+  echo "  ❌ setup.sh 未兼容旧路径 .imgx-config/config.json"
   exit 1
 fi
 if grep -q "config.env" "$SKILL_DIR/scripts/setup.sh"; then
