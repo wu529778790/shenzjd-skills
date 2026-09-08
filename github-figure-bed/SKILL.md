@@ -1,6 +1,6 @@
 ---
 name: github-figure-bed
-description: "Upload images to any GitHub repo as a figure bed and get CDN/markdown links (jsdelivr/jsdmirror/raw). One-time setup.sh guides gh login, auto-detects the owner, creates the default repo (img.shenzjd.com) if missing, and syncs config with the img.shenzjd.com web app via the repo's .imgx-config/config.json — upload with zero manual configuration. Use for uploading images to GitHub, generating CDN links, deleting/listing hosted images, or setting up a figure bed. Keywords: github figure bed, image host, CDN link, jsdelivr, jsdmirror, upload image to GitHub, 图床, 上传图片, CDN 链接, 初始化图床."
+description: "Upload images to any GitHub repo as a figure bed and get CDN/markdown links (jsdelivr/jsdmirror/raw). One-time setup.sh guides gh login, auto-detects the owner, creates the default repo (img.shenzjd.com) if missing, and syncs config with the img.shenzjd.com web app via the repo's .img.shenzjd.com/config.json — upload with zero manual configuration. Use for uploading images to GitHub, generating CDN links, deleting/listing hosted images, or setting up a figure bed. Keywords: github figure bed, image host, CDN link, jsdelivr, jsdmirror, upload image to GitHub, 图床, 上传图片, CDN 链接, 初始化图床."
 ---
 
 # GitHub Figure Bed
@@ -17,6 +17,13 @@ description: "Upload images to any GitHub repo as a figure bed and get CDN/markd
 **零配置体验**：首次使用运行 `scripts/setup.sh` 一键初始化 —— 自动引导登录、
 检测/创建仓库、**读取仓库配置并与 img.shenzjd.com 项目网页端联动**、探测分支、
 生成本地缓存。之后用户只需对 AI 说「上传 xxx.png 到图床」，无需手动配置任何东西。
+
+**配置路径**：远程配置固定读取仓库 `.img.shenzjd.com/config.json`（与 img.shenzjd.com
+网页端一致）；旧仓库的 `.imgx-config/config.json` 仍兼容读取，但新写入一律用新路径。
+
+**可视化后台**：不想用命令行时，直接打开 [img.shenzjd.com](https://img.shenzjd.com)
+网页端 —— 同一个图床仓库，拖拽上传（压缩/水印/WebP）、图片管理（预览/删除/链接复制）、
+可视化设置（分支/目录/CDN）。网页端改配置后，重跑 `setup.sh` 即可同步到 AI 侧。
 
 ## When to Use
 
@@ -49,7 +56,7 @@ scripts/setup.sh
 2. **自动获取 Owner**：取当前登录的 GitHub 用户名，无需手填
 3. **仓库就绪**：检测默认仓库 `img.shenzjd.com`；不存在则自动创建（public），
    并写入宣传/使用说明 README
-4. **配置联动（核心）**：读取仓库的 `.imgx-config/config.json`（与 img.shenzjd.com
+4. **配置联动（核心）**：读取仓库的 `.img.shenzjd.com/config.json`（与 img.shenzjd.com
    项目网页端**共用同一份配置**），自动继承 branch/directory/cdn；
    仓库没有配置时，初始化一份项目格式配置写回仓库（网页端即可直接使用）
 5. **分支探测**：自动找出图片目录实际所在分支（规避 default_branch 与图片分支不一致的坑）
@@ -64,7 +71,7 @@ scripts/setup.sh
 
 优先级（高→低）：**命令行参数 > 环境变量 `IMGX_*` > 本地缓存 `~/.config/github-figure-bed/config.env`（setup.sh 从远程同步） > 脚本内 `DEFAULT_*` 默认区**。
 
-**配置联动**：远程配置源为仓库 `.imgx-config/config.json`（与 img.shenzjd.com
+**配置联动**：远程配置源为仓库 `.img.shenzjd.com/config.json`（与 img.shenzjd.com
 项目网页端共用），setup.sh 自动读取并同步到本地缓存；项目网页端修改配置后，
 重跑 `setup.sh` 即可刷新本地。
 
@@ -138,7 +145,7 @@ scripts/list.sh [关键词] [--owner O] [--repo R] [--branch B] [--dir 子目录
 - **忘记指定仓库**：`owner/repo` 由 setup.sh 自动写入配置文件，无需手填；
   未 setup 时需传参或设 `IMGX_OWNER`/`IMGX_REPO`，脚本无法凭空推断目标仓库。
 - **从未运行 setup 就上传**：会因 owner/repo 为空而报错，先跑 `setup.sh`。
-- **网页端改配置后本地未同步**：远程配置（`.imgx-config/config.json`）变化后，
+- **网页端改配置后本地未同步**：远程配置（`.img.shenzjd.com/config.json`）变化后，
   重跑 `setup.sh` 刷新本地缓存。
 - **大图失败**：脚本已用临时文件拼 JSON payload 规避命令行长度限制，若仍失败检查
   GitHub 仓库 100MB 单文件限制与网络。

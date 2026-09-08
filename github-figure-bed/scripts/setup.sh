@@ -6,7 +6,8 @@
 #   setup.sh [--repo <仓库名>] [--cdn <cdn>] [--dir <目录>] [--no-test] [--force-readme]
 #
 # 配置联动 (核心设计):
-#   - 配置权威源 = 仓库的 .imgx-config/config.json (与 img.shenzjd.com 项目网页端共用!)
+#   - 配置权威源 = 仓库的 .img.shenzjd.com/config.json (与 img.shenzjd.com 项目网页端共用!)
+#     旧仓库兼容读取 .imgx-config/config.json (网页端已迁移到新路径)
 #   - 仓库已有该文件 → 自动读取 branch/directory/cdn, 与项目配置保持一致
 #   - 仓库没有该文件 → 用默认值, 并写一份项目格式配置回仓库 (项目网页端即可直接使用)
 #   - 本地 ~/.config/github-figure-bed/config.env 只是缓存 (upload/delete/list 读取),
@@ -18,9 +19,9 @@
 #   3. 检查目标仓库 (默认 img.shenzjd.com):
 #      - 不存在 → gh repo create 创建 (public), 写入宣传 README + 默认配置
 #      - 已存在 → 直接使用 (不覆盖原 README)
-#   4. 读取远程配置 .imgx-config/config.json (从 default_branch 开始依次尝试)
+#   4. 读取远程配置 .img.shenzjd.com/config.json (新路径, 兼容旧 .imgx-config/config.json)
 #   5. 计算最终值: 命令行参数 > 远程配置 > 默认值; 分支用目录探测修正
-#   6. 新仓库或无远程配置时, 写一份项目格式配置到 .imgx-config/config.json
+#   6. 新仓库或无远程配置时, 写一份项目格式配置到 .img.shenzjd.com/config.json
 #   7. 写入本地缓存 ~/.config/github-figure-bed/config.env
 #   8. 默认生成 1x1 测试图 上传→删除 验证全链路 (--no-test 跳过)
 #   9. 输出最终配置与 CDN 示例
@@ -30,7 +31,9 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/github-figure-bed"
 CONFIG_FILE="$CONFIG_DIR/config.env"
-REMOTE_CONFIG_PATH=".imgx-config/config.json"
+# 配置文件路径: 新路径与 img.shenzjd.com 网页端一致; 旧路径仅兼容读取 (网页端已迁移)
+CONFIG_PATH_NEW=".img.shenzjd.com/config.json"
+CONFIG_PATH_LEGACY=".imgx-config/config.json"
 
 DEFAULT_REPO_NAME="img.shenzjd.com"
 DEFAULT_CDN="jsdelivr"
@@ -102,8 +105,8 @@ else
   echo "✅ 仓库已创建"
 fi
 
-# ---- 5. 读取远程配置 (与项目网页端共用 .imgx-config/config.json) ----
-# 遍历 default_branch/master/main, 收集所有能解析的配置,
+# ---- 5. 读取远程配置 (与项目网页端共用 .img.shenzjd.com/config.json) ----
+# 遍历 default_branch/master/main × 新旧配置路径, 收集所有能解析的配置,
 # 按 lastSyncAt 选最新的一份 (避免读到旧分支上的过期配置)
 DEFAULT_BRANCH=$(gh api "repos/${OWNER}/${REPO}" --jq .default_branch 2>/dev/null || echo "main")
 echo "   默认分支: ${DEFAULT_BRANCH}"
@@ -111,19 +114,24 @@ echo "   默认分支: ${DEFAULT_BRANCH}"
 REPO_CFG=""
 BEST_TS=""
 BEST_CB=""
+BEST_PATH=""
 for cb in "$DEFAULT_BRANCH" master main; do
-  B64=$(gh api "repos/${OWNER}/${REPO}/contents/${REMOTE_CONFIG_PATH}?ref=$cb" --jq .content 2>/dev/null || true)
-  [[ -n "$B64" ]] && [[ "$B64" != "null" ]] || continue
-  C=$(echo "$B64" | b64decode_py 2>/dev/null || true)
-  echo "$C" | jq -e . >/dev/null 2>&1 || continue
-  TS=$(echo "$C" | jq -r '.lastSyncAt // empty' 2>/dev/null || true)
-  if [[ -z "$BEST_TS" ]] || [[ "$TS" > "$BEST_TS" ]]; then
-    BEST_TS="$TS"; BEST_CFG="$C"; BEST_CB="$cb"
-  fi
+  for cfg_path in "$CONFIG_PATH_NEW" "$CONFIG_PATH_LEGACY"; do
+    B64=$(gh api "repos/${OWNER}/${REPO}/contents/${cfg_path}?ref=$cb" --jq .content 2>/dev/null || true)
+    [[ -n "$B64" ]] && [[ "$B64" != "null" ]] || continue
+    C=$(echo "$B64" | b64decode_py 2>/dev/null || true)
+    echo "$C" | jq -e . >/dev/null 2>&1 || continue
+    TS=$(echo "$C" | jq -r '.lastSyncAt // empty' 2>/dev/null || true)
+    if [[ -z "$BEST_TS" ]] || [[ "$TS" > "$BEST_TS" ]]; then
+      BEST_TS="$TS"; BEST_CFG="$C"; BEST_CB="$cb"; BEST_PATH="$cfg_path"
+    fi
+  done
 done
 REPO_CFG="${BEST_CFG:-}"
 if [[ -n "$REPO_CFG" ]]; then
-  echo "✓ 读取到仓库配置 (分支 ${BEST_CB}${BEST_TS:+, 同步于 ${BEST_TS}}): ${REMOTE_CONFIG_PATH}"
+  [[ "$BEST_PATH" == "$CONFIG_PATH_LEGACY" ]] && \
+    echo "⚠️  检测到旧配置路径 ${CONFIG_PATH_LEGACY} (网页端已迁移到 ${CONFIG_PATH_NEW}), 本次按旧配置运行" || \
+    echo "✓ 读取到仓库配置 (分支 ${BEST_CB}${BEST_TS:+, 同步于 ${BEST_TS}}): ${BEST_PATH}"
 fi
 
 CFG_BRANCH=$(echo "$REPO_CFG" | jq -r '.branch // empty' 2>/dev/null || true)
@@ -188,6 +196,16 @@ npx skills add wu529778790/shenzjd-skills -s github-figure-bed -y
 
 首次使用运行 \`setup.sh\` 一键初始化（自动登录引导 + 配置），之后零配置直接上传。
 
+## 🌐 可视化管理后台
+
+不想敲命令？打开 **[img.shenzjd.com](https://img.shenzjd.com)** 网页端，同一个图床仓库：
+
+- 拖拽上传（支持自动压缩、水印、WebP 转换）
+- 图片管理（列表、预览、删除、CDN 链接一键复制）
+- 图床设置（分支/目录/CDN 可视化配置，与 AI 技能共用同一份配置）
+
+网页端改完配置，AI 侧重跑一次 \`setup.sh\` 即可同步，两边配置永远一致。
+
 ## 链接格式
 
 \`\`\`
@@ -215,40 +233,41 @@ fi
 
 # ---- 8. 写远程配置 (仅新仓库或仓库无配置时, 与项目共用) ----
 if [[ "$CREATED" -eq 1 || -z "$REPO_CFG" ]]; then
-  echo "📝 初始化远程配置 ${REMOTE_CONFIG_PATH} (与 img.shenzjd.com 项目共用) ..."
-  # 生成项目格式配置 (与项目 configStore defaultConfig 对齐)
+  echo "📝 初始化远程配置 ${CONFIG_PATH_NEW} (与 img.shenzjd.com 项目共用) ..."
+  # 生成项目格式配置 (与网页端 configStore defaultConfig 对齐)
   CFG_JSON=$(jq -nc \
     --arg owner "$OWNER" --arg repo "$REPO" --arg branch "$BRANCH" --arg dir "$DIRECTORY" --arg cdn "$CDN" \
     '{owner:$owner, repo:$repo, branch:$branch, directory:$dir,
       compressionEnabled:false, compressionQuality:80,
-      watermarkEnabled:false, watermarkText:"", watermarkColor:"#ffffff",
+      watermarkEnabled:false, watermarkText:"by img.shenzjd.com", watermarkColor:"#ffffff",
       watermarkSize:24, watermarkPosition:"bottom-right",
       theme:"system", cdn:$cdn, useRaw:true, copyFormat:"url",
       autoCopyAfterUpload:true, useOriginalFileName:false, convertToWebp:false,
-      configPath:".imgx-config/config.json", autoSync:true}')
+      duplicateStrategy:"rename",
+      configPath:".img.shenzjd.com/config.json", autoSync:true}')
 
   CFG_B64=$(printf '%s' "$CFG_JSON" | b64encode_py || printf '%s' "$CFG_JSON" | base64 | tr -d '\n')
   TMP_JSON=$(mktemp)
   trap 'rm -f "$TMP_JSON"' EXIT
   {
-    printf '{"message":"chore: update imgx config","content":"%s","branch":"%s"}' "$CFG_B64" "$BRANCH"
+    printf '{"message":"chore: update config by https://img.shenzjd.com","content":"%s","branch":"%s"}' "$CFG_B64" "$BRANCH"
   } > "$TMP_JSON"
 
   # 已存在则先取 sha (避免 422)
-  EXIST_SHA=$(gh api "repos/${OWNER}/${REPO}/contents/${REMOTE_CONFIG_PATH}?ref=${BRANCH}" --jq .sha 2>/dev/null || true)
+  EXIST_SHA=$(gh api "repos/${OWNER}/${REPO}/contents/${CONFIG_PATH_NEW}?ref=${BRANCH}" --jq .sha 2>/dev/null || true)
   if [[ -n "$EXIST_SHA" ]] && [[ "$EXIST_SHA" != "null" ]]; then
     TMP_JSON2=$(mktemp)
     jq --arg sha "$EXIST_SHA" '. + {sha:$sha}' "$TMP_JSON" > "$TMP_JSON2" && mv "$TMP_JSON2" "$TMP_JSON"
   fi
 
-  gh api --method PUT "repos/${OWNER}/${REPO}/contents/${REMOTE_CONFIG_PATH}" --input "$TMP_JSON" >/dev/null 2>&1 \
+  gh api --method PUT "repos/${OWNER}/${REPO}/contents/${CONFIG_PATH_NEW}" --input "$TMP_JSON" >/dev/null 2>&1 \
     && echo "✅ 远程配置已写入 ${BRANCH} 分支" || echo "⚠️  远程配置写入失败 (不影响上传功能)"
 fi
 
 # ---- 9. 写入本地缓存 (upload/delete/list 读取) ----
 mkdir -p "$CONFIG_DIR"
 cat > "$CONFIG_FILE" <<EOF
-# 由 github-figure-bed setup.sh 生成 (缓存; 权威源为仓库 ${REMOTE_CONFIG_PATH})
+# 由 github-figure-bed setup.sh 生成 (缓存; 权威源为仓库 ${CONFIG_PATH_NEW})
 IMGX_OWNER=${OWNER}
 IMGX_REPO=${REPO}
 IMGX_BRANCH=${BRANCH}
@@ -292,7 +311,8 @@ echo "配置汇总:"
 echo "   Owner : ${OWNER}"
 echo "   仓库  : ${OWNER}/${REPO} (分支 ${BRANCH})"
 echo "   目录  : ${DIRECTORY}/  CDN: ${CDN}"
-echo "   联动  : 配置源 ${REMOTE_CONFIG_PATH} (与 img.shenzjd.com 项目网页端共用)"
+echo "   联动  : 配置源 ${CONFIG_PATH_NEW} (与 img.shenzjd.com 项目网页端共用)"
+echo "   后台  : https://img.shenzjd.com (可视化上传/管理/设置)"
 case "$CDN" in
   jsdelivr)        CDN_EXAMPLE="https://cdn.jsdelivr.net/gh/${OWNER}/${REPO}@${BRANCH}/${DIRECTORY}/xxx.png" ;;
   jsdmirror)       CDN_EXAMPLE="https://cdn.jsdmirror.com/gh/${OWNER}/${REPO}@${BRANCH}/${DIRECTORY}/xxx.png" ;;

@@ -168,7 +168,7 @@ for LOCAL_FILE in "${FILES[@]}"; do
 
   # 用文件流拼 JSON payload (base64 字符集无需转义)
   {
-    printf '{"message":"[skip ci] upload via github-figure-bed","content":"'
+    printf '{"message":"[skip ci] upload via github-figure-bed (https://img.shenzjd.com)","content":"'
     cat "$TMP_B64"
     printf '","branch":"%s"}' "$BRANCH"
   } > "$TMP_JSON"

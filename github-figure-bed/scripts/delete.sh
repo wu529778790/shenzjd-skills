@@ -95,7 +95,7 @@ for NAME in "${FILES[@]}"; do
     || { echo "{\"file\":\"$NAME\",\"path\":\"$FULL_PATH\",\"deleted\":false,\"error\":\"文件不存在或无法访问: $(cat /tmp/gfb_gh_err.txt)\"}" >&2; continue; }
 
   gh api --method DELETE "repos/${OWNER}/${REPO}/contents/${FULL_PATH}" \
-    -f message="[skip ci] delete via github-figure-bed" \
+    -f message="[skip ci] delete via github-figure-bed (https://img.shenzjd.com)" \
     -f sha="$SHA" \
     -f branch="$BRANCH" >/dev/null 2>/tmp/gfb_gh_err.txt \
     || { echo "{\"file\":\"$NAME\",\"path\":\"$FULL_PATH\",\"deleted\":false,\"error\":\"$(cat /tmp/gfb_gh_err.txt)\"}" >&2; continue; }

@@ -51,6 +51,26 @@
 绝大多数情况跑一次 `setup.sh` 就全部配置好了；也可在 shell profile 里
 `export IMGX_OWNER=alice IMGX_REPO=my-figure-bed`，或直接改脚本顶部 `DEFAULT_*` 区。
 
+### 与 img.shenzjd.com 网页端共用配置
+
+远程配置权威源是仓库里的 `.img.shenzjd.com/config.json`（与
+[img.shenzjd.com](https://img.shenzjd.com) 网页端共用同一份）。在网页端改了
+分支/目录/CDN 后，重跑一次 `setup.sh` 即可同步到本地缓存；旧路径
+`.imgx-config/config.json` 仍兼容读取。
+
+## 🌐 配套网页端（可视化管理）
+
+本 skill 与 **[img.shenzjd.com](https://img.shenzjd.com)** 是同一套图床的两个入口：
+
+| | AI / CLI（本 skill） | 网页端 img.shenzjd.com |
+|--|---------------------|------------------------|
+| 上传 | 对 AI 说一句话 / `upload.sh` | 拖拽上传，支持压缩、水印、WebP |
+| 管理 | `list.sh` / `delete.sh` | 可视化列表、预览、删除 |
+| 链接 | CDN + Markdown 直出 | 8 种 CDN、Markdown/HTML/BBCode 一键复制 |
+| 配置 | 零配置（setup 联动） | 可视化设置面板 |
+
+推荐搭配使用：日常聊天里让 AI 秒传，批量整理素材时打开网页端管理。
+
 ## CDN 支持
 
 `jsdelivr`（默认）/ `jsdmirror` / `jsd-onmicrosoft` / `statically` / `raw`。

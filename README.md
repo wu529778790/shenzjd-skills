@@ -49,3 +49,5 @@ npx skills add wu529778790/shenzjd-skills -s git-hooks-setup -y
 npx skills add wu529778790/shenzjd-skills -s dependency-audit -y
 npx skills add wu529778790/shenzjd-skills -s github-figure-bed -y
 ```
+
+> 🖼️ **github-figure-bed** companion web app: [img.shenzjd.com](https://img.shenzjd.com) — a visual management dashboard for the same figure-bed repo (drag-and-drop upload / compression & watermark / image management / CDN settings). The skill and the web app share one config file, so use them together for the best experience.

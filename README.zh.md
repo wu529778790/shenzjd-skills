@@ -50,6 +50,8 @@ npx skills add wu529778790/shenzjd-skills -s dependency-audit -y
 npx skills add wu529778790/shenzjd-skills -s github-figure-bed -y
 ```
 
+> 🖼️ **github-figure-bed** 配套网页端：[img.shenzjd.com](https://img.shenzjd.com) —— 同一个图床仓库的可视化管理后台（拖拽上传 / 压缩水印 / 图片管理 / CDN 设置），AI 技能与网页端共用一份配置，搭配使用体验最佳。
+
 ## 📄 License
 
 MIT

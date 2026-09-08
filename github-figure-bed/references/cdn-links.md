@@ -26,6 +26,10 @@ https://cdn.jsdelivr.net/gh/alice/my-figure-bed@main/images/photo.png
 | `statically` | `https://cdn.statically.io/gh/{o}/{r}/{b}/{path}` | 备用 |
 | `raw` | `https://raw.githubusercontent.com/{o}/{r}/{b}/{path}` | GitHub 官方 raw，无缓存加速 |
 
+> 补充：[img.shenzjd.com](https://img.shenzjd.com) 网页端另支持 GitHub Pages / GitMirror /
+> GhProxy 等更多 CDN；raw 域名对图片支持 `?format=webp` 动态转换（其他镜像 CDN 无此能力，
+> 仓库里没有 .webp 文件时加参数必 404）。
+
 ## Markdown 引用
 
 ```
