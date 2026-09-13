@@ -1,6 +1,6 @@
 # 🛠️ AI Coding Skills
 
-> 5 个生产级 AI 编程技能模块，一行命令安装，覆盖 DevOps 核心链路。
+> 6 个生产级 AI 技能模块，一行命令安装，覆盖 DevOps 核心链路与 AI 图片生成。
 
 [![skills.sh](https://img.shields.io/badge/skills.sh-查找我-blue)](https://skills.sh/wu529778790/shenzjd-skills)
 
@@ -27,6 +27,7 @@ npx skills add wu529778790/shenzjd-skills -s docker-build-deploy -y
 | 🪝 **git-hooks-setup** | 一键配置 husky/lefthook + commitlint | `/git-hooks-setup` |
 | 🔒 **dependency-audit** | CVE 漏洞 + 过时依赖 + License 合规 | `/dependency-audit` |
 | 🖼️ **github-figure-bed** | 一键初始化 GitHub 图床，登录即用、上传秒得 CDN 链接 | `/github-figure-bed setup` |
+| 🎨 **freeimg** | 免费 AI 图片生成（z-image-turbo，每天约 100 张 2K 免费额度）：对话里一句话直接出图 | 「用 freeimg 生成一张××图」 |
 
 ## 🎯 覆盖场景
 
@@ -38,6 +39,8 @@ npx skills add wu529778790/shenzjd-skills -s docker-build-deploy -y
 依赖 → 安全审计 → License 合规
   ↓
 素材 → GitHub 图床 → CDN 链接
+  ↓
+灵感 → freeimg AI 生成 → 2K 图片
 ```
 
 ## 📂 单独安装某个 Skill
@@ -48,9 +51,12 @@ npx skills add wu529778790/shenzjd-skills -s db-migration-helper -y
 npx skills add wu529778790/shenzjd-skills -s git-hooks-setup -y
 npx skills add wu529778790/shenzjd-skills -s dependency-audit -y
 npx skills add wu529778790/shenzjd-skills -s github-figure-bed -y
+npx skills add wu529778790/shenzjd-skills -s freeimg -y
 ```
 
 > 🖼️ **github-figure-bed** 配套网页端：[img.shenzjd.com](https://img.shenzjd.com) —— 同一个图床仓库的可视化管理后台（拖拽上传 / 压缩水印 / 图片管理 / CDN 设置），AI 技能与网页端共用一份配置，搭配使用体验最佳。
+
+> 🎨 **freeimg** 配套网页端：[freeimg.shenzjd.com](https://freeimg.shenzjd.com) —— 免费 AI 图片生成站，内置 18000+ 提示词库与 12 种预设风格（公众号/小红书封面、海报、3D 卡通等），支持历史记录与图床上传。AI 技能与网页端共用同一枚免费令牌。
 
 ## 📄 License
 

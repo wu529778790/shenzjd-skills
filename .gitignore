@@ -35,6 +35,9 @@ Thumbs.db
 .agents/
 skills-lock.json
 
+# Local assistant state
+.workbuddy/
+
 # Temporary files
 tmp/
 temp/

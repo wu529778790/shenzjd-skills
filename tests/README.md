@@ -94,6 +94,7 @@ test-new-skill:
 | db-migration-helper | ✅ | ✅ | ✅ |
 | dependency-audit | ✅ | ✅ | ✅ |
 | docker-build-deploy | ✅ | ✅ | ✅ |
+| freeimg | ✅ | ✅ | ✅ |
 | git-hooks-setup | ✅ | ✅ | ✅ |
 | github-figure-bed | ✅ | ✅ | ✅ |
 
