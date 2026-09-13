@@ -35,6 +35,13 @@
       "description": "Use when auditing project dependencies for security vulnerabilities, outdated packages, or license compliance across npm/yarn/pnpm, pip, go, and cargo.",
       "url": "./dependency-audit/SKILL.md",
       "digest": "sha256:b94c2edfd31bcd3745f449368b70dc7c4f8f1bd6efdbb26dcdd38c3edf01bb9f"
+    },
+    {
+      "name": "freeimg",
+      "type": "skill-md",
+      "description": "Generate AI images from text prompts via the free z-image-turbo model (Gitee AI serverless API, ~100 free 2K images/day with a free token). One-time setup stores the token locally; then generate PNG images in any size (multiple of 8), with negative prompts and step control. Companion web app with 18000+ prompt library and 12 preset styles: https://freeimg.shenzjd.com. Use for generating, drawing, or creating images (icons, covers, illustrations, posters). Keywords: image generation, text-to-image, AI image, z-image, z-image-turbo, Gitee AI, free image, 画图, 生成图片, 文生图, AI 绘画, 免费图片生成, freeimg.",
+      "url": "./freeimg/SKILL.md",
+      "digest": "sha256:55163c2d91ddb781d34afd8e13189e7edcda7ede9d0c59fd5bb341b8aabbcb1b"
     }
   ]
 }
