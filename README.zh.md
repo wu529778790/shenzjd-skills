@@ -1,6 +1,6 @@
 # 🛠️ AI Coding Skills
 
-> 6 个生产级 AI 技能模块，一行命令安装，覆盖 DevOps 核心链路与 AI 图片生成。
+> 7 个生产级 AI 技能模块，一行命令安装，覆盖 DevOps 核心链路与 AI 图片生成。
 
 [![skills.sh](https://img.shields.io/badge/skills.sh-查找我-blue)](https://skills.sh/wu529778790/shenzjd-skills)
 
@@ -28,6 +28,7 @@ npx skills add wu529778790/shenzjd-skills -s docker-build-deploy -y
 | 🔒 **dependency-audit** | CVE 漏洞 + 过时依赖 + License 合规 | `/dependency-audit` |
 | 🖼️ **github-figure-bed** | 一键初始化 GitHub 图床，登录即用、上传秒得 CDN 链接 | `/github-figure-bed setup` |
 | 🎨 **freeimg** | 免费 AI 图片生成（z-image-turbo，每天约 100 张 2K 免费额度）：对话里一句话直接出图 | 「用 freeimg 生成一张××图」 |
+| ⚡ **hunyuan-image** | 腾讯混元 3.0 生图，**免费 10 万张额度**（微信「小程序成长计划」激励资源包）：文生图 + 垫图 | 「用混元生成一张××图」 |
 
 ## 🎯 覆盖场景
 
@@ -41,6 +42,8 @@ npx skills add wu529778790/shenzjd-skills -s docker-build-deploy -y
 素材 → GitHub 图床 → CDN 链接
   ↓
 灵感 → freeimg AI 生成 → 2K 图片
+                              ↘
+        微信生态 → hunyuan-image 混元生图（免费 10 万张，文生图 + 垫图）
 ```
 
 ## 📂 单独安装某个 Skill
@@ -52,11 +55,14 @@ npx skills add wu529778790/shenzjd-skills -s git-hooks-setup -y
 npx skills add wu529778790/shenzjd-skills -s dependency-audit -y
 npx skills add wu529778790/shenzjd-skills -s github-figure-bed -y
 npx skills add wu529778790/shenzjd-skills -s freeimg -y
+npx skills add wu529778790/shenzjd-skills -s hunyuan-image -y
 ```
 
 > 🖼️ **github-figure-bed** 配套网页端：[img.shenzjd.com](https://img.shenzjd.com) —— 同一个图床仓库的可视化管理后台（拖拽上传 / 压缩水印 / 图片管理 / CDN 设置），AI 技能与网页端共用一份配置，搭配使用体验最佳。
 
 > 🎨 **freeimg** 配套网页端：[freeimg.shenzjd.com](https://freeimg.shenzjd.com) —— 免费 AI 图片生成站，内置 18000+ 提示词库与 12 种预设风格（公众号/小红书封面、海报、3D 卡通等），支持历史记录与图床上传。AI 技能与网页端共用同一枚免费令牌。
+
+> ⚡ **hunyuan-image** 配套网页端：[freeimg.shenzjd.com/hunyuan](https://freeimg.shenzjd.com/hunyuan) —— 混元可视化工作台（文生图 + 垫图），页面内置**领取免费资源包到出图的完整图文教程**：微信「小程序成长计划」激励资源包 **10 万张 AI 生图 + 10 亿 Token** 免费领（6 个月有效），与 AI 技能共用同一套凭据。
 
 ## 📄 License
 

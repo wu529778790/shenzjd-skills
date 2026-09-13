@@ -62,7 +62,8 @@ fi
 # 4. 离线参数校验: 缺少令牌时引导配置, 缺少 --prompt 时打印用法
 echo ""
 echo "📋 Test 4: 离线参数校验"
-out="$(GITEE_AI_API_KEY= node "$SKILL_DIR/scripts/generate.mjs" --prompt x --out /tmp/freeimg-test.png 2>&1 || true)"
+# HOME 指向空目录, 防止读到本机 ~/.freeimg/config.env 真实令牌而真实调用 API
+out="$(GITEE_AI_API_KEY= FREEIMG_CONFIG="$TEST_DIR/no-config.env" HOME="$TEST_DIR/no-home" node "$SKILL_DIR/scripts/generate.mjs" --prompt x --out /tmp/freeimg-test.png 2>&1 || true)"
 if echo "$out" | grep -q "ai.gitee.com/serverless-api"; then
   echo "  ✅ 缺少令牌时输出获取引导"
 else
