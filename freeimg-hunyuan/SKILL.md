@@ -1,6 +1,6 @@
 ---
 name: freeimg-hunyuan
-description: "Generate AI images (text-to-image and image-to-image with reference) via Tencent Hunyuan 3.0 — completely FREE: claim the WeChat 小程序成长计划 incentive resource pack (10万张 free AI images + 10亿 Token, 6-month validity) and the quota burns on your own CloudBase env, no payment ever. One-time setup stores Tencent Cloud credentials locally (full illustrated tutorial on the companion web app https://freeimg.shenzjd.com/hunyuan); then generate PNG in 4 sizes with prompt revise control and optional watermark. Use when the user wants Hunyuan/混元 model, WeChat ecosystem image generation, or image-to-image with a reference image. For free no-setup generation prefer the freeimg-z-image skill (z-image-turbo). Keywords: hunyuan, 混元, 混元生图, 腾讯云, CloudBase, 云开发, text-to-image, image-to-image, 垫图, 图生图, 文生图, 小程序成长计划, 激励任务, 免费, 免费生图, 10万张, freeimg-hunyuan."
+description: "Generate AI images (text-to-image and image-to-image with reference) via Tencent Hunyuan 3.0 — completely FREE: claim the WeChat 小程序成长计划 incentive resource pack (10万张 free AI images + 10亿 Token, 6-month validity) and the quota burns on your own CloudBase env, no payment ever. One-time setup stores Tencent Cloud credentials locally (full illustrated tutorial on the companion web app https://freeimg.shenzjd.com/hunyuan); then generate images (upstream returns JPEG) in 4 fixed sizes with prompt revise control and optional watermark. Use when the user wants Hunyuan/混元 model, WeChat ecosystem image generation, or image-to-image with a reference image. For free no-setup generation prefer the freeimg-z-image skill (z-image-turbo). Keywords: hunyuan, 混元, 混元生图, 腾讯云, CloudBase, 云开发, text-to-image, image-to-image, 垫图, 图生图, 文生图, 小程序成长计划, 激励任务, 免费, 免费生图, 10万张, freeimg-hunyuan."
 ---
 
 # FreeImg Hunyuan — 腾讯混元生图（免费 10 万张额度）
@@ -52,9 +52,9 @@ description: "Generate AI images (text-to-image and image-to-image with referenc
 
 ```bash
 # 文生图
-scripts/generate.mjs --prompt "提示词" --out 输出.png [--size 1024x1024] [--no-revise] [--footnote "品牌名"]
+scripts/generate.mjs --prompt "提示词" --out 输出.jpg [--size 1024x1024] [--no-revise] [--footnote "品牌名"]
 # 垫图（图生图）：--image 接图片路径、base64 或 data URL
-scripts/generate.mjs --prompt "提示词" --image 垫图.jpg --out 输出.png
+scripts/generate.mjs --prompt "提示词" --image 垫图.jpg --out 输出.jpg
 ```
 
 - `--size`：只支持 `1024x1024` / `1280x720` / `720x1280` / `2048x512`
@@ -91,4 +91,6 @@ scripts/generate.mjs --prompt "提示词" --image 垫图.jpg --out 输出.png
 - **422 还在重试**：422 是提示词触发内容审核，同样内容重发必然再失败，改措辞
 - **没有资源包直接生成**：会按量计费产生费用；引导用户先免费领取「小程序成长计划」激励资源包（10 万张生图额度）并绑定所用环境
 - **环境 ID 填错**：资源包绑定在领取时创建的那个环境，凭据对应的环境必须有资源包
+- **以为输出是 PNG**：混元上游下发的是 **JPEG**，脚本按原样落盘，扩展名由 `--out` 决定——
+  用 `.png` 会得到「名字是 png、内容是 jpeg」的文件，交付前缀名一律写 `.jpg`
 - **生成后不检查就交付**：先 Read 查看再给用户

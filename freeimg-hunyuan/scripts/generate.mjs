@@ -2,8 +2,9 @@
 // FreeImg Hunyuan — 腾讯云 CloudBase AI 混元生图文生图 / 图生图，纯 BYOK
 // Web app companion: https://freeimg.shenzjd.com/hunyuan
 // Usage:
-//   generate.mjs --prompt "..." --out out.png [--size 1024x1024] [--no-revise] [--footnote " "]
-//   generate.mjs --prompt "..." --image 垫图.jpg --out out.png        # 图生图(垫图)
+//   generate.mjs --prompt "..." --out out.jpg [--size 1024x1024] [--no-revise] [--footnote " "]
+//   generate.mjs --prompt "..." --image 垫图.jpg --out out.jpg        # 图生图(垫图)
+// 注意：上游混元下发的是 JPEG，脚本按原样落盘（不做转码），--out 请用 .jpg
 // Credentials: env TCB_ENV_ID/TCB_SECRET_ID/TCB_SECRET_KEY > ~/.freeimg-hunyuan/config.env > guided error.
 // SDK: @cloudbase/node-sdk 首次运行自动安装到 ~/.freeimg-hunyuan/sdk（CloudBase 网关鉴权是自定义签名，自行复刻不可靠）。
 import fs from 'node:fs'
@@ -82,10 +83,10 @@ const arg = (name, dflt) => {
 const hasFlag = (name) => args.includes('--' + name)
 
 const prompt = arg('prompt')
-const out = arg('out', 'image.png')
+const out = arg('out', 'image.jpg')
 const image = arg('image')
 if (!prompt) {
-  console.error('usage: generate.mjs --prompt "提示词" --out out.png [--size 1024x1024] [--image 垫图.jpg] [--no-revise] [--footnote "品牌名"]')
+  console.error('usage: generate.mjs --prompt "提示词" --out out.jpg [--size 1024x1024] [--image 垫图.jpg] [--no-revise] [--footnote "品牌名"]')
   process.exit(1)
 }
 if (prompt.length > PROMPT_MAX) {

@@ -25,7 +25,7 @@ npx skills add wu529778790/shenzjd-skills -s freeimg-hunyuan -y
 4. **让 AI 生图**：对任意支持的 AI 工具说「用混元生成一张××图」，或手动运行：
 
    ```bash
-   node scripts/generate.mjs --prompt "国潮插画：山水之间的亭台楼阁，暖色调，无文字无水印" --size 1280x720 --out output.png
+   node scripts/generate.mjs --prompt "国潮插画：山水之间的亭台楼阁，暖色调，无文字无水印" --size 1280x720 --out output.jpg
    ```
 
 详细用法见 [SKILL.md](SKILL.md)。
