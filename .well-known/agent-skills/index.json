@@ -2,11 +2,11 @@
   "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
   "skills": [
     {
-      "name": "hunyuan-image",
+      "name": "freeimg-hunyuan",
       "type": "skill-md",
-      "description": "Generate AI images (text-to-image and image-to-image with reference) via Tencent Hunyuan 3.0 — completely FREE: claim the WeChat 小程序成长计划 incentive resource pack (10万张 free AI images + 10亿 Token, 6-month validity) and the quota burns on your own CloudBase env, no payment ever. One-time setup stores Tencent Cloud credentials locally (full illustrated tutorial on the companion web app https://freeimg.shenzjd.com/hunyuan); then generate PNG in 4 sizes with prompt revise control and optional watermark. Use when the user wants Hunyuan/混元 model, WeChat ecosystem image generation, or image-to-image with a reference image. For free no-setup generation prefer the freeimg skill (z-image-turbo). Keywords: hunyuan, 混元, 混元生图, 腾讯云, CloudBase, 云开发, text-to-image, image-to-image, 垫图, 图生图, 文生图, 小程序成长计划, 激励任务, 免费, 免费生图, 10万张, hunyuan-image.",
-      "url": "./hunyuan-image/SKILL.md",
-      "digest": "sha256:53a69647e1abaf19a1dae271cbd8d880f9cea5e8166c7a3ac9e2879f2a2b4238"
+      "description": "Generate AI images (text-to-image and image-to-image with reference) via Tencent Hunyuan 3.0 — completely FREE: claim the WeChat 小程序成长计划 incentive resource pack (10万张 free AI images + 10亿 Token, 6-month validity) and the quota burns on your own CloudBase env, no payment ever. One-time setup stores Tencent Cloud credentials locally (full illustrated tutorial on the companion web app https://freeimg.shenzjd.com/hunyuan); then generate PNG in 4 sizes with prompt revise control and optional watermark. Use when the user wants Hunyuan/混元 model, WeChat ecosystem image generation, or image-to-image with a reference image. For free no-setup generation prefer the freeimg-z-image skill (z-image-turbo). Keywords: hunyuan, 混元, 混元生图, 腾讯云, CloudBase, 云开发, text-to-image, image-to-image, 垫图, 图生图, 文生图, 小程序成长计划, 激励任务, 免费, 免费生图, 10万张, freeimg-hunyuan.",
+      "url": "./freeimg-hunyuan/SKILL.md",
+      "digest": "sha256:577187f40dd3401254304138f3a573d4d52e6f3d3dc78da72d1c68245ba59201"
     },
     {
       "name": "docker-build-deploy",
@@ -21,6 +21,13 @@
       "description": "Use when generating database migration SQL from model or schema changes — compares current vs desired schema, detects diffs, outputs reversible safe migrations.",
       "url": "./db-migration-helper/SKILL.md",
       "digest": "sha256:a708a2b315057019f45e238159c0e70144d37973808f86e290896972a9977085"
+    },
+    {
+      "name": "freeimg-z-image",
+      "type": "skill-md",
+      "description": "Generate AI images from text prompts via the free z-image-turbo model (Gitee AI serverless API, ~100 free 2K images/day with a free token). One-time setup stores the token locally; then generate PNG images in any size (multiple of 8), with negative prompts and step control. Companion web app with 18000+ prompt library and 12 preset styles: https://freeimg.shenzjd.com. Use for generating, drawing, or creating images (icons, covers, illustrations, posters). Keywords: image generation, text-to-image, AI image, z-image, z-image-turbo, Gitee AI, free image, 画图, 生成图片, 文生图, AI 绘画, 免费图片生成, freeimg-z-image.",
+      "url": "./freeimg-z-image/SKILL.md",
+      "digest": "sha256:0460374f1f11c0e1288dfc99f2ccb7778003f02db8a83fb710653726ee937b04"
     },
     {
       "name": "git-hooks-setup",
@@ -42,13 +49,6 @@
       "description": "Use when auditing project dependencies for security vulnerabilities, outdated packages, or license compliance across npm/yarn/pnpm, pip, go, and cargo.",
       "url": "./dependency-audit/SKILL.md",
       "digest": "sha256:b94c2edfd31bcd3745f449368b70dc7c4f8f1bd6efdbb26dcdd38c3edf01bb9f"
-    },
-    {
-      "name": "freeimg",
-      "type": "skill-md",
-      "description": "Generate AI images from text prompts via the free z-image-turbo model (Gitee AI serverless API, ~100 free 2K images/day with a free token). One-time setup stores the token locally; then generate PNG images in any size (multiple of 8), with negative prompts and step control. Companion web app with 18000+ prompt library and 12 preset styles: https://freeimg.shenzjd.com. Use for generating, drawing, or creating images (icons, covers, illustrations, posters). Keywords: image generation, text-to-image, AI image, z-image, z-image-turbo, Gitee AI, free image, 画图, 生成图片, 文生图, AI 绘画, 免费图片生成, freeimg.",
-      "url": "./freeimg/SKILL.md",
-      "digest": "sha256:55163c2d91ddb781d34afd8e13189e7edcda7ede9d0c59fd5bb341b8aabbcb1b"
     }
   ]
 }
