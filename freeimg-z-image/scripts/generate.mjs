@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-// FreeImg — free text-to-image via Gitee AI serverless z-image-turbo
+// FreeImg Z-Image — free text-to-image via Gitee AI serverless z-image-turbo
 // Web app companion: https://freeimg.shenzjd.com
 // Usage:
 //   generate.mjs --prompt "..." --out out.png [--width 1024] [--height 1024]
 //                [--steps 8] [--negative "..."]
-// Token resolution: env GITEE_AI_API_KEY > ~/.freeimg/config.env > guided error.
+// Token resolution: env GITEE_AI_API_KEY > ~/.freeimg-z-image/config.env > guided error.
 import fs from 'node:fs'
 import path from 'node:path'
 import os from 'node:os'
@@ -14,14 +14,14 @@ const CONFIG_HINT = [
   '  1. 登录 https://ai.gitee.com/serverless-api',
   '  2. 任意模型详情页 →「在线体验」→「API」→「添加令牌」→ 复制',
   '  3. 写入本地配置（只需一次）:',
-  '       mkdir -p ~/.freeimg && echo "GITEE_AI_API_KEY=你的令牌" > ~/.freeimg/config.env && chmod 600 ~/.freeimg/config.env',
+  '       mkdir -p ~/.freeimg-z-image && echo "GITEE_AI_API_KEY=你的令牌" > ~/.freeimg-z-image/config.env && chmod 600 ~/.freeimg-z-image/config.env',
   '  或导出环境变量: export GITEE_AI_API_KEY=你的令牌',
   '  可视化网页版（无需配置）: https://freeimg.shenzjd.com',
 ].join('\n')
 
 function loadToken() {
   if (process.env.GITEE_AI_API_KEY) return process.env.GITEE_AI_API_KEY.trim()
-  const cfg = process.env.FREEIMG_CONFIG || path.join(os.homedir(), '.freeimg', 'config.env')
+  const cfg = process.env.FREEIMG_Z_IMAGE_CONFIG || path.join(os.homedir(), '.freeimg-z-image', 'config.env')
   try {
     const text = fs.readFileSync(cfg, 'utf-8')
     const m = text.match(/^GITEE_AI_API_KEY=(.+)$/m)

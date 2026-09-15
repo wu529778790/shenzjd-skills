@@ -17,7 +17,7 @@ npx skills add wu529778790/shenzjd-skills -s freeimg-z-image -y
 1. **配置令牌**（免费，只需一次）：登录 [ai.gitee.com/serverless-api](https://ai.gitee.com/serverless-api) → 任意模型「在线体验」→「API」→「添加令牌」→ 复制，然后：
 
    ```bash
-   mkdir -p ~/.freeimg && echo "GITEE_AI_API_KEY=你的令牌" > ~/.freeimg/config.env && chmod 600 ~/.freeimg/config.env
+   mkdir -p ~/.freeimg-z-image && echo "GITEE_AI_API_KEY=你的令牌" > ~/.freeimg-z-image/config.env && chmod 600 ~/.freeimg-z-image/config.env
    ```
 
 2. **让 AI 画图**：对任意支持的 AI 工具说「用 freeimg-z-image 生成一张××图」，或手动运行：

@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// 混元生图 — 腾讯云 CloudBase AI (hunyuan-image) 文生图 / 图生图，纯 BYOK
+// FreeImg Hunyuan — 腾讯云 CloudBase AI 混元生图文生图 / 图生图，纯 BYOK
 // Web app companion: https://freeimg.shenzjd.com/hunyuan
 // Usage:
 //   generate.mjs --prompt "..." --out out.png [--size 1024x1024] [--no-revise] [--footnote " "]
 //   generate.mjs --prompt "..." --image 垫图.jpg --out out.png        # 图生图(垫图)
-// Credentials: env TCB_ENV_ID/TCB_SECRET_ID/TCB_SECRET_KEY > ~/.hunyuan/config.env > guided error.
-// SDK: @cloudbase/node-sdk 首次运行自动安装到 ~/.hunyuan/sdk（CloudBase 网关鉴权是自定义签名，自行复刻不可靠）。
+// Credentials: env TCB_ENV_ID/TCB_SECRET_ID/TCB_SECRET_KEY > ~/.freeimg-hunyuan/config.env > guided error.
+// SDK: @cloudbase/node-sdk 首次运行自动安装到 ~/.freeimg-hunyuan/sdk（CloudBase 网关鉴权是自定义签名，自行复刻不可靠）。
 import fs from 'node:fs'
 import path from 'node:path'
 import os from 'node:os'
@@ -29,7 +29,7 @@ const CONFIG_HINT = [
   '  2. 腾讯云控制台「访问管理 → API 密钥管理」 https://console.cloud.tencent.com/cam/capi 新建密钥，',
   '     复制 SecretId 与 SecretKey',
   '  3. 写入本地配置（只需一次）:',
-  '       mkdir -p ~/.hunyuan && printf "TCB_ENV_ID=你的环境ID\\nTCB_SECRET_ID=你的SecretId\\nTCB_SECRET_KEY=你的SecretKey\\n" > ~/.hunyuan/config.env && chmod 600 ~/.hunyuan/config.env',
+  '       mkdir -p ~/.freeimg-hunyuan && printf "TCB_ENV_ID=你的环境ID\\nTCB_SECRET_ID=你的SecretId\\nTCB_SECRET_KEY=你的SecretKey\\n" > ~/.freeimg-hunyuan/config.env && chmod 600 ~/.freeimg-hunyuan/config.env',
   '  或导出环境变量: export TCB_ENV_ID=... TCB_SECRET_ID=... TCB_SECRET_KEY=...',
   '  可视化网页版（填密钥即用）: https://freeimg.shenzjd.com/hunyuan',
 ].join('\n')
@@ -41,7 +41,7 @@ function loadCreds() {
     secretKey: process.env.TCB_SECRET_KEY,
   }
   if (env.envId && env.secretId && env.secretKey) return env
-  const cfg = process.env.HUNYUAN_CONFIG || path.join(os.homedir(), '.hunyuan', 'config.env')
+  const cfg = process.env.FREEIMG_HUNYUAN_CONFIG || path.join(os.homedir(), '.freeimg-hunyuan', 'config.env')
   const keyMap = { TCB_ENV_ID: 'envId', TCB_SECRET_ID: 'secretId', TCB_SECRET_KEY: 'secretKey' }
   try {
     for (const line of fs.readFileSync(cfg, 'utf-8').split('\n')) {
@@ -54,16 +54,16 @@ function loadCreds() {
   process.exit(1)
 }
 
-// 依赖解析：本仓库/全局已装则直接用，否则装到 ~/.hunyuan/sdk 复用
+// 依赖解析：本仓库/全局已装则直接用，否则装到 ~/.freeimg-hunyuan/sdk 复用
 function loadSdk() {
   try {
     return createRequire(import.meta.url)('@cloudbase/node-sdk')
   } catch { /* fallthrough to auto install */ }
-  const sdkDir = process.env.HUNYUAN_SDK_DIR || path.join(os.homedir(), '.hunyuan', 'sdk')
+  const sdkDir = process.env.FREEIMG_HUNYUAN_SDK_DIR || path.join(os.homedir(), '.freeimg-hunyuan', 'sdk')
   const pkgJson = path.join(sdkDir, 'package.json')
   if (!fs.existsSync(pkgJson)) {
     fs.mkdirSync(sdkDir, { recursive: true })
-    fs.writeFileSync(pkgJson, JSON.stringify({ name: 'hunyuan-image-sdk', private: true, version: '1.0.0' }))
+    fs.writeFileSync(pkgJson, JSON.stringify({ name: 'freeimg-hunyuan-sdk', private: true, version: '1.0.0' }))
     console.error('首次使用：安装 @cloudbase/node-sdk 到 ' + sdkDir + ' …')
     const r = spawnSync('npm', ['install', '--prefix', sdkDir, '@cloudbase/node-sdk', '--no-fund', '--no-audit', '--loglevel', 'error'], { stdio: 'inherit' })
     if (r.status !== 0) {

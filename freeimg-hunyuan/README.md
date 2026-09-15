@@ -19,7 +19,7 @@ npx skills add wu529778790/shenzjd-skills -s freeimg-hunyuan -y
 3. **写配置**（只需一次）：
 
    ```bash
-   mkdir -p ~/.hunyuan && printf "TCB_ENV_ID=你的环境ID\nTCB_SECRET_ID=你的SecretId\nTCB_SECRET_KEY=你的SecretKey\n" > ~/.hunyuan/config.env && chmod 600 ~/.hunyuan/config.env
+   mkdir -p ~/.freeimg-hunyuan && printf "TCB_ENV_ID=你的环境ID\nTCB_SECRET_ID=你的SecretId\nTCB_SECRET_KEY=你的SecretKey\n" > ~/.freeimg-hunyuan/config.env && chmod 600 ~/.freeimg-hunyuan/config.env
    ```
 
 4. **让 AI 生图**：对任意支持的 AI 工具说「用混元生成一张××图」，或手动运行：

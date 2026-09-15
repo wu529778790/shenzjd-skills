@@ -1,6 +1,6 @@
 ---
 name: freeimg-hunyuan
-description: "Generate AI images (text-to-image and image-to-image with reference) via Tencent Hunyuan 3.0 — completely FREE: claim the WeChat 小程序成长计划 incentive resource pack (10万张 free AI images + 10亿 Token, 6-month validity) and the quota burns on your own CloudBase env, no payment ever. One-time setup stores Tencent Cloud credentials locally (full illustrated tutorial on the companion web app https://freeimg.shenzjd.com/hunyuan); then generate PNG in 4 sizes with prompt revise control and optional watermark. Use when the user wants Hunyuan/混元 model, WeChat ecosystem image generation, or image-to-image with a reference image. For free no-setup generation prefer the freeimg-z-image skill (z-image-turbo). Keywords: hunyuan, 混元, 混元生图, 腾讯云, CloudBase, 云开发, text-to-image, image-to-image, 垫图, 图生图, 文生图, 小程序成长计划, 激励任务, 免费, 免费生图, 10万张, hunyuan-image, freeimg-hunyuan."
+description: "Generate AI images (text-to-image and image-to-image with reference) via Tencent Hunyuan 3.0 — completely FREE: claim the WeChat 小程序成长计划 incentive resource pack (10万张 free AI images + 10亿 Token, 6-month validity) and the quota burns on your own CloudBase env, no payment ever. One-time setup stores Tencent Cloud credentials locally (full illustrated tutorial on the companion web app https://freeimg.shenzjd.com/hunyuan); then generate PNG in 4 sizes with prompt revise control and optional watermark. Use when the user wants Hunyuan/混元 model, WeChat ecosystem image generation, or image-to-image with a reference image. For free no-setup generation prefer the freeimg-z-image skill (z-image-turbo). Keywords: hunyuan, 混元, 混元生图, 腾讯云, CloudBase, 云开发, text-to-image, image-to-image, 垫图, 图生图, 文生图, 小程序成长计划, 激励任务, 免费, 免费生图, 10万张, freeimg-hunyuan."
 ---
 
 # FreeImg Hunyuan — 腾讯混元生图（免费 10 万张额度）
@@ -39,14 +39,14 @@ description: "Generate AI images (text-to-image and image-to-image with referenc
 3. **写配置**（只需一次，**不要把密钥写进仓库、日志或对话输出**）：
 
    ```bash
-   mkdir -p ~/.hunyuan && printf "TCB_ENV_ID=你的环境ID\nTCB_SECRET_ID=你的SecretId\nTCB_SECRET_KEY=你的SecretKey\n" > ~/.hunyuan/config.env && chmod 600 ~/.hunyuan/config.env
+   mkdir -p ~/.freeimg-hunyuan && printf "TCB_ENV_ID=你的环境ID\nTCB_SECRET_ID=你的SecretId\nTCB_SECRET_KEY=你的SecretKey\n" > ~/.freeimg-hunyuan/config.env && chmod 600 ~/.freeimg-hunyuan/config.env
    ```
 
 脚本按以下优先级读取凭据：环境变量 `TCB_ENV_ID` / `TCB_SECRET_ID` /
-`TCB_SECRET_KEY` → 配置文件 `~/.hunyuan/config.env`。都没有时打印上述引导退出。
+`TCB_SECRET_KEY` → 配置文件 `~/.freeimg-hunyuan/config.env`。都没有时打印上述引导退出。
 
 依赖说明：脚本用官方 `@cloudbase/node-sdk`（网关鉴权是自定义签名，不自行复刻），
-首次运行自动装到 `~/.hunyuan/sdk`（需本机有 node + npm，十几秒），之后复用。
+首次运行自动装到 `~/.freeimg-hunyuan/sdk`（需本机有 node + npm，十几秒），之后复用。
 
 ### Step 1: 生成图片
 
@@ -81,12 +81,12 @@ scripts/generate.mjs --prompt "提示词" --image 垫图.jpg --out 输出.png
 | 4:1 超宽 | `--size 2048x512` | 公众号头图、横幅 |
 
 环境变量：`TCB_ENV_ID`、`TCB_SECRET_ID`、`TCB_SECRET_KEY`（凭据）、
-`HUNYUAN_CONFIG`（自定义配置文件路径）、`HUNYUAN_SDK_DIR`（自定义 SDK 安装目录）。
+`FREEIMG_HUNYUAN_CONFIG`（自定义配置文件路径）、`FREEIMG_HUNYUAN_SDK_DIR`（自定义 SDK 安装目录）。
 
 ## Common Mistakes
 
 - **把密钥提交进仓库或贴进对话**：SecretId/SecretKey 等同账号权限，只放
-  `~/.hunyuan/config.env`（`chmod 600`）或环境变量
+  `~/.freeimg-hunyuan/config.env`（`chmod 600`）或环境变量
 - **用不支持的尺寸**：如 1536x2048 会被拒绝，只能四选一（见 Quick Reference）
 - **422 还在重试**：422 是提示词触发内容审核，同样内容重发必然再失败，改措辞
 - **没有资源包直接生成**：会按量计费产生费用；引导用户先免费领取「小程序成长计划」激励资源包（10 万张生图额度）并绑定所用环境

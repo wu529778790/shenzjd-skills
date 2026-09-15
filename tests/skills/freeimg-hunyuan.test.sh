@@ -68,14 +68,14 @@ fi
 # 4. 离线参数校验: 缺少凭据时引导配置, 缺少 --prompt 时打印用法, 尺寸白名单
 echo ""
 echo "📋 Test 4: 离线参数校验"
-out="$(env -u TCB_ENV_ID -u TCB_SECRET_ID -u TCB_SECRET_KEY -u HUNYUAN_CONFIG HOME="$TEST_DIR/no-home" node "$SKILL_DIR/scripts/generate.mjs" --prompt x --out /tmp/hunyuan-test.png 2>&1 || true)"
+out="$(env -u TCB_ENV_ID -u TCB_SECRET_ID -u TCB_SECRET_KEY -u FREEIMG_HUNYUAN_CONFIG HOME="$TEST_DIR/no-home" node "$SKILL_DIR/scripts/generate.mjs" --prompt x --out /tmp/freeimg-hunyuan-test.png 2>&1 || true)"
 if echo "$out" | grep -q "cam/capi"; then
   echo "  ✅ 缺少凭据时输出获取引导"
 else
   echo "  ❌ 缺少凭据时应输出获取引导, 实际: $out"
   exit 1
 fi
-out="$(TCB_ENV_ID=e TCB_SECRET_ID=s TCB_SECRET_KEY=k node "$SKILL_DIR/scripts/generate.mjs" --out /tmp/hunyuan-test.png 2>&1 || true)"
+out="$(TCB_ENV_ID=e TCB_SECRET_ID=s TCB_SECRET_KEY=k node "$SKILL_DIR/scripts/generate.mjs" --out /tmp/freeimg-hunyuan-test.png 2>&1 || true)"
 if echo "$out" | grep -q "usage:"; then
   echo "  ✅ 缺少 --prompt 时打印用法"
 else

@@ -1,6 +1,6 @@
 ---
 name: freeimg-z-image
-description: "Generate AI images from text prompts via the free z-image-turbo model (Gitee AI serverless API, ~100 free 2K images/day with a free token). One-time setup stores the token locally; then generate PNG images in any size (multiple of 8), with negative prompts and step control. Companion web app with 18000+ prompt library and 12 preset styles: https://freeimg.shenzjd.com. Use for generating, drawing, or creating images (icons, covers, illustrations, posters). Keywords: image generation, text-to-image, AI image, z-image, z-image-turbo, Gitee AI, free image, 画图, 生成图片, 文生图, AI 绘画, 免费图片生成, freeimg, freeimg-z-image."
+description: "Generate AI images from text prompts via the free z-image-turbo model (Gitee AI serverless API, ~100 free 2K images/day with a free token). One-time setup stores the token locally; then generate PNG images in any size (multiple of 8), with negative prompts and step control. Companion web app with 18000+ prompt library and 12 preset styles: https://freeimg.shenzjd.com. Use for generating, drawing, or creating images (icons, covers, illustrations, posters). Keywords: image generation, text-to-image, AI image, z-image, z-image-turbo, Gitee AI, free image, 画图, 生成图片, 文生图, AI 绘画, 免费图片生成, freeimg-z-image."
 ---
 
 # FreeImg Z-Image — 免费 AI 图片生成
@@ -38,10 +38,10 @@ description: "Generate AI images from text prompts via the free z-image-turbo mo
 脚本按以下优先级读取令牌（**不要把令牌写进仓库、日志或对话输出**）：
 
 1. 环境变量 `GITEE_AI_API_KEY`
-2. 本地配置文件 `~/.freeimg/config.env`（内容一行：`GITEE_AI_API_KEY=xxxx`）
+2. 本地配置文件 `~/.freeimg-z-image/config.env`（内容一行：`GITEE_AI_API_KEY=xxxx`）
 
 都没有时脚本会打印上面的获取引导并退出；AI 应引导用户完成 Step 0，
-把令牌写入 `~/.freeimg/config.env`（`chmod 600`），只需一次。
+把令牌写入 `~/.freeimg-z-image/config.env`（`chmod 600`），只需一次。
 
 ### Step 1: 生成图片
 
@@ -76,11 +76,11 @@ scripts/generate.mjs --prompt "提示词" --out 输出.png \
 {风格，如 扁平卡通插画/3D 渲染/水彩}：{主体与细节}，{构图，如 居中特写、四周留裁剪余量}，{用途，如 App 图标、缩小时仍清晰}，无文字，无水印
 ```
 
-环境变量：`GITEE_AI_API_KEY`（令牌）、`FREEIMG_CONFIG`（自定义配置文件路径）。
+环境变量：`GITEE_AI_API_KEY`（令牌）、`FREEIMG_Z_IMAGE_CONFIG`（自定义配置文件路径）。
 
 ## Common Mistakes
 
-- **把令牌提交进仓库**：令牌等同免费额度账号，只放 `~/.freeimg/config.env` 或环境变量；`.env` 文件一律 `.gitignore`
+- **把令牌提交进仓库**：令牌等同免费额度账号，只放 `~/.freeimg-z-image/config.env` 或环境变量；`.env` 文件一律 `.gitignore`
 - **尺寸不是 8 的倍数**：如 1000×1000 会被接口拒绝或静默取整，用 1024/1536/2048
 - **图里带乱码文字**：z-image 对文字渲染不稳定，需要文字时后期用设计工具加，提示词里声明「无文字」
 - **生成后不检查就交付**：模型偶尔产出畸形手部/构图偏移，必须先 Read 查看再给用户

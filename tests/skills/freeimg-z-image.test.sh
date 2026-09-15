@@ -62,15 +62,15 @@ fi
 # 4. 离线参数校验: 缺少令牌时引导配置, 缺少 --prompt 时打印用法
 echo ""
 echo "📋 Test 4: 离线参数校验"
-# HOME 指向空目录, 防止读到本机 ~/.freeimg/config.env 真实令牌而真实调用 API
-out="$(GITEE_AI_API_KEY= FREEIMG_CONFIG="$TEST_DIR/no-config.env" HOME="$TEST_DIR/no-home" node "$SKILL_DIR/scripts/generate.mjs" --prompt x --out /tmp/freeimg-test.png 2>&1 || true)"
+# HOME 指向空目录, 防止读到本机 ~/.freeimg-z-image/config.env 真实令牌而真实调用 API
+out="$(GITEE_AI_API_KEY= FREEIMG_Z_IMAGE_CONFIG="$TEST_DIR/no-config.env" HOME="$TEST_DIR/no-home" node "$SKILL_DIR/scripts/generate.mjs" --prompt x --out /tmp/freeimg-z-image-test.png 2>&1 || true)"
 if echo "$out" | grep -q "ai.gitee.com/serverless-api"; then
   echo "  ✅ 缺少令牌时输出获取引导"
 else
   echo "  ❌ 缺少令牌时应输出获取引导, 实际: $out"
   exit 1
 fi
-out="$(GITEE_AI_API_KEY=fake node "$SKILL_DIR/scripts/generate.mjs" --out /tmp/freeimg-test.png 2>&1 || true)"
+out="$(GITEE_AI_API_KEY=fake node "$SKILL_DIR/scripts/generate.mjs" --out /tmp/freeimg-z-image-test.png 2>&1 || true)"
 if echo "$out" | grep -q "usage:"; then
   echo "  ✅ 缺少 --prompt 时打印用法"
 else
