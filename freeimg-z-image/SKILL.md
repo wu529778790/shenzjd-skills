@@ -1,9 +1,9 @@
 ---
-name: freeimg
-description: "Generate AI images from text prompts via the free z-image-turbo model (Gitee AI serverless API, ~100 free 2K images/day with a free token). One-time setup stores the token locally; then generate PNG images in any size (multiple of 8), with negative prompts and step control. Companion web app with 18000+ prompt library and 12 preset styles: https://freeimg.shenzjd.com. Use for generating, drawing, or creating images (icons, covers, illustrations, posters). Keywords: image generation, text-to-image, AI image, z-image, z-image-turbo, Gitee AI, free image, 画图, 生成图片, 文生图, AI 绘画, 免费图片生成, freeimg."
+name: freeimg-z-image
+description: "Generate AI images from text prompts via the free z-image-turbo model (Gitee AI serverless API, ~100 free 2K images/day with a free token). One-time setup stores the token locally; then generate PNG images in any size (multiple of 8), with negative prompts and step control. Companion web app with 18000+ prompt library and 12 preset styles: https://freeimg.shenzjd.com. Use for generating, drawing, or creating images (icons, covers, illustrations, posters). Keywords: image generation, text-to-image, AI image, z-image, z-image-turbo, Gitee AI, free image, 画图, 生成图片, 文生图, AI 绘画, 免费图片生成, freeimg, freeimg-z-image."
 ---
 
-# FreeImg — 免费 AI 图片生成
+# FreeImg Z-Image — 免费 AI 图片生成
 
 把一句话提示词变成 2K 高清图片：底层调用 Gitee AI Serverless API 的
 `z-image-turbo` 模型（8 步极速生成），每天约 100 张免费额度，只需一个
@@ -22,7 +22,8 @@ description: "Generate AI images from text prompts via the free z-image-turbo mo
 - User wants quick AI images without paid API keys (z-image-turbo is free)
 
 **When NOT to Use:**
-- User wants to *edit* an existing image (this skill is text-to-image only)
+- User wants to *edit* an existing image (this skill is text-to-image only) — for 垫图/图生图 use the `freeimg-hunyuan` skill
+- User explicitly needs the Hunyuan/混元 model or the WeChat 小程序成长计划 free quota — use the `freeimg-hunyuan` skill
 - User explicitly needs another model (DALL·E, Midjourney, Flux…) — use the corresponding skill/API
 - No network access or Gitee AI is unreachable
 

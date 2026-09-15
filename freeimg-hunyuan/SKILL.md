@@ -1,9 +1,9 @@
 ---
-name: hunyuan-image
-description: "Generate AI images (text-to-image and image-to-image with reference) via Tencent Hunyuan 3.0 — completely FREE: claim the WeChat 小程序成长计划 incentive resource pack (10万张 free AI images + 10亿 Token, 6-month validity) and the quota burns on your own CloudBase env, no payment ever. One-time setup stores Tencent Cloud credentials locally (full illustrated tutorial on the companion web app https://freeimg.shenzjd.com/hunyuan); then generate PNG in 4 sizes with prompt revise control and optional watermark. Use when the user wants Hunyuan/混元 model, WeChat ecosystem image generation, or image-to-image with a reference image. For free no-setup generation prefer the freeimg skill (z-image-turbo). Keywords: hunyuan, 混元, 混元生图, 腾讯云, CloudBase, 云开发, text-to-image, image-to-image, 垫图, 图生图, 文生图, 小程序成长计划, 激励任务, 免费, 免费生图, 10万张, hunyuan-image."
+name: freeimg-hunyuan
+description: "Generate AI images (text-to-image and image-to-image with reference) via Tencent Hunyuan 3.0 — completely FREE: claim the WeChat 小程序成长计划 incentive resource pack (10万张 free AI images + 10亿 Token, 6-month validity) and the quota burns on your own CloudBase env, no payment ever. One-time setup stores Tencent Cloud credentials locally (full illustrated tutorial on the companion web app https://freeimg.shenzjd.com/hunyuan); then generate PNG in 4 sizes with prompt revise control and optional watermark. Use when the user wants Hunyuan/混元 model, WeChat ecosystem image generation, or image-to-image with a reference image. For free no-setup generation prefer the freeimg-z-image skill (z-image-turbo). Keywords: hunyuan, 混元, 混元生图, 腾讯云, CloudBase, 云开发, text-to-image, image-to-image, 垫图, 图生图, 文生图, 小程序成长计划, 激励任务, 免费, 免费生图, 10万张, hunyuan-image, freeimg-hunyuan."
 ---
 
-# Hunyuan Image — 腾讯混元生图（免费 10 万张额度）
+# FreeImg Hunyuan — 腾讯混元生图（免费 10 万张额度）
 
 调用腾讯云混元 3.0 生图模型（走 CloudBase AI 网关），支持**文生图**与**垫图
 （图生图）**。**完全免费，不花一分钱**：额度来自微信「小程序成长计划」激励
@@ -21,7 +21,7 @@ description: "Generate AI images (text-to-image and image-to-image with referenc
 - User 已配置过腾讯云密钥并要求继续用混元
 
 **When NOT to Use:**
-- User 只想免费快速出图、零配置 → 用 `freeimg` skill（z-image-turbo，免注册免领取）
+- User 只想免费快速出图、零配置 → 用 `freeimg-z-image` skill（z-image-turbo，免注册免领取）
 - User 不愿花几分钟领取免费资源包（虽然不领也不产生费用，但没有资源包时按量计费）
 
 ## Core Pattern

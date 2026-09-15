@@ -1,14 +1,14 @@
 #!/bin/bash
-# freeimg 静态测试
+# freeimg-z-image 静态测试
 # 注意: 真实生成依赖 Gitee AI 令牌和网络, 这里只做静态检查与离线参数校验。
 
 set -e
 
 TEST_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-SKILL_DIR="$(dirname "$TEST_DIR")/freeimg"
+SKILL_DIR="$(dirname "$TEST_DIR")/freeimg-z-image"
 
-echo "🧪 Testing freeimg"
-echo "=================="
+echo "🧪 Testing freeimg-z-image"
+echo "=========================="
 
 # 1. 测试脚本文件存在且语法正确
 echo ""
@@ -86,4 +86,4 @@ else
 fi
 
 echo ""
-echo "✅ freeimg 全部测试通过"
+echo "✅ freeimg-z-image 全部测试通过"

@@ -1,14 +1,14 @@
 #!/bin/bash
-# hunyuan-image 静态测试
+# freeimg-hunyuan 静态测试
 # 注意: 真实生成依赖腾讯云凭据、资源包和网络, 这里只做静态检查与离线参数校验。
 
 set -e
 
 TEST_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-SKILL_DIR="$(dirname "$TEST_DIR")/hunyuan-image"
+SKILL_DIR="$(dirname "$TEST_DIR")/freeimg-hunyuan"
 
-echo "🧪 Testing hunyuan-image"
-echo "========================"
+echo "🧪 Testing freeimg-hunyuan"
+echo "=========================="
 
 # 1. 测试脚本文件存在且语法正确
 echo ""
@@ -98,4 +98,4 @@ else
 fi
 
 echo ""
-echo "✅ hunyuan-image 全部测试通过"
+echo "✅ freeimg-hunyuan 全部测试通过"

@@ -1,4 +1,4 @@
-# 🖼️ freeimg
+# 🖼️ freeimg-z-image
 
 免费 AI 图片生成 skill —— 一句话提示词，直接在 AI 对话里出 2K 高清图。
 
@@ -9,7 +9,7 @@
 ## 安装
 
 ```bash
-npx skills add wu529778790/shenzjd-skills -s freeimg -y
+npx skills add wu529778790/shenzjd-skills -s freeimg-z-image -y
 ```
 
 ## 快速开始
@@ -20,7 +20,7 @@ npx skills add wu529778790/shenzjd-skills -s freeimg -y
    mkdir -p ~/.freeimg && echo "GITEE_AI_API_KEY=你的令牌" > ~/.freeimg/config.env && chmod 600 ~/.freeimg/config.env
    ```
 
-2. **让 AI 画图**：对任意支持的 AI 工具说「用 freeimg 生成一张××图」，或手动运行：
+2. **让 AI 画图**：对任意支持的 AI 工具说「用 freeimg-z-image 生成一张××图」，或手动运行：
 
    ```bash
    node scripts/generate.mjs --prompt "扁平卡通插画：一只叼着骨头的小狗，居中构图，无文字无水印" \

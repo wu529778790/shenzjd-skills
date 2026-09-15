@@ -1,4 +1,4 @@
-# ⚡ hunyuan-image
+# ⚡ freeimg-hunyuan
 
 腾讯混元生图 skill —— **免费 10 万张额度**，文生图 + 垫图（图生图），走 CloudBase AI。
 
@@ -9,7 +9,7 @@
 ## 安装
 
 ```bash
-npx skills add wu529778790/shenzjd-skills -s hunyuan-image -y
+npx skills add wu529778790/shenzjd-skills -s freeimg-hunyuan -y
 ```
 
 ## 快速开始（免费三步）
@@ -32,4 +32,4 @@ npx skills add wu529778790/shenzjd-skills -s hunyuan-image -y
 
 > 💡 卡在哪一步？打开 [freeimg.shenzjd.com/hunyuan](https://freeimg.shenzjd.com/hunyuan) 看图文教程，网页版和本 skill 共用同一套凭据。
 >
-> 🎁 只想零配置直接出图？用同仓库的 `freeimg` skill（z-image-turbo，免注册免领取）。
+> 🎁 只想零配置直接出图？用同仓库的 `freeimg-z-image` skill（z-image-turbo，免注册免领取）。
