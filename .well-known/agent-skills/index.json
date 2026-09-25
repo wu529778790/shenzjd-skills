@@ -2,25 +2,25 @@
   "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
   "skills": [
     {
-      "name": "freeimg-hunyuan",
+      "name": "git-hooks-setup",
       "type": "skill-md",
-      "description": "Generate AI images (text-to-image and image-to-image with reference) via Tencent Hunyuan 3.0 — completely FREE: claim the WeChat 小程序成长计划 incentive resource pack (10万张 free AI images + 10亿 Token, 6-month validity) and the quota burns on your own CloudBase env, no payment ever. One-time setup stores Tencent Cloud credentials locally (full illustrated tutorial on the companion web app https://freeimg.shenzjd.com/hunyuan); then generate images (upstream returns JPEG) in 4 fixed sizes with prompt revise control and optional watermark. Use when the user wants Hunyuan/混元 model, WeChat ecosystem image generation, or image-to-image with a reference image. For free no-setup generation prefer the freeimg-z-image skill (z-image-turbo). Keywords: hunyuan, 混元, 混元生图, 腾讯云, CloudBase, 云开发, text-to-image, image-to-image, 垫图, 图生图, 文生图, 小程序成长计划, 激励任务, 免费, 免费生图, 10万张, freeimg-hunyuan.",
-      "url": "./freeimg-hunyuan/SKILL.md",
-      "digest": "sha256:68d2b503e0b19ad670263519c932bd535eb87a6e3313105b87b48a8c9bfb0617"
+      "description": "Use when setting up git hooks (pre-commit, commit-msg, pre-push) with husky or native hooks for linting, formatting, commit conventions, and secret scanning.",
+      "url": "./git-hooks-setup/SKILL.md",
+      "digest": "sha256:62468233e18f953a498ef54d41d0dfac1acf2fd859b4682a5b829921b51b451b"
     },
     {
-      "name": "docker-build-deploy",
+      "name": "video-cover-packager",
       "type": "skill-md",
-      "description": "Use when containerizing a Node.js app and setting up GitHub Actions CI/CD to build, push to GHCR, and deploy via SSH. Multi-stage build, non-root user, caching.",
-      "url": "./docker-build-deploy/SKILL.md",
-      "digest": "sha256:37cd828a301ad8a760b40a15a6732bd8cd02c40f026171bb010d452b2aa32be1"
+      "description": "Package one video/script/transcript into a complete publish kit: cover titles, platform titles, per-platform tags, description, and creative cover art direction with pre-review before image generation. Covers Xiaohongshu, Douyin, WeChat Channels (视频号), Bilibili, and YouTube. Use when the user asks for video cover design, 封面包装, 视频包装, 发布文案, 标题公式, 封面标题, platform tags for a video, or says 给这期视频做封面/标题/描述/标签. Keywords: video cover, thumbnail title, publish kit, self-media packaging, 小红书封面, 抖音封面, B站封面.",
+      "url": "./video-cover-packager/SKILL.md",
+      "digest": "sha256:c9bde9cb8ba59564b158e054d41ecc8790aceda0679addb70e475a51613ce033"
     },
     {
-      "name": "db-migration-helper",
+      "name": "github-figure-bed",
       "type": "skill-md",
-      "description": "Use when generating database migration SQL from model or schema changes — compares current vs desired schema, detects diffs, outputs reversible safe migrations.",
-      "url": "./db-migration-helper/SKILL.md",
-      "digest": "sha256:a708a2b315057019f45e238159c0e70144d37973808f86e290896972a9977085"
+      "description": "Upload images to any GitHub repo as a figure bed and get CDN/markdown links (jsdelivr/jsdmirror/raw). One-time setup.sh guides gh login, auto-detects the owner, creates the default repo (img.shenzjd.com) if missing, and syncs config with the img.shenzjd.com web app via the repos .img.shenzjd.com/config.json — upload with zero manual configuration. Use for uploading images to GitHub, generating CDN links, deleting/listing hosted images, or setting up a figure bed. Keywords: github figure bed, image host, CDN link, jsdelivr, jsdmirror, upload image to GitHub, 图床, 上传图片, CDN 链接, 初始化图床.",
+      "url": "./github-figure-bed/SKILL.md",
+      "digest": "sha256:87b09c5e768b1b1329783366b50da54df2ffc26cdd56a3487f489e609991c8fa"
     },
     {
       "name": "freeimg-z-image",
@@ -30,18 +30,25 @@
       "digest": "sha256:0460374f1f11c0e1288dfc99f2ccb7778003f02db8a83fb710653726ee937b04"
     },
     {
-      "name": "git-hooks-setup",
+      "name": "db-migration-helper",
       "type": "skill-md",
-      "description": "Use when setting up git hooks (pre-commit, commit-msg, pre-push) with husky or native hooks for linting, formatting, commit conventions, and secret scanning.",
-      "url": "./git-hooks-setup/SKILL.md",
-      "digest": "sha256:62468233e18f953a498ef54d41d0dfac1acf2fd859b4682a5b829921b51b451b"
+      "description": "Use when generating database migration SQL from model or schema changes — compares current vs desired schema, detects diffs, outputs reversible safe migrations.",
+      "url": "./db-migration-helper/SKILL.md",
+      "digest": "sha256:a708a2b315057019f45e238159c0e70144d37973808f86e290896972a9977085"
     },
     {
-      "name": "github-figure-bed",
+      "name": "docker-build-deploy",
       "type": "skill-md",
-      "description": "Upload images to any GitHub repo as a figure bed and get CDN/markdown links (jsdelivr/jsdmirror/raw). One-time setup.sh guides gh login, auto-detects the owner, creates the default repo (img.shenzjd.com) if missing, and syncs config with the img.shenzjd.com web app via the repos .img.shenzjd.com/config.json — upload with zero manual configuration. Use for uploading images to GitHub, generating CDN links, deleting/listing hosted images, or setting up a figure bed. Keywords: github figure bed, image host, CDN link, jsdelivr, jsdmirror, upload image to GitHub, 图床, 上传图片, CDN 链接, 初始化图床.",
-      "url": "./github-figure-bed/SKILL.md",
-      "digest": "sha256:87b09c5e768b1b1329783366b50da54df2ffc26cdd56a3487f489e609991c8fa"
+      "description": "Use when containerizing a Node.js app and setting up GitHub Actions CI/CD to build, push to GHCR, and deploy via SSH. Multi-stage build, non-root user, caching.",
+      "url": "./docker-build-deploy/SKILL.md",
+      "digest": "sha256:37cd828a301ad8a760b40a15a6732bd8cd02c40f026171bb010d452b2aa32be1"
+    },
+    {
+      "name": "freeimg-hunyuan",
+      "type": "skill-md",
+      "description": "Generate AI images (text-to-image and image-to-image with reference) via Tencent Hunyuan 3.0 — completely FREE: claim the WeChat 小程序成长计划 incentive resource pack (10万张 free AI images + 10亿 Token, 6-month validity) and the quota burns on your own CloudBase env, no payment ever. One-time setup stores Tencent Cloud credentials locally (full illustrated tutorial on the companion web app https://freeimg.shenzjd.com/hunyuan); then generate images (upstream returns JPEG) in 4 fixed sizes with prompt revise control and optional watermark. Use when the user wants Hunyuan/混元 model, WeChat ecosystem image generation, or image-to-image with a reference image. For free no-setup generation prefer the freeimg-z-image skill (z-image-turbo). Keywords: hunyuan, 混元, 混元生图, 腾讯云, CloudBase, 云开发, text-to-image, image-to-image, 垫图, 图生图, 文生图, 小程序成长计划, 激励任务, 免费, 免费生图, 10万张, freeimg-hunyuan.",
+      "url": "./freeimg-hunyuan/SKILL.md",
+      "digest": "sha256:68d2b503e0b19ad670263519c932bd535eb87a6e3313105b87b48a8c9bfb0617"
     },
     {
       "name": "dependency-audit",
