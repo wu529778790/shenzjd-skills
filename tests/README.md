@@ -98,6 +98,7 @@ test-new-skill:
 | freeimg-z-image | ✅ | ✅ | ✅ |
 | git-hooks-setup | ✅ | ✅ | ✅ |
 | github-figure-bed | ✅ | ✅ | ✅ |
+| video-cover-packager | ✅ | ✅ | ✅ |
 
 **图例：** ✅ 已实现 | ⏳ 待实现
 

@@ -29,6 +29,7 @@ Supports Claude Code, Cursor, Copilot, Windsurf, Gemini CLI, Cline, Aider, and *
 | 🖼️ **github-figure-bed** | One-time setup → zero-config GitHub figure bed: upload images, get CDN/Markdown links | `/github-figure-bed setup` |
 | 🎨 **freeimg-z-image** | Free AI image generation (z-image-turbo, ~100 free 2K images/day): text prompt → image in any AI chat | `generate an image with freeimg-z-image` |
 | ⚡ **freeimg-hunyuan** | Tencent Hunyuan 3.0 — **FREE 100K images** via the WeChat 小程序成长计划 incentive pack: text-to-image + image-to-image | `generate an image with freeimg-hunyuan` |
+| 📦 **video-cover-packager** | Package one video into a publish kit: cover titles, platform titles, tags, description, cover art direction | `/video-cover-packager` |
 
 ## 🎯 Coverage
 
@@ -56,6 +57,7 @@ npx skills add wu529778790/shenzjd-skills -s dependency-audit -y
 npx skills add wu529778790/shenzjd-skills -s github-figure-bed -y
 npx skills add wu529778790/shenzjd-skills -s freeimg-z-image -y
 npx skills add wu529778790/shenzjd-skills -s freeimg-hunyuan -y
+npx skills add wu529778790/shenzjd-skills -s video-cover-packager -y
 ```
 
 > 🖼️ **github-figure-bed** companion web app: [img.shenzjd.com](https://img.shenzjd.com) — a visual management dashboard for the same figure-bed repo (drag-and-drop upload / compression & watermark / image management / CDN settings). The skill and the web app share one config file, so use them together for the best experience.

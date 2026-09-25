@@ -29,6 +29,7 @@ npx skills add wu529778790/shenzjd-skills -s docker-build-deploy -y
 | 🖼️ **github-figure-bed** | 一键初始化 GitHub 图床，登录即用、上传秒得 CDN 链接 | `/github-figure-bed setup` |
 | 🎨 **freeimg-z-image** | 免费 AI 图片生成（z-image-turbo，每天约 100 张 2K 免费额度）：对话里一句话直接出图 | 「用 freeimg-z-image 生成一张××图」 |
 | ⚡ **freeimg-hunyuan** | 腾讯混元 3.0 生图，**免费 10 万张额度**（微信「小程序成长计划」激励资源包）：文生图 + 垫图 | 「用混元生成一张××图」 |
+| 📦 **video-cover-packager** | 把一期视频素材包装成完整发布方案：封面标题、平台标题、标签、描述、封面创意方向 | `/video-cover-packager` |
 
 ## 🎯 覆盖场景
 
@@ -56,6 +57,7 @@ npx skills add wu529778790/shenzjd-skills -s dependency-audit -y
 npx skills add wu529778790/shenzjd-skills -s github-figure-bed -y
 npx skills add wu529778790/shenzjd-skills -s freeimg-z-image -y
 npx skills add wu529778790/shenzjd-skills -s freeimg-hunyuan -y
+npx skills add wu529778790/shenzjd-skills -s video-cover-packager -y
 ```
 
 > 🖼️ **github-figure-bed** 配套网页端：[img.shenzjd.com](https://img.shenzjd.com) —— 同一个图床仓库的可视化管理后台（拖拽上传 / 压缩水印 / 图片管理 / CDN 设置），AI 技能与网页端共用一份配置，搭配使用体验最佳。
